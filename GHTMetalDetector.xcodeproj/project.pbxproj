@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBB921BD1986375400CA65F4 /* GHTQuad.mm */; };
 		CBD70159198629F500032EC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD70158198629F500032EC3 /* main.m */; };
 		CBD7015C198629F500032EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015B198629F500032EC3 /* AppDelegate.m */; };
 		CBD7015F198629F500032EC3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015E198629F500032EC3 /* ViewController.m */; };
@@ -26,6 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CBB921BC1986375400CA65F4 /* GHTQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTQuad.h; path = Model/Quad/GHTQuad.h; sourceTree = "<group>"; };
+		CBB921BD1986375400CA65F4 /* GHTQuad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTQuad.mm; path = Model/Quad/GHTQuad.mm; sourceTree = "<group>"; };
 		CBD70153198629F500032EC3 /* GHTMetalDetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHTMetalDetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD70157198629F500032EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBD70158198629F500032EC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -58,6 +61,105 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CBB9219E19862FCD00CA65F4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CBD7015D198629F500032EC3 /* ViewController.h */,
+				CBD7015E198629F500032EC3 /* ViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CBB9219F19862FDB00CA65F4 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				CBD7015A198629F500032EC3 /* AppDelegate.h */,
+				CBD7015B198629F500032EC3 /* AppDelegate.m */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		CBB921A019862FE000CA65F4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CBB921A11986300200CA65F4 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				CBD70160198629F500032EC3 /* Main.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		CBB921A21986302600CA65F4 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Image;
+			sourceTree = "<group>";
+		};
+		CBB921A31986304D00CA65F4 /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Shader;
+			sourceTree = "<group>";
+		};
+		CBB921A41986305A00CA65F4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CBB921A61986306C00CA65F4 /* Quad */,
+				CBB921A71986307400CA65F4 /* Texture Loader */,
+				CBB921A51986306000CA65F4 /* Math */,
+				CBB921A31986304D00CA65F4 /* Shader */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		CBB921A51986306000CA65F4 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Math;
+			sourceTree = "<group>";
+		};
+		CBB921A61986306C00CA65F4 /* Quad */ = {
+			isa = PBXGroup;
+			children = (
+				CBB921BC1986375400CA65F4 /* GHTQuad.h */,
+				CBB921BD1986375400CA65F4 /* GHTQuad.mm */,
+			);
+			name = Quad;
+			sourceTree = "<group>";
+		};
+		CBB921A71986307400CA65F4 /* Texture Loader */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Texture Loader";
+			sourceTree = "<group>";
+		};
+		CBB921A8198630D600CA65F4 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CBB9219E19862FCD00CA65F4 /* Controller */,
+				CBB9219F19862FDB00CA65F4 /* Delegate */,
+				CBB921A11986300200CA65F4 /* Storyboard */,
+				CBB921A019862FE000CA65F4 /* View */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		CBB921B01986332900CA65F4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CBD7014A198629F500032EC3 = {
 			isa = PBXGroup;
 			children = (
@@ -79,13 +181,10 @@
 		CBD70155198629F500032EC3 /* GHTMetalDetector */ = {
 			isa = PBXGroup;
 			children = (
-				CBD7015A198629F500032EC3 /* AppDelegate.h */,
-				CBD7015B198629F500032EC3 /* AppDelegate.m */,
-				CBD7015D198629F500032EC3 /* ViewController.h */,
-				CBD7015E198629F500032EC3 /* ViewController.m */,
-				CBD70160198629F500032EC3 /* Main.storyboard */,
-				CBD70163198629F500032EC3 /* Images.xcassets */,
+				CBB921A8198630D600CA65F4 /* App */,
+				CBB921A41986305A00CA65F4 /* Model */,
 				CBD70156198629F500032EC3 /* Supporting Files */,
+				CBB921B01986332900CA65F4 /* Frameworks */,
 			);
 			path = GHTMetalDetector;
 			sourceTree = "<group>";
@@ -93,6 +192,8 @@
 		CBD70156198629F500032EC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CBB921A21986302600CA65F4 /* Image */,
+				CBD70163198629F500032EC3 /* Images.xcassets */,
 				CBD70157198629F500032EC3 /* Info.plist */,
 				CBD70158198629F500032EC3 /* main.m */,
 			);
@@ -217,6 +318,7 @@
 			files = (
 				CBD7015F198629F500032EC3 /* ViewController.m in Sources */,
 				CBD7015C198629F500032EC3 /* AppDelegate.m in Sources */,
+				CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */,
 				CBD70159198629F500032EC3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,9 +434,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				INFOPLIST_FILE = GHTMetalDetector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -343,9 +447,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				INFOPLIST_FILE = GHTMetalDetector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -402,6 +508,7 @@
 				CBD70175198629F600032EC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CBD70176198629F600032EC3 /* Build configuration list for PBXNativeTarget "GHTMetalDetectorTests" */ = {
 			isa = XCConfigurationList;
@@ -410,6 +517,7 @@
 				CBD70178198629F600032EC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
