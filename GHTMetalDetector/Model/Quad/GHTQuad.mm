@@ -17,13 +17,14 @@ static const uint32_t kSizeQuadTexCoordinates       = kCountQuadTextureCoordinat
 static const uint32_t kCountQuadVertices            = kCountQuadTextureCoordinates;
 static const uint32_t kSizeQuadVertices             = kCountQuadVertices * sizeof(simd::float4);
 
-
 static const simd::float4 kQuadVertices[kCountQuadVertices] =
 {
+    //First triangle
     { -1.0f,  -1.0f, 0.0f, 1.0f },
     {  1.0f,  -1.0f, 0.0f, 1.0f },
     { -1.0f,   1.0f, 0.0f, 1.0f },
     
+    //Second triangle
     {  1.0f,  -1.0f, 0.0f, 1.0f },
     { -1.0f,   1.0f, 0.0f, 1.0f },
     {  1.0f,   1.0f, 0.0f, 1.0f }
@@ -31,10 +32,12 @@ static const simd::float4 kQuadVertices[kCountQuadVertices] =
 
 static const simd::float2 kQuadTexturCoordinates[kCountQuadTextureCoordinates] =
 {
+    //First triangle
     { 0.0f, 0.0f },
     { 1.0f, 0.0f },
     { 0.0f, 1.0f },
     
+    //Second triangle
     { 1.0f, 0.0f },
     { 0.0f, 1.0f },
     { 1.0f, 1.0f }
@@ -51,18 +54,7 @@ static const simd::float2 kQuadTexturCoordinates[kCountQuadTextureCoordinates] =
     
 }
 
-- (void)_cleanup
-{
-    m_TextureCoordinateBuffer   = nil;
-    m_VertexBuffer              = nil;
-}
-
-- (void)dealloc
-{
-    [self _cleanup];
-}
-
-#pragma mark - Init
+#pragma mark - Init & clean-up
 - (instancetype)initWithDevice:(id<MTLDevice>)device
 {
     self = [super init];
@@ -115,13 +107,26 @@ static const simd::float2 kQuadTexturCoordinates[kCountQuadTextureCoordinates] =
     return self;
 }
 
+- (void)_cleanup
+{
+    m_TextureCoordinateBuffer   = nil;
+    m_VertexBuffer              = nil;
+}
+
+- (void)dealloc
+{
+    [self _cleanup];
+}
+
 #pragma mark - public
+/// Sets bounds and updates aspect ratio
 - (void)setBounds:(CGRect)bounds
 {
     _bounds = bounds;
     _aspect = fabsf(_bounds.size.width / _bounds.size.height);
 }
 
+/// Updates the vertices if the aspect ratio has changed.
 - (BOOL)update
 {
     BOOL newScale = NO;
@@ -166,10 +171,20 @@ static const simd::float2 kQuadTexturCoordinates[kCountQuadTextureCoordinates] =
             
             pVertices[5].x =  m_Scale.x;
             pVertices[5].y =  m_Scale.y;
-        } // if
-    } // if
+        }
+    }
 
-    
     return newScale;
+}
+
+- (void)encode:(id <MTLRenderCommandEncoder>)renderEncoder
+{
+    [renderEncoder setVertexBuffer:m_VertexBuffer
+                            offset:0
+                           atIndex:_vertexIndex ];
+    
+    [renderEncoder setVertexBuffer:m_TextureCoordinateBuffer
+                            offset:0
+                           atIndex:_textureCoordinateIndex ];
 }
 @end
