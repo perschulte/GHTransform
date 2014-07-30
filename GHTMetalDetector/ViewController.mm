@@ -154,12 +154,157 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 {
     NSError *error = nil;
     
-    [self _setupWithError:&error];
+    if (![self _setupKernelsAndPipeLineStateWithError:&error])
+    {
+        NSLog(@"Error(%@): Failed setting up kernels and pipeline descriptor!", self.class);
+        
+        return NO;
+    }
+    
+    _m_InTexture = [[GHTTexture alloc] initWithResourceName:textureNameString extension:extensionString];
+    
+    BOOL isAcquired = [_m_InTexture finalize:_m_Device];
+    
+    if (!isAcquired)
+    {
+        NSLog(@"Error(%@): Failed creating an input 2d Texture!", self.class);
+        
+        return NO;
+    }
+    
+    _m_QuadTextureSize.width  = _m_InTexture.width;
+    _m_QuadTextureSize.height = _m_InTexture.height;
+    
+    _m_Quad = [[GHTQuad alloc] initWithDevice:_m_Device];
+    
+    if (!_m_Quad)
+    {
+        NSLog(@"Error(%@): Failed creating a quad object!", self.class);
+        
+        return NO;
+    }
+    
+    _m_Quad.size = _m_QuadTextureSize;
+    
+    MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatBGRA8Unorm
+                                                                                                 width:_m_QuadTextureSize.width
+                                                                                                height:_m_QuadTextureSize.height
+                                                                                             mipmapped:NO];
+    if (!textureDescriptor)
+    {
+        NSLog(@"Error(%@): Failed creating a texture descriptor", self.class);
+        
+        return NO;
+    }
+    
+    if (![self _setupOutputTexturesWithTextureDescriptor:textureDescriptor])
+    {
+        NSLog(@"Error(%@): Failed creating textures", self.class);
+        
+        return NO;
+    }
+
+    if (![self _setupQuadSamplerAndDepthStencilState])
+    {
+        NSLog(@"Error(%@): Failed creating quad sampler and depth stencil state", self.class);
+        
+        return NO;
+    }
+    
+    // allocate regions of memory for the constant buffer
+    _m_QuadTransformBuffer = [_m_Device newBufferWithLength:kMaxBufferBytesPerFrame
+                                              options:0];
+    
+    if(!_m_QuadTransformBuffer)
+    {
+        NSLog(@"Error(%@): Failed creating a transform buffer!", self.class);
+        
+        return NO;
+    }
+    
+    _m_QuadTransformBuffer.label = @"TransformBuffer";
     
     return YES;
 }
 
-- (BOOL)_setupWithError:(NSError **)error
+- (BOOL)_setupOutputTexturesWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        _m_OutTexture           = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if (!_m_OutTexture)
+        {
+            NSLog(@"Error(%@): Failed creating an output 2d texture", self.class);
+            
+            return NO;
+        }
+        
+        _m_GaussianTexture      = [self _gaussTextureWithTextureDescriptor:textureDescriptor];
+        
+        if (!_m_GaussianTexture)
+        {
+            NSLog(@"Error(%@): Failed creating an output 2d gauss texture", self.class);
+            
+            return NO;
+        }
+        
+        _m_VotingTexture        = [self _votingTextureWithTextureDescriptor:textureDescriptor];
+        
+        if (!_m_VotingTexture)
+        {
+            NSLog(@"Error(%@): Failed creating an output 2d voting texture", self.class);
+            
+            return NO;
+        }
+        
+        _m_HoughSpaceTexture    = [self _houghSpaceTextureWithTextureDescriptor:textureDescriptor];
+        
+        if (!_m_HoughSpaceTexture)
+        {
+            NSLog(@"Error(%@): Failed creating an output 2d hough space texture", self.class);
+            
+            return NO;
+        }
+        
+        _m_PhiTexture           = [self _phiTextureWithTextureDescriptor:textureDescriptor];
+        
+        if (!_m_PhiTexture)
+        {
+            NSLog(@"Error(%@): Failed creating an output 2d phi texture", self.class);
+            
+            return NO;
+        }
+        
+        _m_CannyTexture         = [self _cannyTextureWithTextureDescriptor:textureDescriptor];
+        
+        if (!_m_CannyTexture)
+        {
+            NSLog(@"Error(%@): Failed creating an output 2d canny texture", self.class);
+            
+            return NO;
+        }
+        
+        _m_ModelTexture         = [self _modelTextureWithTextureDescriptor:textureDescriptor];
+        
+        if (!_m_ModelTexture)
+        {
+            NSLog(@"Error(%@): Failed creating an output 2d model texture", self.class);
+            
+            return NO;
+        }
+        
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor", self.class);
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)_setupKernelsAndPipeLineStateWithError:(NSError **)error
 {
     _m_ShaderLibrary = [_m_Device newDefaultLibrary];
     
@@ -204,6 +349,102 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     if(!vertex_program)
     {
         NSLog(@"Error(%@): Failed creating a vertex shader!", self.class);
+        
+        return NO;
+    }
+    
+    //  create a pipeline state for the quad
+    MTLRenderPipelineDescriptor *quadPipelineStateDescriptor = [MTLRenderPipelineDescriptor new];
+    
+    if(!quadPipelineStateDescriptor)
+    {
+        NSLog(@"Error(%@): Failed creating a pipeline state descriptor!", self.class);
+        
+        return NO;
+    } // if
+
+    quadPipelineStateDescriptor.depthAttachmentPixelFormat      = MTLPixelFormatDepth32Float;
+    quadPipelineStateDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
+    
+    quadPipelineStateDescriptor.sampleCount      = 1;
+    quadPipelineStateDescriptor.vertexFunction   = vertex_program;
+    quadPipelineStateDescriptor.fragmentFunction = fragment_program;
+    
+    _m_PipelineState = [_m_Device newRenderPipelineStateWithDescriptor:quadPipelineStateDescriptor
+                                                               error:error];
+    
+    quadPipelineStateDescriptor = nil;
+    
+    vertex_program   = nil;
+    fragment_program = nil;
+    
+    if(!_m_PipelineState)
+    {
+        NSLog(@"Error(%@): Failed acquiring pipeline state descriptor: %@", self.class, *error);
+        
+        return NO;
+    }
+    
+    // Set the compute kernel's workgroup size and count
+    _m_WorkgroupSize    = MTLSizeMake(1, 1, 1);
+    _m_LocalCount       = MTLSizeMake(_m_QuadTextureSize.width, _m_QuadTextureSize.height, 1);
+    
+    return YES;
+}
+
+- (BOOL)_setupQuadSamplerAndDepthStencilState
+{
+    // create a sampler for the quad
+    MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
+    
+    if(!samplerDescriptor)
+    {
+        NSLog(@"Error(%@): Failed creating a sampler descriptor!", self.class);
+        
+        return NO;
+    }
+    
+    samplerDescriptor.minFilter             = MTLSamplerMinMagFilterNearest;
+    samplerDescriptor.magFilter             = MTLSamplerMinMagFilterNearest;
+    samplerDescriptor.mipFilter             = MTLSamplerMipFilterNotMipmapped;
+    samplerDescriptor.maxAnisotropy         = 1.0f;
+    samplerDescriptor.sAddressMode          = MTLSamplerAddressModeClampToEdge;
+    samplerDescriptor.tAddressMode          = MTLSamplerAddressModeClampToEdge;
+    samplerDescriptor.rAddressMode          = MTLSamplerAddressModeClampToEdge;
+    samplerDescriptor.normalizedCoordinates = YES;
+    samplerDescriptor.lodMinClamp           = 0;
+    samplerDescriptor.lodMaxClamp           = FLT_MAX;
+    
+    _m_QuadSampler = [_m_Device newSamplerStateWithDescriptor:samplerDescriptor];
+    
+    samplerDescriptor = nil;
+    
+    if (!_m_QuadSampler)
+    {
+        NSLog(@"Error(%@): Failed creating a sampler state descriptor!", self.class);
+        
+        return NO;
+    }
+    
+    MTLDepthStencilDescriptor *depthStateDesc = [MTLDepthStencilDescriptor new];
+    
+    if(!depthStateDesc)
+    {
+        NSLog(@"Error(%@): Failed creating a depth stencil descriptor!", self.class);
+        
+        return NO;
+    }
+    
+    depthStateDesc.depthCompareFunction = MTLCompareFunctionAlways;
+    depthStateDesc.depthWriteEnabled    = YES;
+    
+    _m_DepthState = [_m_Device newDepthStencilStateWithDescriptor:depthStateDesc];
+    
+    depthStateDesc = nil;
+    
+    if(!_m_DepthState)
+    {
+        NSLog(@"Error(%@): Failed creating a depth stencil state descriptor!", self.class);
         
         return NO;
     }
@@ -257,6 +498,28 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
+- (id <MTLTexture>)_gaussTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> gaussTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!gaussTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new gauss texture!", self.class);
+            
+            return nil;
+        }
+        
+        return gaussTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
+        
+        return nil;
+    }
+}
+
 #pragma mark - Voting setup
 //  The voting kernel visualizes the actual voting process.
 //  It draws lines from the edge point to a possible center point.
@@ -304,6 +567,28 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
+- (id <MTLTexture>)_votingTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> votingTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!votingTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new voting texture!", self.class);
+            
+            return nil;
+        }
+        
+        return votingTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
+        
+        return nil;
+    }
+}
+
 #pragma mark - Hough space setup
 - (id <MTLFunction>)_houghSpaceFunction
 {
@@ -344,6 +629,28 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     } else
     {
         NSLog(@"Error(%@): No device!", self.class);
+        
+        return nil;
+    }
+}
+
+- (id <MTLTexture>)_houghSpaceTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> houghSpaceTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!houghSpaceTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new hough space texture!", self.class);
+            
+            return nil;
+        }
+        
+        return houghSpaceTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
         
         return nil;
     }
@@ -395,6 +702,28 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
+- (id <MTLTexture>)_phiTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> phiTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!phiTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new phi texture!", self.class);
+            
+            return nil;
+        }
+        
+        return phiTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
+        
+        return nil;
+    }
+}
+
 #pragma mark - Canny setup
 //  The canny kernel only draws the detected edges
 - (id <MTLFunction>)_cannyFunction
@@ -436,6 +765,28 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     } else
     {
         NSLog(@"Error(%@): No device!", self.class);
+        
+        return nil;
+    }
+}
+
+- (id <MTLTexture>)_cannyTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> cannyTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!cannyTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new canny texture!", self.class);
+            
+            return nil;
+        }
+        
+        return cannyTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
         
         return nil;
     }
@@ -487,10 +838,31 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
+- (id <MTLTexture>)_modelTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> modelTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!modelTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new model texture!", self.class);
+            
+            return nil;
+        }
+        
+        return modelTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
+        
+        return nil;
+    }
+}
+
 #pragma mark - View controller
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
 }
 
