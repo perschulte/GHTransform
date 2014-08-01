@@ -62,7 +62,7 @@
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     
-    if (colorSpace)
+    if (!colorSpace)
     {
         image = nil;
         NSLog(@"Error(%@): Could not create colorspace", self.class);

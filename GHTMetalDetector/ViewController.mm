@@ -44,15 +44,15 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 @property (nonatomic, strong) MTLRenderPassDescriptor      *m_RenderPassDescriptor;
 
 //App control
-@property (nonatomic, strong) CADisplayLink                *m_timer;
-@property (nonatomic, assign) dispatch_semaphore_t          m_InflightSemaphore;
+@property (nonatomic, strong) CADisplayLink                *m_Timer;
+@property (nonatomic, strong) dispatch_semaphore_t          m_InflightSemaphore;
 
 //Quad setup
 @property (nonatomic, strong) id <MTLRenderPipelineState>   m_PipelineState;
 @property (nonatomic, strong) id <MTLSamplerState>          m_QuadSampler;
 @property (nonatomic, strong) GHTQuad                      *m_Quad;             //Quad representation
 @property (nonatomic, assign) CGSize                        m_QuadTextureSize;  //Dimensions
-@property (nonatomic, assign) simd::float4                  m_QuadTransform;
+@property (nonatomic, assign) simd::float4x4                m_QuadTransform;
 @property (nonatomic, strong) id <MTLBuffer>                m_QuadTransformBuffer;
 
 //Textures
@@ -135,12 +135,12 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     // Framebuffer/drawable
     _m_RenderingLayer       = nil;
     
-    if(_m_timer)
+    if(_m_Timer)
     {
-        [_m_timer invalidate];
+        [_m_Timer invalidate];
     }
     
-    _m_timer = nil;
+    _m_Timer = nil;
 }
 
 - (void)dealloc
@@ -223,6 +223,10 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
     
     _m_QuadTransformBuffer.label = @"TransformBuffer";
+    
+    // Set the compute kernel's workgroup size and count
+    _m_WorkgroupSize    = MTLSizeMake(1, 1, 1);
+    _m_LocalCount       = MTLSizeMake(_m_QuadTextureSize.width, _m_QuadTextureSize.height, 1);
     
     return YES;
 }
@@ -318,20 +322,20 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     //Gauss kernel
     _m_GaussKernel          = [self _gaussKernelWithError:error];
     
-    //Voting kernel
-    _m_VotingKernel         = [self _votingKernelWithError:error];
-    
-    //Hough space kernel
-    _m_HoughSpaceKernel     = [self _houghSpaceKernelWithError:error];
-    
+//    //Voting kernel
+//    _m_VotingKernel         = [self _votingKernelWithError:error];
+//    
+//    //Hough space kernel
+//    _m_HoughSpaceKernel     = [self _houghSpaceKernelWithError:error];
+//    
     //Phi kernel
     _m_PhiKernel            = [self _phiKernelWithError:error];
-    
-    //Canny kernel
-    _m_CannyKernel          = [self _cannyKernelWithError:error];
-    
-    //Model kernel
-    _m_ModelKernel          = [self _modelKernelWithError:error];
+//
+//    //Canny kernel
+//    _m_CannyKernel          = [self _cannyKernelWithError:error];
+//    
+//    //Model kernel
+//    _m_ModelKernel          = [self _modelKernelWithError:error];
     
     // load the fragment program into the library
     id <MTLFunction> fragment_program = [_m_ShaderLibrary newFunctionWithName:@"texturedQuadFragment"];
@@ -384,10 +388,6 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         
         return NO;
     }
-    
-    // Set the compute kernel's workgroup size and count
-    _m_WorkgroupSize    = MTLSizeMake(1, 1, 1);
-    _m_LocalCount       = MTLSizeMake(_m_QuadTextureSize.width, _m_QuadTextureSize.height, 1);
     
     return YES;
 }
@@ -517,6 +517,21 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         NSLog(@"Error(%@): No texture descriptor!", self.class);
         
         return nil;
+    }
+}
+
+- (void)_addGaussKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
+                           inputTexture:(id <MTLTexture>)inTexture
+                          outputTexture:(id <MTLTexture>)outTexture
+{
+    if (computeEncoder)
+    {
+        [computeEncoder setComputePipelineState:_m_GaussKernel];
+        [computeEncoder setTexture:inTexture atIndex:0];
+        [computeEncoder setTexture:outTexture atIndex:1];
+        [computeEncoder dispatchThreadgroups:_m_LocalCount
+                       threadsPerThreadgroup:_m_WorkgroupSize];
+        [computeEncoder executeBarrier];
     }
 }
 
@@ -724,6 +739,19 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
+- (void)_addPhiKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder inputTexture:(id <MTLTexture>)inTexture outputTexture:(id <MTLTexture>)outTexture
+{
+    if (computeEncoder)
+    {
+        [computeEncoder setComputePipelineState:_m_PhiKernel];
+        [computeEncoder setTexture:inTexture atIndex:0];
+        [computeEncoder setTexture:outTexture atIndex:1];
+        [computeEncoder dispatchThreadgroups:_m_LocalCount
+                       threadsPerThreadgroup:_m_WorkgroupSize];
+        [computeEncoder executeBarrier];
+    }
+}
+
 #pragma mark - Canny setup
 //  The canny kernel only draws the detected edges
 - (id <MTLFunction>)_cannyFunction
@@ -860,10 +888,327 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-#pragma mark - View controller
-- (void)viewDidLoad {
-    [super viewDidLoad];
+#pragma mark - Start up
+
+- (BOOL)_start
+{
+    //  Default orientation is unknown
+    _interfaceOrientation = UIInterfaceOrientationUnknown;
     
+    //  grab the CAALayer created by the nib
+    GHTView *renderView = (GHTView *)self.view;
+    _m_RenderingLayer = (CAMetalLayer *)renderView.layer;
+    
+    if (!_m_RenderingLayer)
+    {
+        NSLog(@"Error(%@): Failed acquring Core Animation Metal layer!", self.class);
+        
+        return NO;
+    }
+    
+    _m_RenderingLayer.presentsWithTransaction = NO;
+    _m_RenderingLayer.drawsAsynchronously = YES;
+    
+    CGRect viewBounds = _m_RenderingLayer.frame;
+    
+    _m_Viewport = {0.0f, 0.0f, viewBounds.size.width, viewBounds.size.height, 0.0f, 1.0f};
+    
+    //  set a background color to make sure the layer appears
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    
+    if (colorspace != NULL)
+    {
+        CGFloat components[4] = {0.5, 0.5, 0.5, 1.0};
+        
+        CGColorRef grayColor = CGColorCreate(colorspace, components);
+        
+        if (grayColor != NULL)
+        {
+            _m_RenderingLayer.backgroundColor = grayColor;
+            
+            CFRelease(grayColor);
+        }
+        
+        CFRelease(colorspace);
+    }
+    
+    //  find a usable Device
+    _m_Device = MTLCreateSystemDefaultDevice();
+    
+    if (!_m_Device)
+    {
+        NSLog(@"Error(%@): Failed creating a default system device!", self.class);
+        
+        return NO;
+    }
+    
+    // set the device on the rendering layer and provide a pixel format
+    _m_RenderingLayer.device          = _m_Device;
+    _m_RenderingLayer.pixelFormat     = MTLPixelFormatBGRA8Unorm;
+    _m_RenderingLayer.framebufferOnly = YES;
+    
+    // create a new command queue
+    _m_CommandQueue = [_m_Device newCommandQueue];
+    
+    if(!_m_CommandQueue)
+    {
+        NSLog(@"Error(%@): Failed creating a new command queue!", self.class);
+        
+        return NO;
+    }
+    
+    // Create a viewing matrix derived from an eye point, a reference point
+    // indicating the center of the scene, and an up vector.
+    simd::float3 eye    = {0.0, 0.0, 0.0};
+    simd::float3 center = {0.0, 0.0, 1.0};
+    simd::float3 up     = {0.0, 1.0, 0.0};
+    
+    _m_LookAt = AAPL::lookAt(eye, center, up);
+    
+    // Translate the object in (x,y,z) space.
+    _m_Translate = AAPL::translate(0.0f, 0.0f, 0.15f);
+    
+    // Set the default clear color
+    _m_ClearColor = MTLClearColorMake(0.0f, 0.0f, 0.0f, 1.0f);
+    
+    return YES;
+}
+
+- (void)_transform
+{
+    // Based on the device orientation, set the angle in degrees
+    // between a plane which passes through the camera position
+    // and the top of your screen and another plane which passes
+    // through the camera position and the bottom of your screen.
+    float dangle = 0.0f;
+    
+    switch(_interfaceOrientation)
+    {
+        case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
+            dangle   = kUIInterfaceOrientationLandscapeAngle;
+            break;
+            
+        case UIInterfaceOrientationPortrait:
+        case UIInterfaceOrientationPortraitUpsideDown:
+        default:
+            dangle   = kUIInterfaceOrientationPortraitAngle;
+            break;
+    }
+    
+    // Describes a tranformation matrix that produces a perspective projection
+    const float near   = kPrespectiveNear;
+    const float far    = kPrespectiveFar;
+    const float rangle = AAPL::radians(dangle);
+    const float length = near * tanf(rangle);
+    
+    float right   = length/_m_Quad.aspect;
+    float left    = -right;
+    float top     = length;
+    float bottom  = -top;
+    
+    simd::float4x4 perspective = AAPL::frustum_oc(left, right, bottom, top, near, far);
+    
+    // Create a viewing matrix derived from an eye point, a reference point
+    // indicating the center of the scene, and an up vector.
+    _m_QuadTransform = _m_LookAt * _m_Translate;
+    
+    // Create a linear _transformation matrix
+    _m_QuadTransform = perspective * _m_QuadTransform;
+    
+    // Update the buffer associated with the linear _transformation matrix
+    float *transform = (float *)[_m_QuadTransformBuffer contents];
+    
+    memcpy(transform, &_m_QuadTransform, kSizeSIMDFloat4x4);
+}
+
+- (void)_update
+{
+    // To correctly compute the aspect ration determine the device
+    // interface orientation.
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    
+    // Update the quad and linear _transformation matrices, if and
+    // only if, the device orientation is changed.
+    if(_interfaceOrientation != orientation)
+    {
+        // Update the device orientation
+        _interfaceOrientation = orientation;
+        
+        // Get the bounds for the current rendering layer
+        _m_Quad.bounds = _m_RenderingLayer.frame;
+        
+        // Update the quad bounds
+        [_m_Quad update];
+        
+        // Determine the linear transformation matrix
+        [self _transform];
+    }
+}
+
+#pragma mark - Rendering
+
+- (MTLRenderPassDescriptor *)_renderPassDescriptorWithDrawable:(id <MTLTexture>)texture
+{
+    _m_RenderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
+    
+    if(!_m_RenderPassDescriptor)
+    {
+        NSLog(@"Error(%@): Failed acquiring a render pass descriptor!", self.class);
+        
+        return nil;
+    }
+    
+    _m_RenderPassDescriptor.colorAttachments[0].texture     = texture;
+    _m_RenderPassDescriptor.colorAttachments[0].loadAction  = MTLLoadActionClear;
+    _m_RenderPassDescriptor.colorAttachments[0].clearColor  = _m_ClearColor;
+    _m_RenderPassDescriptor.colorAttachments[0].storeAction = MTLStoreActionStore;
+    
+    return _m_RenderPassDescriptor;
+}
+
+- (void)_compute:(id <MTLCommandBuffer>)commandBuffer
+{
+    id <MTLComputeCommandEncoder> computeEncoder = [commandBuffer computeCommandEncoder];
+    
+    if(computeEncoder)
+    {
+        [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
+        [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_OutTexture];
+        
+        [computeEncoder endEncoding];
+        
+        computeEncoder = nil;
+    }
+}
+
+- (void)_encode:(id <MTLRenderCommandEncoder>)renderEncoder
+{
+    // set context state with the render encoder
+    [renderEncoder setViewport:_m_Viewport];
+    [renderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
+    [renderEncoder setDepthStencilState:_m_DepthState];
+    
+    [renderEncoder setRenderPipelineState:_m_PipelineState];
+    
+    [renderEncoder setVertexBuffer:_m_QuadTransformBuffer
+                            offset:0
+                           atIndex:2 ];
+    
+    [renderEncoder setFragmentTexture:_m_OutTexture
+                              atIndex:0];
+    
+    [renderEncoder setFragmentSamplerState:_m_QuadSampler
+                                   atIndex:0];
+    
+    // Encode quad vertex and texture coordinate buffers
+    [_m_Quad encode:renderEncoder];
+    
+    // tell the render context we want to draw our primitives
+    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle
+                      vertexStart:0
+                      vertexCount:6
+                    instanceCount:1];
+    
+    [renderEncoder endEncoding];
+}
+
+- (void)_render:(id <MTLCommandBuffer>)commandBuffer
+       drawable:(id <CAMetalDrawable>)drawable
+{
+    // obtain the renderpass descriptor for this drawable
+    MTLRenderPassDescriptor *renderPassDescriptor = [self _renderPassDescriptorWithDrawable:drawable.texture];
+    
+    if(renderPassDescriptor)
+    {
+        // Get a render encoder
+        id <MTLRenderCommandEncoder>  renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
+        
+        renderPassDescriptor = nil;
+        
+        // Encode into a renderer
+        [self _encode:renderEncoder];
+        
+        // Discard renderer and framebuffer
+        renderEncoder = nil;
+    }
+}
+
+- (void)_dispatch:(id <MTLCommandBuffer>)commandBuffer
+{
+    __block dispatch_semaphore_t dispatchSemaphore = _m_InflightSemaphore;
+    
+    [commandBuffer addCompletedHandler:^(id <MTLCommandBuffer> cmdb)
+    {
+        dispatch_semaphore_signal(dispatchSemaphore);
+    }];
+}
+
+- (void)_commit:(id <MTLCommandBuffer>)commandBuffer
+       drawable:(id <CAMetalDrawable>)drawable
+{
+    [commandBuffer presentDrawable:drawable];
+    [commandBuffer commit];
+}
+
+- (void)render:(id)sender
+{
+    dispatch_semaphore_wait(_m_InflightSemaphore, DISPATCH_TIME_FOREVER);
+    
+    [self _update];
+    
+    id <CAMetalDrawable>  drawable      = [_m_RenderingLayer nextDrawable];
+    id <MTLCommandBuffer> commandBuffer = [_m_CommandQueue commandBuffer];
+    
+    [self _compute:commandBuffer];
+    
+    [self _render:commandBuffer
+         drawable:drawable];
+    
+    [self _dispatch:commandBuffer];
+    
+    [self _commit:commandBuffer
+         drawable:drawable];
+    
+    commandBuffer = nil;
+    drawable      = nil;
+}
+
+#pragma mark - View controller
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    if(![self _start])
+    {
+        NSLog(@"Error(%@): Failed initializations!", self.class);
+        
+        [self _cleanUp];
+        
+        exit(-1);
+    }
+    else
+    {
+        if(![self _setupWithTextureName:@"001IN_TestImage_32x32_black" extension:@"png"])
+        {
+            NSLog(@"Error(%@): Failed creating assets!", self.class);
+            
+            [self _cleanUp];
+            
+            exit(-1);
+        }
+        else
+        {
+            _m_InflightSemaphore = dispatch_semaphore_create(kInFlightCommandBuffers);
+            
+            // as the timer fires, we render
+            _m_Timer = [CADisplayLink displayLinkWithTarget:self
+                                                   selector:@selector(render:)];
+            
+            [_m_Timer addToRunLoop:[NSRunLoop mainRunLoop]
+                          forMode:NSDefaultRunLoopMode];
+            
+        }
+    }
 }
 
 - (void) didReceiveMemoryWarning

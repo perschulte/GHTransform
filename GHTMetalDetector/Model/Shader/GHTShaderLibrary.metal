@@ -138,8 +138,7 @@ float gaussianBlur(float sample5x5[5][5])
             result += sample5x5[i][j] * gaussianMask[i][j];
         }
     }
-
-    //result = dot(sample5x5, gaussianMask);
+    
     return result/115.0;
 }
 
@@ -191,54 +190,40 @@ kernel void gaussianBlurKernel(texture2d<float, access::read>    inTexture   [[ 
     outTexture.write(outColor, gid);
 }
 
-//Depreciated
-kernel void sobelAngleFilter(texture2d<float, access::read>    inTexture   [[ texture(0) ]],
-                             texture2d<float, access::write>   outTexture  [[ texture(1) ]],
-                             uint2                             gid         [[ thread_position_in_grid ]])
+kernel void phiKernel(texture2d<float, access::read>    inTexture   [[texture(0)]],
+                      texture2d<float, access::write>   outTexture  [[texture(1)]],
+                      uint2                             gid         [[thread_position_in_grid]])
 {
-    float thresholdFlag;
-    float phi = 0.0;
-    float4 outColor;
+    float4  outColor;
+    float   phi = 0.0;
     
-    float sobelsample3x3[9];
+    float sobelsample3x3[3][3];
     
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 3; i++)
     {
-        uint2 offset = uint2(i % 3 - 1, (i / 3) -1);
-        uint2 coords = uint2(gid[0] - offset[0], gid[1] - offset[1]);
-        float gray     = dot(inTexture.read(coords).rgb, kRec709Luma);
-        sobelsample3x3[i] = gray;
+        for (int j = 0; j < 3; j++)
+        {
+            uint2 offset = uint2(i - 1, j - 1);
+            uint2 coords = uint2(gid[0] - offset[0], gid[1] - offset[1]);
+            sobelsample3x3[i][j] = dot(inTexture.read(coords).rgb, kRec709Luma);
+        }
     }
     
-    //Horizontal
-    //  1  2  1  |   p0 p1 p2
-    //  0  0  0  |   p3 p4 p5
-    // -1 -2 -1  |   p6 p7 p8
-    float horizEdge = sobelsample3x3[2] + (2.0*sobelsample3x3[5]) + sobelsample3x3[8] -
-    (sobelsample3x3[0] + (2.0*sobelsample3x3[3]) + sobelsample3x3[6]);
+    float verticalEdge = vSobel(sobelsample3x3);
     
-    //Vertical
-    // 1 0 -1  |   p0 p1 p2
-    // 2 0 -2  |   p3 p4 p5
-    // 1 0 -1  |   p6 p7 p8
-    float vertEdge = sobelsample3x3[0] + (2.0*sobelsample3x3[1]) + sobelsample3x3[2] -
-    (sobelsample3x3[6] + (2.0*sobelsample3x3[7]) + sobelsample3x3[8]);
+    float horizontalEdge = hSobel(sobelsample3x3);
     
-    if (sqrt((horizEdge * horizEdge) +
-             (vertEdge * vertEdge)) > THRESHOLD)
+    if (sqrt((horizontalEdge * horizontalEdge) +
+             (verticalEdge * verticalEdge)) > THRESHOLD)
     {
-        thresholdFlag = 1.0;
-        phi = atanTwo(vertEdge, horizEdge);
+        phi = atanTwo(verticalEdge, horizontalEdge);
         phi = (phi / PI_2);
     } else
     {
-        thresholdFlag = 0.0;
         phi = 0.0;
     }
     
-    //    float edge = sqrt((horizEdge * horizEdge) + (vertEdge * vertEdge));
     outColor = float4(phi, phi, phi, 1.0);
     
     outTexture.write(outColor, gid);
 }
-

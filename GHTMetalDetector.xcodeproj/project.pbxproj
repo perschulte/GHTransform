@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB4D7603198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7602198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png */; };
 		CBA321041986485400EF0260 /* GHTTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA321031986485400EF0260 /* GHTTexture.m */; };
 		CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBA32106198650B200EF0260 /* AAPLTransforms.mm */; };
 		CBA321091986510300EF0260 /* GHTShaderLibrary.metal in Sources */ = {isa = PBXBuildFile; fileRef = CBA321081986510300EF0260 /* GHTShaderLibrary.metal */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB4D7602198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 001IN_TestImage_32x32_black.png; path = ../../Resources/Images/Input/001IN_TestImage_32x32_black.png; sourceTree = "<group>"; };
 		CBA321021986485400EF0260 /* GHTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTTexture.h; path = "Model/Texture Loader/GHTTexture.h"; sourceTree = "<group>"; };
 		CBA321031986485400EF0260 /* GHTTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTTexture.m; path = "Model/Texture Loader/GHTTexture.m"; sourceTree = "<group>"; };
 		CBA32105198650B200EF0260 /* AAPLTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAPLTransforms.h; path = Model/Math/AAPLTransforms.h; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		CBB921A21986302600CA65F4 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				CB4D7602198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBD70162198629F500032EC3 /* Main.storyboard in Resources */,
+				CB4D7603198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png in Resources */,
 				CBD70164198629F500032EC3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
