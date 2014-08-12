@@ -13,12 +13,18 @@
 #include <metal_math>
 #include <metal_texture>
 
-using namespace metal;
+#include "GHTSharedTypes.h"
 
+using namespace metal;
 
 #define PI_2    6.28318530717958647692
 #define PI      3.14159265358979323846
-#define THRESHOLD 0.4
+#define THRESHOLD 0.1
+
+// Colors
+static constant simd::float4 targetMarkerColor = {204.0/255.0,     91.0/255.0,     172.0/255.0,    1.0};
+static constant simd::float4 sourceMarkerColor = {169.0/255.0,     246.0/255.0,    199.0/255.0,    1.0};
+static constant simd::float4 defaultColor      = {58.0/255.0,      84.0/255.0,     93.0/255.0,     1.0};
 
 //Grayscale constant
 constant float3 kRec709Luma = float3(0.2126, 0.7152, 0.0722);
@@ -28,6 +34,14 @@ float atanTwo(float y, float x);
 float gaussianBlur(float sample5x5[5][5]);
 float vSobel(float sample3x3[3][3]);
 float hSobel(float sample3x3[3][3]);
+void line(int x1,int y1,int x2,int y2, texture2d<float, access::write> outTexture);
+
+static constant GHT::Model referenceTable[4] = {
+    {1,     -8.0,   0.0,    3.14159,    1.0, 4, uint2(0, 0)},
+    {2,     8.0,    0.0,    0.0,        1.0, 4, uint2(0, 0)},
+    {3,     0.0,    8.0,    1.57079,    1.0, 4, uint2(0, 0)},
+    {4,     0.0,    -8.0,   4.712388,   1.0, 4, uint2(0, 0)},
+};
 
 //Gaussian mask
 //  2   4   5   4   2
@@ -42,7 +56,6 @@ static constant float gaussianMask[5][5] = {
     {2.0, 4.0, 5.0, 4.0, 2.0},
     {2.0, 4.0, 5.0, 4.0, 2.0}
 };
-
 
 //vertical sobel
 // 1 0 -1
@@ -223,7 +236,42 @@ kernel void phiKernel(texture2d<float, access::read>    inTexture   [[texture(0)
         phi = 0.0;
     }
     
-    outColor = float4(phi, phi, phi, 1.0);
+    outColor = float4(phi, phi, phi, phi);
     
     outTexture.write(outColor, gid);
+}
+
+kernel void votingKernel(texture2d<float, access::read>     inTexture   [[texture(0)]],
+                         texture2d<float, access::write>    outTexture  [[texture(1)]],
+                         constant GHT::Model               *modelBuffer [[buffer(0)]],
+                         uint2                              gid         [[thread_position_in_grid]])
+{
+    float4 inColor = inTexture.read(gid);
+    
+    if(inColor[3] > 0.00)
+    {
+        for(int i = 0; i < modelBuffer[0].length; i++)
+        {
+            if(inColor[0] * PI_2 > modelBuffer[i].phi - 0.1 && inColor[0] * PI_2 < modelBuffer[i].phi + 0.1)
+            {
+                if (gid[0] - modelBuffer[i].x >= 0 && gid[0] - modelBuffer[i].x < 32 && gid[1] - modelBuffer[i].y >= 0 && gid[1] - modelBuffer[i].y < 32)
+                {
+                    outTexture.write({1.0, 0.0, 0.0, 1.0}, gid);
+                    outTexture.write({0.0, 1.0, 0.0, 1.0}, uint2(gid[0] - modelBuffer[i].x, gid[1] - modelBuffer[i].y));
+                    outTexture.write({0.0, 1.0, 0.0, 1.0}, uint2(gid[0] + modelBuffer[i].x, gid[1] + modelBuffer[i].y));
+                }
+            }
+        }
+    } else
+    {
+        outTexture.write(defaultColor, gid);
+    }
+    
+}
+
+kernel void houghSpaceKernel(texture2d<float, access::read>     inTexture           [[texture(0)]],
+                             constant GHT::HoughSpaceCell      *houghSpaceBuffer    [[buffer(0)]],
+                             uint2                              gid                 [[thread_position_in_grid]])
+{
+    
 }

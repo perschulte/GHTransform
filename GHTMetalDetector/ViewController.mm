@@ -18,6 +18,7 @@
 #import "GHTQuad.h"
 #import "GHTTexture.h"
 #import "GHTView.h"
+#import "GHTModel.h"
 
 static const float kUIInterfaceOrientationLandscapeAngle = 35.0f;
 static const float kUIInterfaceOrientationPortraitAngle  = 50.0f;
@@ -75,6 +76,8 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_CannyKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_ModelKernel;
 
+//Model
+@property (nonatomic, strong) GHTModel                     *m_Model;
 // Viewing matrix is derived from an eye point, a reference point
 // indicating the center of the scene, and an up vector.
 @property (nonatomic, assign) simd::float4x4                m_LookAt;
@@ -132,6 +135,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     _m_CannyKernel          = nil;
     _m_ModelKernel          = nil;
 
+    //Model
+    _m_Model                = nil;
+    
     // Framebuffer/drawable
     _m_RenderingLayer       = nil;
     
@@ -168,6 +174,13 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     if (!isAcquired)
     {
         NSLog(@"Error(%@): Failed creating an input 2d Texture!", self.class);
+        
+        return NO;
+    }
+    
+    if (![self _setupModelWithResourceName:@"001MOD__TestImage_32x32_black" extension:@"gmf"])
+    {
+        NSLog(@"Error(%@): Failed setting up a model", self.class);
         
         return NO;
     }
@@ -322,8 +335,8 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     //Gauss kernel
     _m_GaussKernel          = [self _gaussKernelWithError:error];
     
-//    //Voting kernel
-//    _m_VotingKernel         = [self _votingKernelWithError:error];
+    //Voting kernel
+    _m_VotingKernel         = [self _votingKernelWithError:error];
 //    
 //    //Hough space kernel
 //    _m_HoughSpaceKernel     = [self _houghSpaceKernelWithError:error];
@@ -601,6 +614,24 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         NSLog(@"Error(%@): No texture descriptor!", self.class);
         
         return nil;
+    }
+}
+
+- (void)_addVotingKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
+                            inputTexture:(id <MTLTexture>)inTexture
+                           outputTexture:(id <MTLTexture>)outTexture
+                             modelBuffer:(GHTModel *)modelBuffer
+{
+    if (computeEncoder)
+    {
+        [computeEncoder setComputePipelineState:_m_VotingKernel];
+        [computeEncoder setTexture:inTexture atIndex:0];
+        [computeEncoder setTexture:outTexture atIndex:1];
+        [computeEncoder setBuffer:modelBuffer.buffer offset:modelBuffer.offset atIndex:0];
+        
+        [computeEncoder dispatchThreadgroups:_m_LocalCount
+                       threadsPerThreadgroup:_m_WorkgroupSize];
+        [computeEncoder executeBarrier];
     }
 }
 
@@ -888,6 +919,22 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
+- (BOOL)_setupModelWithResourceName:(NSString *)resourceName extension:(NSString *)extensionString
+{
+    _m_Model = [[GHTModel alloc] initWithResourceName:resourceName extension:extensionString];
+    
+    BOOL isAcquired = [_m_Model finalize:_m_Device];
+    
+    if (!isAcquired)
+    {
+        NSLog(@"Error(%@): Failed creating a model!", self.class);
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 #pragma mark - Start up
 
 - (BOOL)_start
@@ -1074,8 +1121,8 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     if(computeEncoder)
     {
         [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
-        [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_OutTexture];
-        
+        [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_PhiTexture];
+        [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_Model];
         [computeEncoder endEncoding];
         
         computeEncoder = nil;

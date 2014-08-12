@@ -110,7 +110,7 @@
     
     _target     = textureDescriptor.textureType;
     _texture    = [device newTextureWithDescriptor:textureDescriptor];
-    
+
     textureDescriptor = nil;
     
     if(!_texture)
