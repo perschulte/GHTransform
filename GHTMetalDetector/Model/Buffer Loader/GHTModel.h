@@ -21,5 +21,5 @@
 - (instancetype)initWithResourceName:(NSString *)name extension:(NSString *)extension;
 
 - (BOOL)finalize:(id<MTLDevice>)device;
-
+- (void)debugPrintModelArrayFromBuffer;
 @end

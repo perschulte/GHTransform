@@ -27,12 +27,13 @@ namespace GHT
         simd::uint2 size;
     };
     
-    struct HoughSpaceCell
+    typedef struct
     {
         float       accumulatedVotes;
         int         numVotes;
-        simd::uint2 size;   //size of the original
-    };
+        simd::uint2 size;   //Hough space size
+        simd::uint2 quantization;   //Hough space size
+    } HoughSpaceCell;
 }
 
 #endif // cplusplus

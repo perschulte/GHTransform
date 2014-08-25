@@ -35,6 +35,7 @@ float gaussianBlur(float sample5x5[5][5]);
 float vSobel(float sample3x3[3][3]);
 float hSobel(float sample3x3[3][3]);
 void line(int x1,int y1,int x2,int y2, texture2d<float, access::write> outTexture);
+uint2 cellIndex(uint2 size, uint2 quantization, uint2 coords);
 
 static constant GHT::Model referenceTable[4] = {
     {1,     -8.0,   0.0,    3.14159,    1.0, 4, uint2(0, 0)},
@@ -181,6 +182,12 @@ fragment half4 texturedQuadFragment(FragmentInput     inFrag    [[ stage_in ]],
 }
 
 #pragma mark - Kernel
+kernel void sourceKernel(texture2d<float, access::read>    inTexture   [[ texture(0) ]],
+                         texture2d<float, access::write>   outTexture  [[ texture(1) ]],
+                         uint2                             gid         [[ thread_position_in_grid ]])
+{
+    outTexture.write(inTexture.read(gid), gid);
+}
 
 kernel void gaussianBlurKernel(texture2d<float, access::read>    inTexture   [[ texture(0) ]],
                                texture2d<float, access::write>   outTexture  [[ texture(1) ]],
@@ -237,22 +244,22 @@ kernel void phiKernel(texture2d<float, access::read>    inTexture   [[texture(0)
     }
     
     outColor = float4(phi, phi, phi, phi);
-    
     outTexture.write(outColor, gid);
+    
 }
 
 kernel void votingKernel(texture2d<float, access::read>     inTexture   [[texture(0)]],
                          texture2d<float, access::write>    outTexture  [[texture(1)]],
-                         constant GHT::Model               *modelBuffer [[buffer(0)]],
+                         device GHT::Model                 *modelBuffer [[buffer(0)]],
                          uint2                              gid         [[thread_position_in_grid]])
 {
     float4 inColor = inTexture.read(gid);
-    
+    modelBuffer[0].x = 8.8;
     if(inColor[3] > 0.00)
     {
         for(int i = 0; i < modelBuffer[0].length; i++)
         {
-            if(inColor[0] * PI_2 > modelBuffer[i].phi - 0.1 && inColor[0] * PI_2 < modelBuffer[i].phi + 0.1)
+            if(inColor[0] * PI_2 > modelBuffer[i].phi - 0.08 && inColor[0] * PI_2 < modelBuffer[i].phi + 0.08)
             {
                 if (gid[0] - modelBuffer[i].x >= 0 && gid[0] - modelBuffer[i].x < 32 && gid[1] - modelBuffer[i].y >= 0 && gid[1] - modelBuffer[i].y < 32)
                 {
@@ -264,14 +271,76 @@ kernel void votingKernel(texture2d<float, access::read>     inTexture   [[textur
         }
     } else
     {
-        outTexture.write(defaultColor, gid);
+        //outTexture.write(defaultColor, gid);
     }
-    
 }
 
 kernel void houghSpaceKernel(texture2d<float, access::read>     inTexture           [[texture(0)]],
-                             constant GHT::HoughSpaceCell      *houghSpaceBuffer    [[buffer(0)]],
+                             device GHT::HoughSpaceCell        *houghSpaceBuffer    [[buffer(0)]],
+                             constant GHT::Model               *modelBuffer         [[buffer(1)]],
                              uint2                              gid                 [[thread_position_in_grid]])
 {
+    float4  inColor             = inTexture.read(gid);
+    uint2   quantization        = houghSpaceBuffer[0].quantization;
+    uint    numberOfModelPoints = modelBuffer[0].length;
+    uint2   resourceSize        = houghSpaceBuffer[0].size;
+    uint2   houghSpaceCoords;
     
+    uint pos;
+
+    houghSpaceCoords = uint2(gid[0]/quantization[0],
+                             gid[1]/quantization[1]);
+    pos = houghSpaceCoords[1] * houghSpaceBuffer[0].size[0] + houghSpaceCoords[0];
+    
+    houghSpaceBuffer[0].numVotes++;
+//    houghSpaceBuffer[pos].accumulatedVotes += 1.0;
+    
+    //is this pixel relevant (alpha channel > 0)
+//    if(inColor[3] > 0.0)
+//    {
+//        //compare with each model point
+//        for(int i = 0; i < numberOfModelPoints; i++)
+//        {
+//            GHT::Model model = modelBuffer[i];
+//            //is the models phi equal to or close to this phi angle
+//            if(inColor[0] * PI_2 > model.phi - 0.1 && inColor[0] * PI_2 < model.phi + 0.1)
+//            {
+//                // are the new points within the resource's borders
+//                if (gid[0] - model.x >= 0 && gid[0] - model.x < resourceSize[0] && gid[1] - model.y >= 0 && gid[1] - model.y < resourceSize[1])
+//                {
+//                    //vote
+//                    uint2 houghSpaceCoords; //= uint2((gid[0] - modelBuffer[i].x)/houghSpaceBuffer[0].quantization[0],
+////                                                   (gid[1] - modelBuffer[i].y)/houghSpaceBuffer[0].quantization[1]);
+//                    uint pos; // = houghSpaceCoords[1] * houghSpaceBuffer[0].size[1] + houghSpaceCoords[0];
+////                    houghSpaceBuffer[pos].numVotes++;
+////                    houghSpaceBuffer[pos].accumulatedVotes += modelBuffer[i].weight;
+//                    
+//                    houghSpaceCoords = uint2((gid[0] + modelBuffer[i].x)/quantization[0],
+//                                                   (gid[1] + modelBuffer[i].y)/quantization[1]);
+//                    pos = houghSpaceCoords[1] * houghSpaceBuffer[0].size[0] + houghSpaceCoords[0];
+//                    houghSpaceBuffer[pos].numVotes++;
+//                    houghSpaceBuffer[pos].accumulatedVotes += modelBuffer[i].weight;
+//                    
+//                }
+//            }
+//        }
+//    }
+}
+
+kernel void normalizeKernel(constant GHT::HoughSpaceCell   *houghSpaceBuffer            [[buffer(0)]],
+                            constant float                 *maxAccumulatedVotesBuffer   [[buffer(1)]],
+                            texture2d<float, access::write> outTexture                  [[texture(0)]],
+                            uint2                           gid                         [[thread_position_in_grid]])
+{
+    /*  Each point on the texture will be processed. The uint2 will give us the current coordinates.
+     *  We need to calculate the equivalent position in the houghSpace.
+     *  gid = (1,2) -> houghSpaceCoords = (0,1) with quantization = (2,2)
+     */
+    uint2 quantization = houghSpaceBuffer[0].quantization;
+    uint2 houghSpaceCoords = uint2(gid[0]/quantization[0], gid[1]/quantization[1]);
+    uint pos = houghSpaceCoords[1] * houghSpaceBuffer[0].size[0] + houghSpaceCoords[0];
+    
+    float4 outColor = float4(houghSpaceBuffer[pos].accumulatedVotes / maxAccumulatedVotesBuffer[0], houghSpaceBuffer[pos].accumulatedVotes / maxAccumulatedVotesBuffer[0], houghSpaceBuffer[pos].accumulatedVotes / maxAccumulatedVotesBuffer[0], 1.0);
+    
+    outTexture.write(outColor, gid);
 }

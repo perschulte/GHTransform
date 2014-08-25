@@ -19,9 +19,10 @@
 #import "GHTTexture.h"
 #import "GHTView.h"
 #import "GHTModel.h"
+#import "GHTHoughSpace.h"
 
 static const float kUIInterfaceOrientationLandscapeAngle = 35.0f;
-static const float kUIInterfaceOrientationPortraitAngle  = 50.0f;
+static const float kUIInterfaceOrientationPortraitAngle  = 35.0f;
 
 static const float kPrespectiveNear = 0.1f;
 static const float kPrespectiveFar  = 100.0f;
@@ -36,6 +37,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 @interface ViewController ()
 
 @property (nonatomic, assign) UIInterfaceOrientation interfaceOrientation;
+@property (nonatomic, assign) uint state;
+@property (nonatomic, strong) AVCaptureSession *session;
+@property (nonatomic, assign) CVMetalTextureCacheRef textureCacheRef;
 
 //Render globals
 @property (nonatomic, strong) id <MTLDevice>                m_Device;
@@ -61,6 +65,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 @property (nonatomic, strong) id <MTLTexture>               m_OutTexture;
 
 //Filter textures
+@property (nonatomic, strong) id <MTLTexture>               m_SourceTexture;
 @property (nonatomic, strong) id <MTLTexture>               m_GaussianTexture;
 @property (nonatomic, strong) id <MTLTexture>               m_VotingTexture;
 @property (nonatomic, strong) id <MTLTexture>               m_HoughSpaceTexture;
@@ -69,15 +74,21 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 @property (nonatomic, strong) id <MTLTexture>           	m_ModelTexture;
 
 //Filter kernels
+@property (nonatomic, strong) id <MTLComputePipelineState>  m_SourceKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_GaussKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_VotingKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_HoughSpaceKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_PhiKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_CannyKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_ModelKernel;
+@property (nonatomic, strong) id <MTLComputePipelineState>  m_NormalizeKernel;
 
 //Model
 @property (nonatomic, strong) GHTModel                     *m_Model;
+
+//HoughSpace
+@property (nonatomic, strong) GHTHoughSpace                *m_HoughSpace;
+
 // Viewing matrix is derived from an eye point, a reference point
 // indicating the center of the scene, and an up vector.
 @property (nonatomic, assign) simd::float4x4                m_LookAt;
@@ -120,6 +131,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     _m_OutTexture           = nil;
     
     //Filter textures
+    _m_SourceTexture        = nil;
     _m_GaussianTexture      = nil;
     _m_VotingTexture        = nil;
     _m_HoughSpaceTexture    = nil;
@@ -128,15 +140,20 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     _m_ModelTexture         = nil;
     
     //Filter kernels
+    _m_SourceKernel         = nil;
     _m_GaussKernel          = nil;
     _m_VotingKernel         = nil;
     _m_HoughSpaceKernel     = nil;
     _m_PhiKernel            = nil;
     _m_CannyKernel          = nil;
     _m_ModelKernel          = nil;
+    _m_NormalizeKernel      = nil;
 
     //Model
     _m_Model                = nil;
+    
+    //HoughSpace
+    _m_HoughSpace           = nil;
     
     // Framebuffer/drawable
     _m_RenderingLayer       = nil;
@@ -178,9 +195,16 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         return NO;
     }
     
-    if (![self _setupModelWithResourceName:@"001MOD__TestImage_32x32_black" extension:@"gmf"])
+    if (![self _setupModelBufferWithResourceName:@"001MOD__TestImage_32x32_black" extension:@"gmf"])
     {
-        NSLog(@"Error(%@): Failed setting up a model", self.class);
+        NSLog(@"Error(%@): Failed setting up a model buffer", self.class);
+        
+        return NO;
+    }
+    
+    if (![self _setupHoughSpaceBufferWithResourceSize:{_m_InTexture.width, _m_InTexture.height}])
+    {
+        NSLog(@"Error(%@): Failed setting up a hough space buffer", self.class);
         
         return NO;
     }
@@ -253,6 +277,15 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         if (!_m_OutTexture)
         {
             NSLog(@"Error(%@): Failed creating an output 2d texture", self.class);
+            
+            return NO;
+        }
+        
+        _m_SourceTexture        = [self _gaussTextureWithTextureDescriptor:textureDescriptor];
+        
+        if (!_m_SourceTexture)
+        {
+            NSLog(@"Error(%@): Failed creating an output 2d source texture", self.class);
             
             return NO;
         }
@@ -332,15 +365,18 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         return NO;
     }
     
+    //Source kernel
+    _m_SourceKernel         = [self _sourceKernelWithError:error];
+    
     //Gauss kernel
     _m_GaussKernel          = [self _gaussKernelWithError:error];
     
     //Voting kernel
     _m_VotingKernel         = [self _votingKernelWithError:error];
-//    
-//    //Hough space kernel
-//    _m_HoughSpaceKernel     = [self _houghSpaceKernelWithError:error];
-//    
+    
+    //Hough space kernel
+    _m_HoughSpaceKernel     = [self _houghSpaceKernelWithError:error];
+    
     //Phi kernel
     _m_PhiKernel            = [self _phiKernelWithError:error];
 //
@@ -349,6 +385,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 //    
 //    //Model kernel
 //    _m_ModelKernel          = [self _modelKernelWithError:error];
+    
+    //Normalize Kernel
+    _m_NormalizeKernel      = [self _normalizeKernelWithError:error];
     
     // load the fragment program into the library
     id <MTLFunction> fragment_program = [_m_ShaderLibrary newFunctionWithName:@"texturedQuadFragment"];
@@ -463,6 +502,88 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
     
     return YES;
+}
+
+#pragma mark - source setup
+- (id <MTLFunction>)_sourceFunction
+{
+    if (_m_ShaderLibrary)
+    {
+        id <MTLFunction> sourceFunction = [_m_ShaderLibrary newFunctionWithName:@"sourceKernel"];
+        
+        if(!sourceFunction)
+        {
+            NSLog(@"Error(%@): Failed creating a new source function!", self.class);
+            
+            return nil;
+        }
+        
+        return sourceFunction;
+    } else
+    {
+        NSLog(@"Error(%@): No shader library!", self.class);
+        return nil;
+    }
+}
+
+- (id <MTLComputePipelineState>)_sourceKernelWithError:(NSError **)error
+{
+    if (_m_Device)
+    {
+        id <MTLComputePipelineState> sourceKernel = [_m_Device newComputePipelineStateWithFunction:[self _sourceFunction]
+                                                                                             error:error];
+        
+        if(!sourceKernel)
+        {
+            NSLog(@"Error(%@): Failed creating a new source kernel!", self.class);
+            
+            return nil;
+        }
+        
+        return sourceKernel;
+    } else
+    {
+        NSLog(@"Error(%@): No device!", self.class);
+        
+        return nil;
+    }
+}
+
+- (id <MTLTexture>)_sourceTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> sourceTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!sourceTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new source texture!", self.class);
+            
+            return nil;
+        }
+        
+        return sourceTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
+        
+        return nil;
+    }
+}
+
+- (void)_addSourceKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
+                            inputTexture:(id <MTLTexture>)inTexture
+                           outputTexture:(id <MTLTexture>)outTexture
+{
+    if (computeEncoder)
+    {
+        [computeEncoder setComputePipelineState:_m_SourceKernel];
+        [computeEncoder setTexture:inTexture atIndex:0];
+        [computeEncoder setTexture:outTexture atIndex:1];
+        [computeEncoder dispatchThreadgroups:_m_LocalCount
+                       threadsPerThreadgroup:_m_WorkgroupSize];
+        [computeEncoder executeBarrier];
+    }
 }
 
 #pragma mark - Gauss setup
@@ -641,7 +762,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     if (_m_ShaderLibrary)
     {
         id <MTLFunction> houghSpaceFunction = [_m_ShaderLibrary newFunctionWithName:@"houghSpaceKernel"];
-        
+
         if(!houghSpaceFunction)
         {
             NSLog(@"Error(%@): Failed creating a new hough space function!", self.class);
@@ -700,6 +821,39 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         
         return nil;
     }
+}
+
+- (void)_addHoughSpaceKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
+                                inputTexture:(id <MTLTexture>)inTexture
+                            houghSpaceBuffer:(GHTHoughSpace *)houghSpaceBuffer
+                                 modelBuffer:(GHTModel *)modelBuffer
+{
+    if (computeEncoder)
+    {
+        [computeEncoder setComputePipelineState:_m_HoughSpaceKernel];
+        [computeEncoder setTexture:inTexture atIndex:0];
+        [computeEncoder setBuffer:houghSpaceBuffer.buffer offset:houghSpaceBuffer.offset atIndex:0];
+        [computeEncoder setBuffer:modelBuffer.buffer offset:modelBuffer.offset atIndex:1];
+        [computeEncoder dispatchThreadgroups:_m_LocalCount
+                       threadsPerThreadgroup:_m_WorkgroupSize];
+        [computeEncoder executeBarrier];
+    }
+}
+
+- (BOOL)_setupHoughSpaceBufferWithResourceSize:(simd::uint2)size
+{
+    _m_HoughSpace = [[GHTHoughSpace alloc] initWithImageSize:size quantization:{1,1}];
+    
+    BOOL isAcquired = [_m_HoughSpace finalize:_m_Device];
+    
+    if (!isAcquired)
+    {
+        NSLog(@"Error(%@): Failed creating a hough space buffer!", self.class);
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Phi setup
@@ -770,7 +924,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (void)_addPhiKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder inputTexture:(id <MTLTexture>)inTexture outputTexture:(id <MTLTexture>)outTexture
+- (void)_addPhiKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
+                         inputTexture:(id <MTLTexture>)inTexture
+                        outputTexture:(id <MTLTexture>)outTexture
 {
     if (computeEncoder)
     {
@@ -919,7 +1075,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (BOOL)_setupModelWithResourceName:(NSString *)resourceName extension:(NSString *)extensionString
+- (BOOL)_setupModelBufferWithResourceName:(NSString *)resourceName extension:(NSString *)extensionString
 {
     _m_Model = [[GHTModel alloc] initWithResourceName:resourceName extension:extensionString];
     
@@ -927,12 +1083,94 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     
     if (!isAcquired)
     {
-        NSLog(@"Error(%@): Failed creating a model!", self.class);
+        NSLog(@"Error(%@): Failed creating a model buffer!", self.class);
         
         return NO;
     }
     
     return YES;
+}
+
+#pragma mark - Normalize kernel setup
+- (id <MTLFunction>)_normalizeFunction
+{
+    if (_m_ShaderLibrary)
+    {
+        id <MTLFunction> normalizeFunction = [_m_ShaderLibrary newFunctionWithName:@"normalizeKernel"];
+        
+        if(!normalizeFunction)
+        {
+            NSLog(@"Error(%@): Failed creating a new normalize function!", self.class);
+            
+            return nil;
+        }
+        
+        return normalizeFunction;
+    } else
+    {
+        NSLog(@"Error(%@): No shader library!", self.class);
+        return nil;
+    }
+}
+- (id <MTLComputePipelineState>)_normalizeKernelWithError:(NSError **)error
+{
+    if (_m_Device)
+    {
+        id <MTLComputePipelineState> normalizeKernel = [_m_Device newComputePipelineStateWithFunction:[self _normalizeFunction]
+                                                                                                error:error];
+        
+        if(!normalizeKernel)
+        {
+            NSLog(@"Error(%@): Failed creating a new normalize kernel!", self.class);
+            
+            return nil;
+        }
+        
+        return normalizeKernel;
+    } else
+    {
+        NSLog(@"Error(%@): No device!", self.class);
+        
+        return nil;
+    }
+}
+
+- (id <MTLTexture>)_normalizeTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> normalizeTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!normalizeTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new normalize texture!", self.class);
+            
+            return nil;
+        }
+        
+        return normalizeTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
+        
+        return nil;
+    }
+}
+- (void)_addNormalizeKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
+                           houghSpaceBuffer:(GHTHoughSpace *)houghSpaceBuffer
+                              outputTexture:(id <MTLTexture>)outTexture
+{
+    if (computeEncoder)
+    {
+        [computeEncoder setComputePipelineState:_m_NormalizeKernel];
+        [computeEncoder setBuffer:houghSpaceBuffer.buffer offset:houghSpaceBuffer.offset atIndex:0];
+        [computeEncoder setBuffer:houghSpaceBuffer.maxVotesBuffer offset:0 atIndex:1];
+        [computeEncoder setTexture:outTexture atIndex:0];
+        
+        [computeEncoder dispatchThreadgroups:_m_LocalCount
+                       threadsPerThreadgroup:_m_WorkgroupSize];
+        [computeEncoder executeBarrier];
+    }
 }
 
 #pragma mark - Start up
@@ -965,7 +1203,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     
     if (colorspace != NULL)
     {
-        CGFloat components[4] = {0.5, 0.5, 0.5, 1.0};
+        CGFloat components[4] = {0.0, 0.0, 0.0, 1.0};
         
         CGColorRef grayColor = CGColorCreate(colorspace, components);
         
@@ -1013,7 +1251,14 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     _m_LookAt = AAPL::lookAt(eye, center, up);
     
     // Translate the object in (x,y,z) space.
-    _m_Translate = AAPL::translate(0.0f, 0.0f, 0.15f);
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        _m_Translate = AAPL::translate(0.0f, 0.0f, 0.1f);
+    } else
+    {
+        _m_Translate = AAPL::translate(0.0f, 0.0f, 0.15f);
+    }
+    
     
     // Set the default clear color
     _m_ClearColor = MTLClearColorMake(0.0f, 0.0f, 0.0f, 1.0f);
@@ -1120,9 +1365,40 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     
     if(computeEncoder)
     {
-        [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
-        [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_PhiTexture];
-        [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_Model];
+        switch (_state)
+        {
+            case 0:
+                [self _addSourceKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_OutTexture];
+                break;
+            case 1:
+                [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_OutTexture];
+                break;
+            case 2:
+                [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
+                [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_OutTexture];
+                break;
+            case 3:
+                [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
+                [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_PhiTexture];
+                [self _addHoughSpaceKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture houghSpaceBuffer:_m_HoughSpace modelBuffer:_m_Model];
+                //[self _addNormalizeKernelToComputeEncoder:computeEncoder houghSpaceBuffer:_m_HoughSpace outputTexture:_m_OutTexture];
+                [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_Model];
+                break;
+            case 4:
+                [self _addSourceKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_OutTexture];
+                [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
+                [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_PhiTexture];
+                [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_Model];
+                break;
+
+            default:
+                [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
+                [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_PhiTexture];
+                [self _addHoughSpaceKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture houghSpaceBuffer:_m_HoughSpace modelBuffer:_m_Model];
+                //[self _addNormalizeKernelToComputeEncoder:computeEncoder houghSpaceBuffer:_m_HoughSpace outputTexture:_m_OutTexture];
+                [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_Model];
+                break;
+        }
         [computeEncoder endEncoding];
         
         computeEncoder = nil;
@@ -1214,6 +1490,10 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     
     [self _dispatch:commandBuffer];
     
+    [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer>){
+       [_m_HoughSpace finalizeHoughSpaceMaxWithDevice:_m_Device];
+    }];
+    
     [self _commit:commandBuffer
          drawable:drawable];
     
@@ -1225,6 +1505,11 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //This needs to be redone
+    _state = 0;
+    //
+    
     if(![self _start])
     {
         NSLog(@"Error(%@): Failed initializations!", self.class);
@@ -1245,6 +1530,17 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         }
         else
         {
+            //Initial update
+            // Get the bounds for the current rendering layer
+            _m_Quad.bounds = _m_RenderingLayer.frame;
+            
+            // Update the quad bounds
+            [_m_Quad update];
+            
+            // Determine the linear transformation matrix
+            [self _transform];
+            
+            //Setup the timer
             _m_InflightSemaphore = dispatch_semaphore_create(kInFlightCommandBuffers);
             
             // as the timer fires, we render
@@ -1252,10 +1548,73 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
                                                    selector:@selector(render:)];
             
             [_m_Timer addToRunLoop:[NSRunLoop mainRunLoop]
-                          forMode:NSDefaultRunLoopMode];
+                           forMode:NSDefaultRunLoopMode];
+            
+            [self _setupVideoCapture];
+            
+            UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+            [self.view addGestureRecognizer:tapRecognizer];
             
         }
     }
+    
+    
+}
+
+#pragma mark - gestures
+- (void)handleTap:(UIGestureRecognizer *)gestureRecognizer
+{
+    _state = (_state + 1) % 5;
+}
+
+#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
+{
+    CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    //CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, _textureCacheRef, pixelBuffer, NULL, MTLPixelFormatBGRA8Unorm, 32, 32, 0, &_m_SourceTexture);
+}
+
+- (void)_setupVideoCapture
+{
+    AVCaptureSession *session = [[AVCaptureSession alloc] init];
+    if ([session canSetSessionPreset:AVCaptureSessionPreset640x480])
+    {
+        session.sessionPreset = AVCaptureSessionPreset640x480;
+        
+    } else
+    {
+        // Handle the failure.
+    }
+   
+    
+    [session beginConfiguration];
+    AVCaptureDevice *device = [AVCaptureDevice
+                               defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    NSError *error;
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device
+                                                                        error:&error];
+    if ([session canAddInput:input])
+    {
+        [session addInput:input];
+    }
+    
+    AVCaptureVideoDataOutput *videoOutput = [[AVCaptureVideoDataOutput alloc] init];
+    [videoOutput setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
+    [videoOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+    [session addOutput:videoOutput];
+    
+    // Remove an existing capture device.
+    // Add a new capture device.
+    // Reset the preset.
+    [session commitConfiguration];
+    
+    [session startRunning];
+    
+//    CVMetalTextureCacheCreate(kCFAllocatorDefault, NULL, _m_Device, NULL, _textureCacheRef);
+    
+    _session = session;
 }
 
 - (void) didReceiveMemoryWarning

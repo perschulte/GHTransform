@@ -16,6 +16,9 @@
 		CB4D7635198E54E7002D1C9D /* 001MOD__TestImage_32x32_black.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */; };
 		CB4D763C198E6D41002D1C9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBD70160198629F500032EC3 /* Main.storyboard */; };
 		CB4E4C5D198FC891003B32C5 /* GHTSharedTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4E4C5C198FC891003B32C5 /* GHTSharedTypes.h */; };
+		CB62A00719AB81EE00C595E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00619AB81EE00C595E7 /* AVFoundation.framework */; };
+		CB62A00919AB8B2200C595E7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00819AB8B2200C595E7 /* CoreMedia.framework */; };
+		CB62A00B19AB8D5A00C595E7 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */; };
 		CBA321041986485400EF0260 /* GHTTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA321031986485400EF0260 /* GHTTexture.m */; };
 		CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBA32106198650B200EF0260 /* AAPLTransforms.mm */; };
 		CBA321091986510300EF0260 /* GHTShaderLibrary.metal in Sources */ = {isa = PBXBuildFile; fileRef = CBA321081986510300EF0260 /* GHTShaderLibrary.metal */; };
@@ -49,6 +52,9 @@
 		CB4D7622198CD85A002D1C9D /* GHTIcon60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GHTIcon60.png; path = ../../Resources/Logo/GHTIcon60.png; sourceTree = "<group>"; };
 		CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = 001MOD__TestImage_32x32_black.gmf; path = ../../Resources/Models/001MOD__TestImage_32x32_black.gmf; sourceTree = "<group>"; };
 		CB4E4C5C198FC891003B32C5 /* GHTSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTSharedTypes.h; path = Model/Shader/GHTSharedTypes.h; sourceTree = "<group>"; };
+		CB62A00619AB81EE00C595E7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		CB62A00819AB8B2200C595E7 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		CBA321021986485400EF0260 /* GHTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTTexture.h; path = "Model/Texture Loader/GHTTexture.h"; sourceTree = "<group>"; };
 		CBA321031986485400EF0260 /* GHTTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTTexture.m; path = "Model/Texture Loader/GHTTexture.m"; sourceTree = "<group>"; };
 		CBA32105198650B200EF0260 /* AAPLTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAPLTransforms.h; path = Model/Math/AAPLTransforms.h; sourceTree = "<group>"; };
@@ -79,6 +85,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB62A00B19AB8D5A00C595E7 /* CoreVideo.framework in Frameworks */,
+				CB62A00919AB8B2200C595E7 /* CoreMedia.framework in Frameworks */,
+				CB62A00719AB81EE00C595E7 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +236,9 @@
 		CBB921B01986332900CA65F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */,
+				CB62A00819AB8B2200C595E7 /* CoreMedia.framework */,
+				CB62A00619AB81EE00C595E7 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

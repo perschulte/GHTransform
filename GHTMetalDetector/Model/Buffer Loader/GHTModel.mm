@@ -100,4 +100,13 @@
         NSLog(@"%d", modelArray[i].referenceId);
     }
 }
+
+- (void)debugPrintModelArrayFromBuffer
+{
+    GHT::Model *model = (GHT::Model *)[_buffer contents];
+    for (int i = 0 ; i < model[0].length; i++)
+    {
+        NSLog(@"%f", model[i].x);
+    }
+}
 @end

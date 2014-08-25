@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreMedia/CoreMedia.h>
+#import <CoreVideo/CoreVideo.h>
+#import <CoreVideo/CVMetalTextureCache.h>
+#import <CoreVideo/CVMetalTexture.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate>
 
 
 @end
