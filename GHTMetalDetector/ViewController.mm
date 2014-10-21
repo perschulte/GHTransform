@@ -20,6 +20,7 @@
 #import "GHTView.h"
 #import "GHTModel.h"
 #import "GHTHoughSpace.h"
+#import "GHTVideo.h"
 
 static const float kUIInterfaceOrientationLandscapeAngle = 35.0f;
 static const float kUIInterfaceOrientationPortraitAngle  = 35.0f;
@@ -38,8 +39,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 @property (nonatomic, assign) UIInterfaceOrientation interfaceOrientation;
 @property (nonatomic, assign) uint state;
-@property (nonatomic, strong) AVCaptureSession *session;
-@property (nonatomic, assign) CVMetalTextureCacheRef textureCacheRef;
+
 
 //Render globals
 @property (nonatomic, strong) id <MTLDevice>                m_Device;
@@ -62,6 +62,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 //Textures
 @property (nonatomic, strong) GHTTexture                   *m_InTexture;
+@property (nonatomic, strong) GHTVideo                     *m_VideoTexture;
 @property (nonatomic, strong) id <MTLTexture>               m_OutTexture;
 
 //Filter textures
@@ -185,12 +186,22 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
     
     _m_InTexture = [[GHTTexture alloc] initWithResourceName:textureNameString extension:extensionString];
-    
+
     BOOL isAcquired = [_m_InTexture finalize:_m_Device];
     
     if (!isAcquired)
     {
         NSLog(@"Error(%@): Failed creating an input 2d Texture!", self.class);
+        
+        return NO;
+    }
+
+    _m_VideoTexture = [[GHTVideo alloc] init];
+    isAcquired = [_m_VideoTexture finalize:_m_Device];
+    
+    if (!isAcquired)
+    {
+        NSLog(@"Error(%@): Failed creating an video 2d Texture!", self.class);
         
         return NO;
     }
@@ -356,6 +367,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 - (BOOL)_setupKernelsAndPipeLineStateWithError:(NSError **)error
 {
+
     _m_ShaderLibrary = [_m_Device newDefaultLibrary];
     
     if (!_m_ShaderLibrary)
@@ -419,7 +431,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         return NO;
     } // if
 
-    quadPipelineStateDescriptor.depthAttachmentPixelFormat      = MTLPixelFormatDepth32Float;
+    quadPipelineStateDescriptor.depthAttachmentPixelFormat      = MTLPixelFormatInvalid;
     quadPipelineStateDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
     
     quadPipelineStateDescriptor.sampleCount      = 1;
@@ -582,7 +594,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         [computeEncoder setTexture:outTexture atIndex:1];
         [computeEncoder dispatchThreadgroups:_m_LocalCount
                        threadsPerThreadgroup:_m_WorkgroupSize];
-        [computeEncoder executeBarrier];
+        //[computeEncoder ];
     }
 }
 
@@ -665,7 +677,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         [computeEncoder setTexture:outTexture atIndex:1];
         [computeEncoder dispatchThreadgroups:_m_LocalCount
                        threadsPerThreadgroup:_m_WorkgroupSize];
-        [computeEncoder executeBarrier];
+        //[computeEncoder executeBarrier];
     }
 }
 
@@ -752,7 +764,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         
         [computeEncoder dispatchThreadgroups:_m_LocalCount
                        threadsPerThreadgroup:_m_WorkgroupSize];
-        [computeEncoder executeBarrier];
+        //[computeEncoder executeBarrier];
     }
 }
 
@@ -836,7 +848,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         [computeEncoder setBuffer:modelBuffer.buffer offset:modelBuffer.offset atIndex:1];
         [computeEncoder dispatchThreadgroups:_m_LocalCount
                        threadsPerThreadgroup:_m_WorkgroupSize];
-        [computeEncoder executeBarrier];
+        //[computeEncoder executeBarrier];
     }
 }
 
@@ -935,7 +947,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         [computeEncoder setTexture:outTexture atIndex:1];
         [computeEncoder dispatchThreadgroups:_m_LocalCount
                        threadsPerThreadgroup:_m_WorkgroupSize];
-        [computeEncoder executeBarrier];
+        //[computeEncoder executeBarrier];
     }
 }
 
@@ -1169,7 +1181,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         
         [computeEncoder dispatchThreadgroups:_m_LocalCount
                        threadsPerThreadgroup:_m_WorkgroupSize];
-        [computeEncoder executeBarrier];
+        //[computeEncoder executeBarrier];
     }
 }
 
@@ -1368,7 +1380,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         switch (_state)
         {
             case 0:
-                [self _addSourceKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_OutTexture];
+                [self _addSourceKernelToComputeEncoder:computeEncoder inputTexture:_m_VideoTexture.texture outputTexture:_m_OutTexture];
                 break;
             case 1:
                 [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_OutTexture];
@@ -1390,6 +1402,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
                 [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_PhiTexture];
                 [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_Model];
                 break;
+            case 5:
+                
+                break;
 
             default:
                 [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
@@ -1399,6 +1414,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
                 [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_Model];
                 break;
         }
+        
         [computeEncoder endEncoding];
         
         computeEncoder = nil;
@@ -1550,7 +1566,6 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
             [_m_Timer addToRunLoop:[NSRunLoop mainRunLoop]
                            forMode:NSDefaultRunLoopMode];
             
-            [self _setupVideoCapture];
             
             UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
             [self.view addGestureRecognizer:tapRecognizer];
@@ -1564,58 +1579,10 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 #pragma mark - gestures
 - (void)handleTap:(UIGestureRecognizer *)gestureRecognizer
 {
-    _state = (_state + 1) % 5;
+    _state = (_state + 1) % 6;
 }
 
-#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
-{
-    CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    //CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, _textureCacheRef, pixelBuffer, NULL, MTLPixelFormatBGRA8Unorm, 32, 32, 0, &_m_SourceTexture);
-}
-
-- (void)_setupVideoCapture
-{
-    AVCaptureSession *session = [[AVCaptureSession alloc] init];
-    if ([session canSetSessionPreset:AVCaptureSessionPreset640x480])
-    {
-        session.sessionPreset = AVCaptureSessionPreset640x480;
-        
-    } else
-    {
-        // Handle the failure.
-    }
-   
-    
-    [session beginConfiguration];
-    AVCaptureDevice *device = [AVCaptureDevice
-                               defaultDeviceWithMediaType:AVMediaTypeVideo];
-    
-    NSError *error;
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device
-                                                                        error:&error];
-    if ([session canAddInput:input])
-    {
-        [session addInput:input];
-    }
-    
-    AVCaptureVideoDataOutput *videoOutput = [[AVCaptureVideoDataOutput alloc] init];
-    [videoOutput setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
-    [videoOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
-    [session addOutput:videoOutput];
-    
-    // Remove an existing capture device.
-    // Add a new capture device.
-    // Reset the preset.
-    [session commitConfiguration];
-    
-    [session startRunning];
-    
-//    CVMetalTextureCacheCreate(kCFAllocatorDefault, NULL, _m_Device, NULL, _textureCacheRef);
-    
-    _session = session;
-}
 
 - (void) didReceiveMemoryWarning
 {

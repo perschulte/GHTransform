@@ -12,16 +12,18 @@
 		CB4D7623198CD85A002D1C9D /* GHTIcon29.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7620198CD85A002D1C9D /* GHTIcon29.png */; };
 		CB4D7624198CD85A002D1C9D /* GHTIcon40.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7621198CD85A002D1C9D /* GHTIcon40.png */; };
 		CB4D7625198CD85A002D1C9D /* GHTIcon60.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7622198CD85A002D1C9D /* GHTIcon60.png */; };
-		CB4D7634198E54D9002D1C9D /* GHTShaderLibrary.metal in Resources */ = {isa = PBXBuildFile; fileRef = CBA321081986510300EF0260 /* GHTShaderLibrary.metal */; };
 		CB4D7635198E54E7002D1C9D /* 001MOD__TestImage_32x32_black.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */; };
 		CB4D763C198E6D41002D1C9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBD70160198629F500032EC3 /* Main.storyboard */; };
-		CB4E4C5D198FC891003B32C5 /* GHTSharedTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4E4C5C198FC891003B32C5 /* GHTSharedTypes.h */; };
 		CB62A00719AB81EE00C595E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00619AB81EE00C595E7 /* AVFoundation.framework */; };
 		CB62A00919AB8B2200C595E7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00819AB8B2200C595E7 /* CoreMedia.framework */; };
 		CB62A00B19AB8D5A00C595E7 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */; };
+		CB66CCC519AC8A37004616EF /* GHTVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = CB66CCC319AC8A37004616EF /* GHTVideo.h */; };
+		CB66CCC619AC8A37004616EF /* GHTVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = CB66CCC419AC8A37004616EF /* GHTVideo.m */; };
+		CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
+		CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */; };
+		CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
 		CBA321041986485400EF0260 /* GHTTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA321031986485400EF0260 /* GHTTexture.m */; };
 		CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBA32106198650B200EF0260 /* AAPLTransforms.mm */; };
-		CBA321091986510300EF0260 /* GHTShaderLibrary.metal in Sources */ = {isa = PBXBuildFile; fileRef = CBA321081986510300EF0260 /* GHTShaderLibrary.metal */; };
 		CBA3210C1986725900EF0260 /* GHTView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA3210B1986725900EF0260 /* GHTView.m */; };
 		CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBB921BD1986375400CA65F4 /* GHTQuad.mm */; };
 		CBD70159198629F500032EC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD70158198629F500032EC3 /* main.m */; };
@@ -51,15 +53,17 @@
 		CB4D7621198CD85A002D1C9D /* GHTIcon40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GHTIcon40.png; path = ../../Resources/Logo/GHTIcon40.png; sourceTree = "<group>"; };
 		CB4D7622198CD85A002D1C9D /* GHTIcon60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GHTIcon60.png; path = ../../Resources/Logo/GHTIcon60.png; sourceTree = "<group>"; };
 		CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = 001MOD__TestImage_32x32_black.gmf; path = ../../Resources/Models/001MOD__TestImage_32x32_black.gmf; sourceTree = "<group>"; };
-		CB4E4C5C198FC891003B32C5 /* GHTSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTSharedTypes.h; path = Model/Shader/GHTSharedTypes.h; sourceTree = "<group>"; };
 		CB62A00619AB81EE00C595E7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		CB62A00819AB8B2200C595E7 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		CB66CCC319AC8A37004616EF /* GHTVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTVideo.h; path = "Model/Texture Loader/GHTVideo.h"; sourceTree = "<group>"; };
+		CB66CCC419AC8A37004616EF /* GHTVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTVideo.m; path = "Model/Texture Loader/GHTVideo.m"; sourceTree = "<group>"; };
+		CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GHTShaderLibrary.metal; sourceTree = "<group>"; };
+		CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTSharedTypes.h; sourceTree = "<group>"; };
 		CBA321021986485400EF0260 /* GHTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTTexture.h; path = "Model/Texture Loader/GHTTexture.h"; sourceTree = "<group>"; };
 		CBA321031986485400EF0260 /* GHTTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTTexture.m; path = "Model/Texture Loader/GHTTexture.m"; sourceTree = "<group>"; };
 		CBA32105198650B200EF0260 /* AAPLTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAPLTransforms.h; path = Model/Math/AAPLTransforms.h; sourceTree = "<group>"; };
 		CBA32106198650B200EF0260 /* AAPLTransforms.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AAPLTransforms.mm; path = Model/Math/AAPLTransforms.mm; sourceTree = "<group>"; };
-		CBA321081986510300EF0260 /* GHTShaderLibrary.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = GHTShaderLibrary.metal; path = Model/Shader/GHTShaderLibrary.metal; sourceTree = "<group>"; };
 		CBA3210A1986725900EF0260 /* GHTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTView.h; path = App/View/GHTView.h; sourceTree = "<group>"; };
 		CBA3210B1986725900EF0260 /* GHTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTView.m; path = App/View/GHTView.m; sourceTree = "<group>"; };
 		CBB921BC1986375400CA65F4 /* GHTQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTQuad.h; path = Model/Quad/GHTQuad.h; sourceTree = "<group>"; };
@@ -104,7 +108,7 @@
 		CB4D7604198CB477002D1C9D /* Buffer Loader */ = {
 			isa = PBXGroup;
 			children = (
-				CB4E4C5C198FC891003B32C5 /* GHTSharedTypes.h */,
+				CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */,
 				CB4D7605198CB4E0002D1C9D /* GHTModel.h */,
 				CB4D7606198CB4E0002D1C9D /* GHTModel.mm */,
 				CBEB0EA7199562F400EC9F51 /* GHTHoughSpace.h */,
@@ -178,7 +182,7 @@
 		CBB921A31986304D00CA65F4 /* Shader */ = {
 			isa = PBXGroup;
 			children = (
-				CBA321081986510300EF0260 /* GHTShaderLibrary.metal */,
+				CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */,
 			);
 			name = Shader;
 			sourceTree = "<group>";
@@ -218,6 +222,8 @@
 			children = (
 				CBA321021986485400EF0260 /* GHTTexture.h */,
 				CBA321031986485400EF0260 /* GHTTexture.m */,
+				CB66CCC319AC8A37004616EF /* GHTVideo.h */,
+				CB66CCC419AC8A37004616EF /* GHTVideo.m */,
 			);
 			name = "Texture Loader";
 			sourceTree = "<group>";
@@ -308,7 +314,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB4E4C5D198FC891003B32C5 /* GHTSharedTypes.h in Headers */,
+				CB66CCC519AC8A37004616EF /* GHTVideo.h in Headers */,
+				CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */,
 				CBEB0EA9199562F400EC9F51 /* GHTHoughSpace.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,9 +401,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */,
 				CB4D763C198E6D41002D1C9D /* Main.storyboard in Resources */,
 				CB4D7635198E54E7002D1C9D /* 001MOD__TestImage_32x32_black.gmf in Resources */,
-				CB4D7634198E54D9002D1C9D /* GHTShaderLibrary.metal in Resources */,
 				CB4D7603198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png in Resources */,
 				CB4D7625198CD85A002D1C9D /* GHTIcon60.png in Resources */,
 				CBD70164198629F500032EC3 /* Images.xcassets in Resources */,
@@ -420,10 +427,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */,
-				CBA321091986510300EF0260 /* GHTShaderLibrary.metal in Sources */,
+				CB66CCC619AC8A37004616EF /* GHTVideo.m in Sources */,
 				CBEB0EAA199562F400EC9F51 /* GHTHoughSpace.mm in Sources */,
 				CBA3210C1986725900EF0260 /* GHTView.m in Sources */,
 				CBD7015F198629F500032EC3 /* ViewController.mm in Sources */,
+				CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */,
 				CBD7015C198629F500032EC3 /* AppDelegate.m in Sources */,
 				CB4D7607198CB4E0002D1C9D /* GHTModel.mm in Sources */,
 				CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */,
