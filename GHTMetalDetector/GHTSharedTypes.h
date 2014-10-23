@@ -16,7 +16,7 @@
 
 namespace GHT
 {
-    struct Model
+    struct model
     {
         int         referenceId;
         float       x;
@@ -35,19 +35,23 @@ namespace GHT
         simd::uint2 quantization;   //Hough space size
     } HoughSpaceCell;
     
-    typedef struct
+    struct houghSpace
     {
-        simd::uint2 houghSpaceSize;
-        simd::uint2 houghSpaceQuantization;
-        int         houghSpaceLength;
-        
-        simd::uint2 sourceSize;
-        int         sourceLenght;
-        
-        simd::uint2 modelSize;
-        int         modelLenght;
-    } parameter;
+        float       accumulatedVotes;
+    };
     
+    struct parameter
+    {                                               // Example:
+        simd::uint2     houghSpaceSize;             // 4x4 cells
+        simd::uint2     houghSpaceQuantization;     // 2x2 points per cell
+        unsigned int    houghSpaceLength;           // 16 cells
+        
+        simd::uint2     sourceSize;                 // 8x8 pixel source image
+        unsigned int    sourceLength;               // 36 pixels
+        
+        simd::uint2     modelSize;                  
+        unsigned int    modelLength;
+    };
 }
 
 #endif // cplusplus

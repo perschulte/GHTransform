@@ -21,6 +21,7 @@
 #import "GHTModel.h"
 #import "GHTHoughSpace.h"
 #import "GHTVideo.h"
+#import "GHTParameter.h"
 
 static const float kUIInterfaceOrientationLandscapeAngle = 35.0f;
 static const float kUIInterfaceOrientationPortraitAngle  = 35.0f;
@@ -79,16 +80,22 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_GaussKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_VotingKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_HoughSpaceKernel;
+@property (nonatomic, strong) id <MTLComputePipelineState>  m_HoughSpaceKernelV2;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_PhiKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_CannyKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_ModelKernel;
 @property (nonatomic, strong) id <MTLComputePipelineState>  m_NormalizeKernel;
 
-//Model
+//Model Buffer A
 @property (nonatomic, strong) GHTModel                     *m_Model;
+//Model Buffer B
+@property (nonatomic, strong) GHTModel                     *m_ModelB;
 
-//HoughSpace
+//HoughSpace Buffer
 @property (nonatomic, strong) GHTHoughSpace                *m_HoughSpace;
+
+//Parameter Buffer
+@property (nonatomic, strong) GHTParameter                 *m_Parameter;
 
 // Viewing matrix is derived from an eye point, a reference point
 // indicating the center of the scene, and an up vector.
@@ -145,16 +152,20 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     _m_GaussKernel          = nil;
     _m_VotingKernel         = nil;
     _m_HoughSpaceKernel     = nil;
+    _m_HoughSpaceKernelV2   = nil;
     _m_PhiKernel            = nil;
     _m_CannyKernel          = nil;
     _m_ModelKernel          = nil;
     _m_NormalizeKernel      = nil;
 
-    //Model
+    //Model Buffer
     _m_Model                = nil;
     
-    //HoughSpace
+    //HoughSpace Buffer
     _m_HoughSpace           = nil;
+    
+    //Parameter Buffer
+    _m_Parameter            = nil;
     
     // Framebuffer/drawable
     _m_RenderingLayer       = nil;
@@ -208,12 +219,26 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     
     if (![self _setupModelBufferWithResourceName:@"001MOD__TestImage_32x32_black" extension:@"gmf"])
     {
-        NSLog(@"Error(%@): Failed setting up a model buffer", self.class);
+        NSLog(@"Error(%@): Failed setting up a model A buffer", self.class);
         
         return NO;
     }
     
     if (![self _setupHoughSpaceBufferWithResourceSize:{_m_InTexture.width, _m_InTexture.height}])
+    {
+        NSLog(@"Error(%@): Failed setting up a hough space buffer", self.class);
+        
+        return NO;
+    }
+    
+    if (![self _setupHoughSpaceV2BufferWithResourceSize:{_m_InTexture.width, _m_InTexture.height}])
+    {
+        NSLog(@"Error(%@): Failed setting up a hough space buffer", self.class);
+        
+        return NO;
+    }
+    
+    if (![self _setupParameterBufferWithImageSize:{_m_InTexture.width, _m_InTexture.height} quantization:{1,1} modelSize:{0,0} numberOfModelPoints:_m_Model.length])
     {
         NSLog(@"Error(%@): Failed setting up a hough space buffer", self.class);
         
@@ -389,6 +414,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     //Hough space kernel
     _m_HoughSpaceKernel     = [self _houghSpaceKernelWithError:error];
     
+    //Hough space kernel
+    _m_HoughSpaceKernelV2     = [self _houghSpaceKernelV2WithError:error];
+    
     //Phi kernel
     _m_PhiKernel            = [self _phiKernelWithError:error];
 //
@@ -509,6 +537,22 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     if(!_m_DepthState)
     {
         NSLog(@"Error(%@): Failed creating a depth stencil state descriptor!", self.class);
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)_setupParameterBufferWithImageSize:(simd::uint2)imageSize quantization:(simd::uint2)quantization modelSize:(simd::uint2)modelSize numberOfModelPoints:(unsigned int)modelLength
+{
+    _m_Parameter = [[GHTParameter alloc] initWithImageSize:imageSize quantization:quantization modelSize:modelSize numberOfModelPoints:modelLength];
+    
+    BOOL isAcquired = [_m_Parameter finalize:_m_Device];
+    
+    if (!isAcquired)
+    {
+        NSLog(@"Error(%@): Failed creating a parameter buffer!", self.class);
         
         return NO;
     }
@@ -761,6 +805,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         [computeEncoder setTexture:inTexture atIndex:0];
         [computeEncoder setTexture:outTexture atIndex:1];
         [computeEncoder setBuffer:modelBuffer.buffer offset:modelBuffer.offset atIndex:0];
+        [computeEncoder setBuffer:_m_Parameter.buffer offset:_m_Parameter.offset atIndex:1];
         
         [computeEncoder dispatchThreadgroups:_m_LocalCount
                        threadsPerThreadgroup:_m_WorkgroupSize];
@@ -844,8 +889,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     {
         [computeEncoder setComputePipelineState:_m_HoughSpaceKernel];
         [computeEncoder setTexture:inTexture atIndex:0];
-        [computeEncoder setBuffer:houghSpaceBuffer.buffer offset:houghSpaceBuffer.offset atIndex:0];
-        [computeEncoder setBuffer:modelBuffer.buffer offset:modelBuffer.offset atIndex:1];
+        [computeEncoder setBuffer:_m_Parameter.buffer offset:_m_Parameter.offset atIndex:0];
+        [computeEncoder setBuffer:houghSpaceBuffer.buffer offset:houghSpaceBuffer.offset atIndex:1];
+        [computeEncoder setBuffer:modelBuffer.buffer offset:modelBuffer.offset atIndex:2];
         [computeEncoder dispatchThreadgroups:_m_LocalCount
                        threadsPerThreadgroup:_m_WorkgroupSize];
         //[computeEncoder executeBarrier];
@@ -853,6 +899,107 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 
 - (BOOL)_setupHoughSpaceBufferWithResourceSize:(simd::uint2)size
+{
+    _m_HoughSpace = [[GHTHoughSpace alloc] initWithImageSize:size quantization:{1,1}];
+    
+    BOOL isAcquired = [_m_HoughSpace finalize:_m_Device];
+    
+    if (!isAcquired)
+    {
+        NSLog(@"Error(%@): Failed creating a hough space buffer!", self.class);
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - Hough space V2 setup
+- (id <MTLFunction>)_houghSpaceFunctionV2
+{
+    if (_m_ShaderLibrary)
+    {
+        id <MTLFunction> houghSpaceFunction = [_m_ShaderLibrary newFunctionWithName:@"houghSpaceKernelV2"];
+        
+        if(!houghSpaceFunction)
+        {
+            NSLog(@"Error(%@): Failed creating a new hough space function!", self.class);
+            
+            return nil;
+        }
+        
+        return houghSpaceFunction;
+    } else
+    {
+        NSLog(@"Error(%@): No shader library!", self.class);
+        return nil;
+    }
+}
+
+- (id <MTLComputePipelineState>)_houghSpaceKernelV2WithError:(NSError **)error
+{
+    if (_m_Device)
+    {
+        id <MTLComputePipelineState> houghSpaceKernel = [_m_Device newComputePipelineStateWithFunction:[self _houghSpaceFunctionV2]
+                                                                                                 error:error];
+        
+        if(!houghSpaceKernel)
+        {
+            NSLog(@"Error(%@): Failed creating a new houghSpace kernel!", self.class);
+            
+            return nil;
+        }
+        
+        return houghSpaceKernel;
+    } else
+    {
+        NSLog(@"Error(%@): No device!", self.class);
+        
+        return nil;
+    }
+}
+
+- (id <MTLTexture>)_houghSpaceV2TextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+{
+    if (textureDescriptor)
+    {
+        id <MTLTexture> houghSpaceTexture = [_m_Device newTextureWithDescriptor:textureDescriptor];
+        
+        if(!houghSpaceTexture)
+        {
+            NSLog(@"Error(%@): Failed creating a new hough space texture!", self.class);
+            
+            return nil;
+        }
+        
+        return houghSpaceTexture;
+    } else
+    {
+        NSLog(@"Error(%@): No texture descriptor!", self.class);
+        
+        return nil;
+    }
+}
+
+- (void)_addHoughSpaceKernelV2ToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
+                                inputTexture:(id <MTLTexture>)inTexture
+                            houghSpaceBuffer:(GHTHoughSpace *)houghSpaceBuffer
+                                 modelBuffer:(GHTModel *)modelBuffer
+                             parameterBuffer:(GHTParameter *)parameterBuffer
+{
+    if (computeEncoder)
+    {
+        [computeEncoder setComputePipelineState:_m_HoughSpaceKernel];
+        [computeEncoder setTexture:inTexture atIndex:0];
+        [computeEncoder setBuffer:parameterBuffer.buffer offset:parameterBuffer.offset atIndex:0];
+        [computeEncoder setBuffer:houghSpaceBuffer.buffer offset:houghSpaceBuffer.offset atIndex:1];
+        [computeEncoder setBuffer:modelBuffer.buffer offset:modelBuffer.offset atIndex:2];
+        [computeEncoder dispatchThreadgroups:_m_LocalCount
+                       threadsPerThreadgroup:_m_WorkgroupSize];
+    }
+}
+
+- (BOOL)_setupHoughSpaceV2BufferWithResourceSize:(simd::uint2)size
 {
     _m_HoughSpace = [[GHTHoughSpace alloc] initWithImageSize:size quantization:{1,1}];
     
@@ -1090,6 +1237,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 - (BOOL)_setupModelBufferWithResourceName:(NSString *)resourceName extension:(NSString *)extensionString
 {
     _m_Model = [[GHTModel alloc] initWithResourceName:resourceName extension:extensionString];
+    
+    _m_ModelB = [[GHTModel alloc] initWithResourceName:@"002MOD__TestImage_32x32_black" extension:extensionString];
+    [_m_ModelB finalize:_m_Device];
     
     BOOL isAcquired = [_m_Model finalize:_m_Device];
     
@@ -1403,6 +1553,10 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
                 [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_Model];
                 break;
             case 5:
+                [self _addSourceKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_OutTexture];
+                [self _addGaussKernelToComputeEncoder:computeEncoder inputTexture:_m_InTexture.texture outputTexture:_m_GaussianTexture];
+                [self _addPhiKernelToComputeEncoder:computeEncoder inputTexture:_m_GaussianTexture outputTexture:_m_PhiTexture];
+                [self _addVotingKernelToComputeEncoder:computeEncoder inputTexture:_m_PhiTexture outputTexture:_m_OutTexture modelBuffer:_m_ModelB];
                 
                 break;
 
@@ -1518,6 +1672,18 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 
 #pragma mark - View controller
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self)
+    {
+        
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -1572,8 +1738,6 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
             
         }
     }
-    
-    
 }
 
 #pragma mark - gestures

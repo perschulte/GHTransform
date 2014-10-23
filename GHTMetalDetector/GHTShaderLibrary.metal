@@ -37,12 +37,12 @@ float hSobel(float sample3x3[3][3]);
 void line(int x1,int y1,int x2,int y2, texture2d<float, access::write> outTexture);
 uint2 cellIndex(uint2 size, uint2 quantization, uint2 coords);
 
-static constant GHT::Model referenceTable[4] = {
-    {1,     -8.0,   0.0,    3.14159,    1.0, 4, uint2(0, 0)},
-    {2,     8.0,    0.0,    0.0,        1.0, 4, uint2(0, 0)},
-    {3,     0.0,    8.0,    1.57079,    1.0, 4, uint2(0, 0)},
-    {4,     0.0,    -8.0,   4.712388,   1.0, 4, uint2(0, 0)},
-};
+//static constant GHT::Model referenceTable[4] = {
+//    {1,     -8.0,   0.0,    3.14159,    1.0, 4, uint2(0, 0)},
+//    {2,     8.0,    0.0,    0.0,        1.0, 4, uint2(0, 0)},
+//    {3,     0.0,    8.0,    1.57079,    1.0, 4, uint2(0, 0)},
+//    {4,     0.0,    -8.0,   4.712388,   1.0, 4, uint2(0, 0)},
+//};
 
 //Gaussian mask
 //  2   4   5   4   2
@@ -248,15 +248,16 @@ kernel void phiKernel(texture2d<float, access::read>    inTexture   [[texture(0)
     
 }
 
-kernel void votingKernel(texture2d<float, access::read>     inTexture   [[texture(0)]],
-                         texture2d<float, access::write>    outTexture  [[texture(1)]],
-                         device GHT::Model                 *modelBuffer [[buffer(0)]],
-                         uint2                              gid         [[thread_position_in_grid]])
+kernel void votingKernel(texture2d<float, access::read>     inTexture       [[texture(0)]],
+                         texture2d<float, access::write>    outTexture      [[texture(1)]],
+                         device GHT::model                 *modelBuffer     [[buffer(0)]],
+                         device GHT::parameter             *parameterBuffer [[buffer(1)]],
+                         uint2                              gid             [[thread_position_in_grid]])
 {
     float4 inColor = inTexture.read(gid);
     if(inColor[3] > 0.00)
     {
-        for(int i = 0; i < modelBuffer[0].length; i++)
+        for(int i = 0; i < parameterBuffer[0].modelLength; i++)
         {
             if(inColor[0] * PI_2 > modelBuffer[i].phi - 0.08 && inColor[0] * PI_2 < modelBuffer[i].phi + 0.08)
             {
@@ -274,9 +275,27 @@ kernel void votingKernel(texture2d<float, access::read>     inTexture   [[textur
     }
 }
 
+kernel void houghSpaceKernelV2(texture2d<float, access::read>   inTexture   [[texture(0)]], // Kantenextrahierte und winkel bestimmte Textur
+                               device GHT::parameter            *parameterBuffer    [[buffer(0)]], //Parameter buffer
+                               device GHT::houghSpace           *houghSpaceBuffer   [[buffer(1)]], //Hough space buffer
+                               device GHT::model                *modelBuffer        [[buffer(2)]],
+                               uint2                            gid                 [[thread_position_in_grid]])
+{
+    uint2   houghSpaceQuantization  = parameterBuffer[0].houghSpaceQuantization;
+    uint2   houghSpaceSize          = parameterBuffer[0].houghSpaceSize;
+    uint    houghSpaceLength        = parameterBuffer[0].houghSpaceLength;
+
+    uint2   sourceSize              = parameterBuffer[0].sourceSize;
+    uint2   sourceLength            = parameterBuffer[0].sourceLength;
+    
+    uint    numberOfModelPoints     = parameterBuffer[0].modelLength;
+    
+    
+}
 kernel void houghSpaceKernel(texture2d<float, access::read>     inTexture           [[texture(0)]],
-                             device GHT::HoughSpaceCell        *houghSpaceBuffer    [[buffer(0)]],
-                             constant GHT::Model               *modelBuffer         [[buffer(1)]],
+                             device GHT::parameter             *parameterBuffer     [[buffer(0)]],
+                             device GHT::HoughSpaceCell        *houghSpaceBuffer    [[buffer(1)]],
+                             device GHT::model                 *modelBuffer         [[buffer(2)]],
                              uint2                              gid                 [[thread_position_in_grid]])
 {
     float4  inColor             = inTexture.read(gid);

@@ -14,7 +14,7 @@
 @property (nonatomic, readonly) id <MTLBuffer>  buffer;
 @property (nonatomic, readonly) NSString       *path;
 @property (nonatomic, readwrite) NSUInteger     offset;
-@property (nonatomic, readwrite) NSUInteger     length;
+@property (nonatomic, readwrite) uint           length;
 @property (nonatomic, readonly) uint            width;
 @property (nonatomic, readonly) uint            height;
 

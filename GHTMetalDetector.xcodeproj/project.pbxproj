@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB4B490419F6573C00D97690 /* GHTParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4B490219F6573C00D97690 /* GHTParameter.h */; };
+		CB4B490519F6573C00D97690 /* GHTParameter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB4B490319F6573C00D97690 /* GHTParameter.mm */; };
+		CB4B490D19F6C49A00D97690 /* GHTRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4B490B19F6C49A00D97690 /* GHTRenderer.h */; };
+		CB4B490E19F6C49A00D97690 /* GHTRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB4B490C19F6C49A00D97690 /* GHTRenderer.mm */; };
 		CB4D7603198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7602198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png */; };
 		CB4D7607198CB4E0002D1C9D /* GHTModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB4D7606198CB4E0002D1C9D /* GHTModel.mm */; };
 		CB4D7623198CD85A002D1C9D /* GHTIcon29.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7620198CD85A002D1C9D /* GHTIcon29.png */; };
@@ -19,6 +23,8 @@
 		CB62A00B19AB8D5A00C595E7 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */; };
 		CB66CCC519AC8A37004616EF /* GHTVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = CB66CCC319AC8A37004616EF /* GHTVideo.h */; };
 		CB66CCC619AC8A37004616EF /* GHTVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = CB66CCC419AC8A37004616EF /* GHTVideo.m */; };
+		CB76B4CD19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */; };
+		CB76B4CE19F6CF43001CA3C1 /* TemplateIcon2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB76B4CC19F6CF43001CA3C1 /* TemplateIcon2x.png */; };
 		CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
 		CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */; };
 		CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
@@ -46,6 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB4B490219F6573C00D97690 /* GHTParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTParameter.h; path = "Model/Buffer Loader/GHTParameter.h"; sourceTree = "<group>"; };
+		CB4B490319F6573C00D97690 /* GHTParameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTParameter.mm; path = "Model/Buffer Loader/GHTParameter.mm"; sourceTree = "<group>"; };
+		CB4B490B19F6C49A00D97690 /* GHTRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTRenderer.h; path = Renderer/GHTRenderer.h; sourceTree = "<group>"; };
+		CB4B490C19F6C49A00D97690 /* GHTRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTRenderer.mm; path = Renderer/GHTRenderer.mm; sourceTree = "<group>"; };
 		CB4D7602198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 001IN_TestImage_32x32_black.png; path = ../../Resources/Images/Input/001IN_TestImage_32x32_black.png; sourceTree = "<group>"; };
 		CB4D7605198CB4E0002D1C9D /* GHTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTModel.h; path = "Model/Buffer Loader/GHTModel.h"; sourceTree = "<group>"; };
 		CB4D7606198CB4E0002D1C9D /* GHTModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTModel.mm; path = "Model/Buffer Loader/GHTModel.mm"; sourceTree = "<group>"; };
@@ -58,6 +68,8 @@
 		CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		CB66CCC319AC8A37004616EF /* GHTVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTVideo.h; path = "Model/Texture Loader/GHTVideo.h"; sourceTree = "<group>"; };
 		CB66CCC419AC8A37004616EF /* GHTVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTVideo.m; path = "Model/Texture Loader/GHTVideo.m"; sourceTree = "<group>"; };
+		CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 002MOD__TestImage_32x32_black.gmf; sourceTree = "<group>"; };
+		CB76B4CC19F6CF43001CA3C1 /* TemplateIcon2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TemplateIcon2x.png; sourceTree = "<group>"; };
 		CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GHTShaderLibrary.metal; sourceTree = "<group>"; };
 		CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTSharedTypes.h; sourceTree = "<group>"; };
 		CBA321021986485400EF0260 /* GHTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTTexture.h; path = "Model/Texture Loader/GHTTexture.h"; sourceTree = "<group>"; };
@@ -105,14 +117,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB4B490619F6A50000D97690 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				CB4B490B19F6C49A00D97690 /* GHTRenderer.h */,
+				CB4B490C19F6C49A00D97690 /* GHTRenderer.mm */,
+			);
+			name = Renderer;
+			sourceTree = "<group>";
+		};
 		CB4D7604198CB477002D1C9D /* Buffer Loader */ = {
 			isa = PBXGroup;
 			children = (
-				CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */,
-				CB4D7605198CB4E0002D1C9D /* GHTModel.h */,
-				CB4D7606198CB4E0002D1C9D /* GHTModel.mm */,
 				CBEB0EA7199562F400EC9F51 /* GHTHoughSpace.h */,
 				CBEB0EA8199562F400EC9F51 /* GHTHoughSpace.mm */,
+				CB4D7605198CB4E0002D1C9D /* GHTModel.h */,
+				CB4D7606198CB4E0002D1C9D /* GHTModel.mm */,
+				CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */,
+				CB4B490219F6573C00D97690 /* GHTParameter.h */,
+				CB4B490319F6573C00D97690 /* GHTParameter.mm */,
 			);
 			name = "Buffer Loader";
 			sourceTree = "<group>";
@@ -131,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */,
+				CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */,
+				CB76B4CC19F6CF43001CA3C1 /* TemplateIcon2x.png */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -190,6 +215,7 @@
 		CBB921A41986305A00CA65F4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CB4B490619F6A50000D97690 /* Renderer */,
 				CB4D7604198CB477002D1C9D /* Buffer Loader */,
 				CBB921A61986306C00CA65F4 /* Quad */,
 				CBB921A71986307400CA65F4 /* Texture Loader */,
@@ -314,6 +340,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB4B490419F6573C00D97690 /* GHTParameter.h in Headers */,
+				CB4B490D19F6C49A00D97690 /* GHTRenderer.h in Headers */,
 				CB66CCC519AC8A37004616EF /* GHTVideo.h in Headers */,
 				CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */,
 				CBEB0EA9199562F400EC9F51 /* GHTHoughSpace.h in Headers */,
@@ -401,7 +429,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB76B4CE19F6CF43001CA3C1 /* TemplateIcon2x.png in Resources */,
 				CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */,
+				CB76B4CD19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf in Resources */,
 				CB4D763C198E6D41002D1C9D /* Main.storyboard in Resources */,
 				CB4D7635198E54E7002D1C9D /* 001MOD__TestImage_32x32_black.gmf in Resources */,
 				CB4D7603198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png in Resources */,
@@ -431,10 +461,12 @@
 				CBEB0EAA199562F400EC9F51 /* GHTHoughSpace.mm in Sources */,
 				CBA3210C1986725900EF0260 /* GHTView.m in Sources */,
 				CBD7015F198629F500032EC3 /* ViewController.mm in Sources */,
+				CB4B490E19F6C49A00D97690 /* GHTRenderer.mm in Sources */,
 				CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */,
 				CBD7015C198629F500032EC3 /* AppDelegate.m in Sources */,
 				CB4D7607198CB4E0002D1C9D /* GHTModel.mm in Sources */,
 				CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */,
+				CB4B490519F6573C00D97690 /* GHTParameter.mm in Sources */,
 				CBD70159198629F500032EC3 /* main.m in Sources */,
 				CBA321041986485400EF0260 /* GHTTexture.m in Sources */,
 			);

@@ -88,7 +88,7 @@
     _maxVotesBuffer = [device newBufferWithBytes:&_maxAccumulatedVotes
                                           length:sizeof(float)
                                          options:MTLResourceOptionCPUCacheModeDefault];
-    
+    _buffer.label = @"HoughSpaceBuffer";
     free(data);
     if(!_buffer)
     {

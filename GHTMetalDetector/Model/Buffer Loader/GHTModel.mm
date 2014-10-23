@@ -39,7 +39,7 @@
     _buffer     = nil;
 }
 
-- (GHT::Model *)referenceData
+- (GHT::model *)referenceData
 {
     NSString *dataString = [NSString stringWithContentsOfFile:_path encoding:NSUTF8StringEncoding error:nil];
     
@@ -52,15 +52,15 @@
     
     NSArray *dataRowsArray = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
-    _length = (int)dataRowsArray.count;
+    _length = (uint)dataRowsArray.count;
     
-    GHT::Model *dataModelArray = (GHT::Model *)malloc(sizeof(GHT::Model) * _length);
+    GHT::model *dataModelArray = (GHT::model *)malloc(sizeof(GHT::model) * _length);
     
     for (int i = 0; i < _length; i++)
     {
         NSArray *entryArray = [[dataRowsArray objectAtIndex:i] componentsSeparatedByString:@" "];
         
-        GHT::Model model;
+        GHT::model model;
         model.referenceId   = [[entryArray objectAtIndex:0] intValue];
         model.x             = [[entryArray objectAtIndex:1] floatValue];
         model.y             = [[entryArray objectAtIndex:2] floatValue];
@@ -76,12 +76,12 @@
 
 - (BOOL)finalize:(id<MTLDevice>)device
 {
-    GHT::Model *data = [self referenceData];
+    GHT::model *data = [self referenceData];
     
     _buffer = [device newBufferWithBytes:data
-                                  length:sizeof(GHT::Model)*_length
+                                  length:sizeof(GHT::model)*_length
                                  options:MTLResourceOptionCPUCacheModeDefault];
-    
+    _buffer.label = @"ModelBuffer";
     free(data);
     if(!_buffer)
     {
@@ -92,9 +92,9 @@
     return YES;
 }
 
-- (void)debugPrintModelArray:(GHT::Model *)modelArray
+- (void)debugPrintModelArray:(GHT::model *)modelArray
 {
-    NSLog(@"%ld", sizeof(GHT::Model));
+    NSLog(@"%ld", sizeof(GHT::model));
     for (int i = 0 ; i < modelArray[0].length; i++)
     {
         NSLog(@"%d", modelArray[i].referenceId);
@@ -103,7 +103,7 @@
 
 - (void)debugPrintModelArrayFromBuffer
 {
-    GHT::Model *model = (GHT::Model *)[_buffer contents];
+    GHT::model *model = (GHT::model *)[_buffer contents];
     for (int i = 0 ; i < model[0].length; i++)
     {
         NSLog(@"%f", model[i].x);

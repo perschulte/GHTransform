@@ -21,7 +21,7 @@
 @property (nonatomic, readonly) simd::uint2     quantization;
 @property (nonatomic, readonly) simd::uint2     imageSize;
 
-@property (nonatomic, readonly) int             length;
+@property (nonatomic, readonly) unsigned int    length;
 
 - (instancetype)initWithImageSize:(simd::uint2)imageSize quantization:(simd::uint2)quantization;
 
