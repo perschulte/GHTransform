@@ -1,79 +1,52 @@
 //
-//  GHTTexture.m
+//  GHTImageInput.m
 //  GHTMetalDetector
 //
-//  Created by Per Schulte on 28.07.14.
+//  Created by Per Schulte on 26.11.14.
 //  Copyright (c) 2014 de.launchair. All rights reserved.
 //
 
-#import "GHTTexture.h"
-#import <QuartzCore/QuartzCore.h>
+#import "GHTImageInput.h"
 
-@implementation GHTTexture
+@implementation GHTImageInput
 
-#pragma mark - Init
-- (instancetype)initWithResourceName:(NSString *)name extension:(NSString *)extension
+- (instancetype)initWithImage:(UIImage *)image
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:name
-                                                     ofType:extension];
-    
-    if (!path)
-    {
-        NSLog(@"Error(%@): The file(%@.%@) could not be loaded.", self.class, name, extension);
-        return nil;
-    }
-    
     self = [super init];
     
     if (self)
     {
-        _path       = path;
-        _width      = 0;
-        _height     = 0;
-        _depth      = 1;
-        _format     = MTLPixelFormatRGBA8Unorm;
-        _target     = MTLTextureType2D;
-        _texture    = nil;
-        _hasAlpha   = YES;
-        _flip       = NO;
+        self.width      = 0;
+        self.height     = 0;
+        self.format     = MTLPixelFormatRGBA8Unorm;
+        self.target     = MTLTextureType2D;
+        self.texture    = nil;
+        _inputImage = image;
     }
     
     return self;
 }
 
-- (void)dealloc
-{
-    _path       = nil;
-    _texture    = nil;
-}
-
-#pragma mark - public
-
 - (BOOL)finalize:(id<MTLDevice>)device
 {
-    UIImage *image = [UIImage imageWithContentsOfFile:_path];
-    
-    if (!image)
+    if (!_inputImage)
     {
-        image = nil;
-        NSLog(@"Error(%@): The image(%@) could not be loaded.", self.class, _path);
+        NSLog(@"Error(%@): No image", self.class);
         return NO;
     }
-    
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     
     if (!colorSpace)
     {
-        image = nil;
         NSLog(@"Error(%@): Could not create colorspace", self.class);
         return NO;
     }
     
-    _width  = (uint32_t)CGImageGetWidth(image.CGImage);
-    _height = (uint32_t)CGImageGetHeight(image.CGImage);
+    self.width  = (uint32_t)CGImageGetWidth(self.inputImage.CGImage);
+    self.height = (uint32_t)CGImageGetHeight(self.inputImage.CGImage);
     
-    uint32_t width      = _width;
-    uint32_t height     = _height;
+    uint32_t width      = self.width;
+    uint32_t height     = self.height;
     uint32_t rowBytes   = width * 4;
     
     CGContextRef context = CGBitmapContextCreate(NULL,
@@ -91,29 +64,25 @@
         return NO;
     }
     
-    CGRect bounds = CGRectMake(0.0f, 0.0f, _width, _height);
+    CGRect bounds = CGRectMake(0.0f, 0.0f,  self.width,  self.height);
     
     CGContextClearRect(context, bounds);
     
     //Vertical reflect
-    if (_flip)
-    {
-        CGContextTranslateCTM(context, width, height);
-        CGContextScaleCTM(context, -1.0, -1.0);
-    }
+    CGContextTranslateCTM(context, width, height);
+    CGContextScaleCTM(context, -1.0, -1.0);
     
-    CGContextDrawImage(context, bounds, image.CGImage);
     
-    image = nil;
+    CGContextDrawImage(context, bounds,  self.inputImage.CGImage);
     
     MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:width height:height mipmapped:NO];
     
-    _target     = textureDescriptor.textureType;
-    _texture    = [device newTextureWithDescriptor:textureDescriptor];
-
+    self.target     = textureDescriptor.textureType;
+    self.texture    = [device newTextureWithDescriptor:textureDescriptor];
+    
     textureDescriptor = nil;
     
-    if(!_texture)
+    if(!self.texture)
     {
         CGContextRelease(context);
         NSLog(@"Error(%@): Could not create texture", self.class);
@@ -126,7 +95,7 @@
     if (pixels != NULL)
     {
         MTLRegion region = MTLRegionMake2D(0, 0, width, height);
-        [_texture replaceRegion:region
+        [self.texture replaceRegion:region
                     mipmapLevel:0
                       withBytes:pixels
                     bytesPerRow:rowBytes];

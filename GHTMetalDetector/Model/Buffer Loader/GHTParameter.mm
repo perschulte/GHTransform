@@ -13,7 +13,7 @@
 
 - (instancetype)initWithImageSize:(simd::uint2)imageSize quantization:(simd::uint2)quantization modelSize:(simd::uint2)modelSize numberOfModelPoints:(unsigned int)modelLength
 {
-    self = [super init];
+    self = [self init];
     
     if (self)
     {
@@ -25,6 +25,28 @@
         
         _modelSize = modelSize;
         _modelLength = modelLength;
+        
+        self.length = 1;
+    }
+    
+    return self;
+}
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _sourceSize = (simd::uint2){1,1};
+        _sourceLength = _sourceSize[0] * _sourceSize[1];
+        
+        _houghSpaceQuantization = (simd::uint2){1,1};
+        _houghSpaceSize         = (simd::uint2){1,1};
+        
+        _modelSize = (simd::uint2){1,1};
+        _modelLength = 1;
+        
+        self.length = 1;
     }
     
     return self;
@@ -39,9 +61,8 @@
     parameter.houghSpaceLength          = _houghSpaceLength;
     parameter.sourceSize                = _sourceSize;
     parameter.sourceLength              = _sourceLength;
-    parameter.modelSize                 = _modelSize;
     parameter.modelLength               = _modelLength;
-    
+    parameter.modelSize                 = {0,0};
     parameterBuffer[0] = parameter;
     
     return parameterBuffer;
@@ -51,14 +72,14 @@
 {
     GHT::parameter *data = [self parameterBuffer];
     
-    _buffer = [device newBufferWithBytes:data
-                                  length:sizeof(GHT::parameter)
+    self.buffer = [device newBufferWithBytes:data
+                                  length:self.length * sizeof(GHT::parameter)
                                  options:MTLResourceOptionCPUCacheModeDefault];
-    _buffer.label = @"ParameterBuffer";
+    self.buffer.label = @"ParameterBuffer";
     
     free(data);
     
-    if(!_buffer)
+    if(!self.buffer)
     {
         NSLog(@"Error(%@): Could not create parameter buffer", self.class);
         return NO;

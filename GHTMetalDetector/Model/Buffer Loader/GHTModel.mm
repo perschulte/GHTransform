@@ -7,7 +7,7 @@
 //
 
 #import "GHTModel.h"
-#import "GHTSharedTypes.h"
+
 
 @implementation GHTModel
 
@@ -26,7 +26,7 @@
     
     if (self)
     {
-        _path       = path;
+        self.path   = path;
         _offset     = 0;
     }
     
@@ -39,7 +39,32 @@
     _buffer     = nil;
 }
 
-- (GHT::model *)referenceData
+- (void)setDelegate:(id<GHTModelBufferDelegate>)delegate
+{
+    _delegate = delegate;
+    if (_modelData)
+    {
+        [self.delegate didChangeDataWithLength:_length];
+    }
+}
+
+- (void)setPath:(NSString *)path
+{
+    _path = path;
+    self.modelData = [self loadModelData];
+}
+
+- (void)setModelData:(GHT::model *)modelData
+{
+    _modelData = modelData;
+    
+    if (self.delegate)
+    {
+        [self.delegate didChangeDataWithLength:_length];
+    }
+}
+
+- (GHT::model *)loadModelData
 {
     NSString *dataString = [NSString stringWithContentsOfFile:_path encoding:NSUTF8StringEncoding error:nil];
     
@@ -50,7 +75,15 @@
         return nil;
     }
     
-    NSArray *dataRowsArray = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    NSArray *rawDataRowsArray = [dataString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    NSMutableArray *dataRowsArray = [NSMutableArray new];
+    for (NSUInteger i = 0; i < rawDataRowsArray.count; i++)
+    {
+        if (![[rawDataRowsArray objectAtIndex:i] isEqualToString:@""])
+        {
+            [dataRowsArray addObject:[rawDataRowsArray objectAtIndex:i]];
+        }
+    }
     
     _length = (uint)dataRowsArray.count;
     
@@ -59,16 +92,16 @@
     for (int i = 0; i < _length; i++)
     {
         NSArray *entryArray = [[dataRowsArray objectAtIndex:i] componentsSeparatedByString:@" "];
-        
-        GHT::model model;
-        model.referenceId   = [[entryArray objectAtIndex:0] intValue];
-        model.x             = [[entryArray objectAtIndex:1] floatValue];
-        model.y             = [[entryArray objectAtIndex:2] floatValue];
-        model.phi           = [[entryArray objectAtIndex:3] floatValue];
-        model.weight        = [[entryArray objectAtIndex:4] floatValue];
-        model.length        = (int)_length;
-        model.size          = {0,0}; // TODO: Set source image size
-        dataModelArray[i]   = model;
+        if ([entryArray count])
+        {
+            GHT::model model;
+            model.referenceId   = [[entryArray objectAtIndex:0] intValue];
+            model.x             = [[entryArray objectAtIndex:1] floatValue];
+            model.y             = [[entryArray objectAtIndex:2] floatValue];
+            model.phi           = [[entryArray objectAtIndex:3] floatValue];
+            model.weight        = [[entryArray objectAtIndex:4] floatValue];
+            dataModelArray[i]   = model;
+        }
     }
     
     return dataModelArray;
@@ -76,7 +109,7 @@
 
 - (BOOL)finalize:(id<MTLDevice>)device
 {
-    GHT::model *data = [self referenceData];
+    GHT::model *data = [self loadModelData];
     
     _buffer = [device newBufferWithBytes:data
                                   length:sizeof(GHT::model)*_length
@@ -95,7 +128,7 @@
 - (void)debugPrintModelArray:(GHT::model *)modelArray
 {
     NSLog(@"%ld", sizeof(GHT::model));
-    for (int i = 0 ; i < modelArray[0].length; i++)
+    for (int i = 0 ; i < self.length; i++)
     {
         NSLog(@"%d", modelArray[i].referenceId);
     }
@@ -104,7 +137,7 @@
 - (void)debugPrintModelArrayFromBuffer
 {
     GHT::model *model = (GHT::model *)[_buffer contents];
-    for (int i = 0 ; i < model[0].length; i++)
+    for (int i = 0 ; i < self.length; i++)
     {
         NSLog(@"%f", model[i].x);
     }

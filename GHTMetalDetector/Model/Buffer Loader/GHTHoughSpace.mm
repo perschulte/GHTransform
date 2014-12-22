@@ -12,6 +12,7 @@
 @interface GHTHoughSpace ()
 {
     GHT::HoughSpaceCell *_emptyBufferData;
+    GHT::houghSpace *_emptyHoughBuffer;
     float _maxAccumulatedVotes;
 }
 
@@ -74,15 +75,45 @@
     return houghSpace;
 }
 
+- (GHT::houghSpace*)hough
+{
+    //_imagesize = (32,32)
+    //_quantization = (1,1)
+    // -> Houghspace = (32,32)
+    
+    //_imagesize = (32,32)
+    //_quantization = (3,3)
+    // -> Houghspace = (11,11)
+    
+    //_imagesize = (32,32)
+    //_quantization = (6,6)
+    // -> Houghspace = (6,6)
+    
+    _length = ceilf(_imageSize[0] / _quantization[0]) * ceilf(_imageSize[1] / _quantization[1]);
+    
+    GHT::houghSpace *houghSpace = (GHT::houghSpace *)malloc(sizeof(GHT::houghSpace) * _length);
+    
+    for (int i = 0; i < _length; i++)
+    {
+        GHT::houghSpace cell;
+        cell.accumulatedVotes   = 0.0f;
+        houghSpace[i]           = cell;
+    }
+    
+    _emptyHoughBuffer = houghSpace;
+    
+    return houghSpace;
+}
+
 - (BOOL)finalize:(id<MTLDevice>)device
 {
-    GHT::HoughSpaceCell *data = [self houghSpace];
+    GHT::houghSpace *data = [self hough];
     
     if (!_emptyBuffer)
     {
         _emptyBuffer = _buffer = [device newBufferWithBytes:data
-                                      length:sizeof(GHT::HoughSpaceCell)*_length
-                                     options:MTLResourceOptionCPUCacheModeDefault];
+                                                     length:sizeof(GHT::houghSpace)*_length
+                                                    options:MTLResourceOptionCPUCacheModeDefault];
     }
     
     _maxVotesBuffer = [device newBufferWithBytes:&_maxAccumulatedVotes
@@ -103,7 +134,7 @@
 {
     float result = 0.0;
     
-    GHT::HoughSpaceCell *data = (GHT::HoughSpaceCell *)[_buffer contents];
+    GHT::houghSpace *data = (GHT::houghSpace *)[_buffer contents];
     
     for (int i = 0; i<_length; i++)
     {

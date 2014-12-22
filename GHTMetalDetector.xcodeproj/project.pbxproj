@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		CB4B490419F6573C00D97690 /* GHTParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4B490219F6573C00D97690 /* GHTParameter.h */; };
 		CB4B490519F6573C00D97690 /* GHTParameter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB4B490319F6573C00D97690 /* GHTParameter.mm */; };
-		CB4B490D19F6C49A00D97690 /* GHTRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4B490B19F6C49A00D97690 /* GHTRenderer.h */; };
-		CB4B490E19F6C49A00D97690 /* GHTRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB4B490C19F6C49A00D97690 /* GHTRenderer.mm */; };
 		CB4D7603198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7602198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png */; };
 		CB4D7607198CB4E0002D1C9D /* GHTModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB4D7606198CB4E0002D1C9D /* GHTModel.mm */; };
 		CB4D7623198CD85A002D1C9D /* GHTIcon29.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7620198CD85A002D1C9D /* GHTIcon29.png */; };
@@ -22,16 +20,65 @@
 		CB62A00919AB8B2200C595E7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00819AB8B2200C595E7 /* CoreMedia.framework */; };
 		CB62A00B19AB8D5A00C595E7 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */; };
 		CB66CCC519AC8A37004616EF /* GHTVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = CB66CCC319AC8A37004616EF /* GHTVideo.h */; };
-		CB66CCC619AC8A37004616EF /* GHTVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = CB66CCC419AC8A37004616EF /* GHTVideo.m */; };
+		CB66CCC619AC8A37004616EF /* GHTVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB66CCC419AC8A37004616EF /* GHTVideo.mm */; };
+		CB6A78AC1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6A78AA1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h */; };
+		CB6A78AD1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB6A78AB1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm */; };
 		CB76B4CD19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */; };
 		CB76B4CE19F6CF43001CA3C1 /* TemplateIcon2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB76B4CC19F6CF43001CA3C1 /* TemplateIcon2x.png */; };
 		CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
 		CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */; };
 		CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
-		CBA321041986485400EF0260 /* GHTTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA321031986485400EF0260 /* GHTTexture.m */; };
+		CB8497161A01078200B1CCB7 /* canny.png in Resources */ = {isa = PBXBuildFile; fileRef = CB8497141A01078200B1CCB7 /* canny.png */; };
+		CB8497171A01078200B1CCB7 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = CB8497151A01078200B1CCB7 /* circle.png */; };
+		CB8497191A0108AC00B1CCB7 /* circleModel.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB8497181A0108AC00B1CCB7 /* circleModel.gmf */; };
+		CBA321041986485400EF0260 /* GHTTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBA321031986485400EF0260 /* GHTTexture.mm */; };
 		CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBA32106198650B200EF0260 /* AAPLTransforms.mm */; };
 		CBA3210C1986725900EF0260 /* GHTView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA3210B1986725900EF0260 /* GHTView.m */; };
+		CBB46CEE1A234E1C00E8C2AA /* GHTModelFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = CBB46CEC1A234E1C00E8C2AA /* GHTModelFilter.h */; };
+		CBB46CEF1A234E1C00E8C2AA /* GHTModelFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBB46CED1A234E1C00E8C2AA /* GHTModelFilter.mm */; };
+		CBB46CF21A234FEF00E8C2AA /* GHTFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = CBB46CF01A234FEF00E8C2AA /* GHTFilter.h */; };
+		CBB46CF31A234FEF00E8C2AA /* GHTFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBB46CF11A234FEF00E8C2AA /* GHTFilter.mm */; };
+		CBB46CF51A237E5F00E8C2AA /* circle2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CBB46CF41A237E5F00E8C2AA /* circle2x.png */; };
 		CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBB921BD1986375400CA65F4 /* GHTQuad.mm */; };
+		CBBCBE5C1A25DC73000DC500 /* GHTHoughSpaceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = CBBCBE5A1A25DC73000DC500 /* GHTHoughSpaceFilter.h */; };
+		CBBCBE5D1A25DC73000DC500 /* GHTHoughSpaceFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBBCBE5B1A25DC73000DC500 /* GHTHoughSpaceFilter.mm */; };
+		CBBCBE601A25DF46000DC500 /* GHTBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CBBCBE5E1A25DF46000DC500 /* GHTBuffer.h */; };
+		CBBCBE611A25DF46000DC500 /* GHTBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBBCBE5F1A25DF46000DC500 /* GHTBuffer.mm */; };
+		CBBCBE641A25E4AB000DC500 /* GHTHoughSpaceBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CBBCBE621A25E4AB000DC500 /* GHTHoughSpaceBuffer.h */; };
+		CBBCBE651A25E4AB000DC500 /* GHTHoughSpaceBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBBCBE631A25E4AB000DC500 /* GHTHoughSpaceBuffer.mm */; };
+		CBBCBE681A2632A9000DC500 /* GHTInput.h in Headers */ = {isa = PBXBuildFile; fileRef = CBBCBE661A2632A9000DC500 /* GHTInput.h */; };
+		CBBCBE691A2632A9000DC500 /* GHTInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBBCBE671A2632A9000DC500 /* GHTInput.mm */; };
+		CBBCBE6C1A2633AF000DC500 /* GHTImageInput.h in Headers */ = {isa = PBXBuildFile; fileRef = CBBCBE6A1A2633AF000DC500 /* GHTImageInput.h */; };
+		CBBCBE6D1A2633AF000DC500 /* GHTImageInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBBCBE6B1A2633AF000DC500 /* GHTImageInput.mm */; };
+		CBBCBE6F1A275CA1000DC500 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBCBE6E1A275CA1000DC500 /* AssetsLibrary.framework */; };
+		CBBCBE761A27671D000DC500 /* GHTInputImageCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CBBCBE741A27671D000DC500 /* GHTInputImageCollectionViewCell.h */; };
+		CBBCBE771A27671D000DC500 /* GHTInputImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CBBCBE751A27671D000DC500 /* GHTInputImageCollectionViewCell.m */; };
+		CBC1BA911A35B3A1000649FD /* GHTFilterSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BA8E1A35B3A1000649FD /* GHTFilterSettingsViewController.h */; };
+		CBC1BA921A35B3A1000649FD /* GHTFilterSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BA8F1A35B3A1000649FD /* GHTFilterSettingsViewController.mm */; };
+		CBC1BA9A1A35BE61000649FD /* GHTRoundButtons.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BA981A35BE61000649FD /* GHTRoundButtons.h */; };
+		CBC1BA9B1A35BE61000649FD /* GHTRoundButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BA991A35BE61000649FD /* GHTRoundButtons.m */; };
+		CBC1BAA61A361FC8000649FD /* GHTFilterSettingsScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAA41A361FC8000649FD /* GHTFilterSettingsScrollView.h */; };
+		CBC1BAA71A361FC8000649FD /* GHTFilterSettingsScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAA51A361FC8000649FD /* GHTFilterSettingsScrollView.m */; };
+		CBC1BAAE1A36DF60000649FD /* GHTContextViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAAC1A36DF60000649FD /* GHTContextViewController.h */; };
+		CBC1BAAF1A36DF60000649FD /* GHTContextViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAAD1A36DF60000649FD /* GHTContextViewController.mm */; };
+		CBC1BAB21A36E27C000649FD /* GHTCamSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAB01A36E27C000649FD /* GHTCamSettingsViewController.h */; };
+		CBC1BAB31A36E27C000649FD /* GHTCamSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAB11A36E27C000649FD /* GHTCamSettingsViewController.mm */; };
+		CBC1BAB61A36E288000649FD /* GHTGaussSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAB41A36E288000649FD /* GHTGaussSettingsViewController.h */; };
+		CBC1BAB71A36E288000649FD /* GHTGaussSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAB51A36E288000649FD /* GHTGaussSettingsViewController.mm */; };
+		CBC1BABA1A36E6C1000649FD /* GHTEmptySegue.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAB81A36E6C1000649FD /* GHTEmptySegue.h */; };
+		CBC1BABB1A36E6C1000649FD /* GHTEmptySegue.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAB91A36E6C1000649FD /* GHTEmptySegue.m */; };
+		CBC1BABE1A36F30F000649FD /* GHTComputeBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BABC1A36F30F000649FD /* GHTComputeBuilder.h */; };
+		CBC1BABF1A36F30F000649FD /* GHTComputeBuilder.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BABD1A36F30F000649FD /* GHTComputeBuilder.mm */; };
+		CBC1BAC41A383704000649FD /* GHTGaussFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAC21A383704000649FD /* GHTGaussFilter.h */; };
+		CBC1BAC51A383704000649FD /* GHTGaussFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAC31A383704000649FD /* GHTGaussFilter.mm */; };
+		CBC1BAC81A383BDB000649FD /* GHTPhiFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAC61A383BDB000649FD /* GHTPhiFilter.h */; };
+		CBC1BAC91A383BDB000649FD /* GHTPhiFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAC71A383BDB000649FD /* GHTPhiFilter.mm */; };
+		CBC1BACC1A384229000649FD /* GHTSourceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BACA1A384229000649FD /* GHTSourceFilter.h */; };
+		CBC1BACD1A384229000649FD /* GHTSourceFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BACB1A384229000649FD /* GHTSourceFilter.mm */; };
+		CBC50B471A3F2649008CB9D4 /* GHTSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC50B451A3F2649008CB9D4 /* GHTSettingsViewController.h */; };
+		CBC50B481A3F2649008CB9D4 /* GHTSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC50B461A3F2649008CB9D4 /* GHTSettingsViewController.mm */; };
+		CBC50B4C1A4171E9008CB9D4 /* GHTPhiSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC50B4A1A4171E9008CB9D4 /* GHTPhiSettingsViewController.h */; };
+		CBC50B4D1A4171E9008CB9D4 /* GHTPhiSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC50B4B1A4171E9008CB9D4 /* GHTPhiSettingsViewController.mm */; };
 		CBD70159198629F500032EC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD70158198629F500032EC3 /* main.m */; };
 		CBD7015C198629F500032EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015B198629F500032EC3 /* AppDelegate.m */; };
 		CBD7015F198629F500032EC3 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015E198629F500032EC3 /* ViewController.mm */; };
@@ -54,8 +101,6 @@
 /* Begin PBXFileReference section */
 		CB4B490219F6573C00D97690 /* GHTParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTParameter.h; path = "Model/Buffer Loader/GHTParameter.h"; sourceTree = "<group>"; };
 		CB4B490319F6573C00D97690 /* GHTParameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTParameter.mm; path = "Model/Buffer Loader/GHTParameter.mm"; sourceTree = "<group>"; };
-		CB4B490B19F6C49A00D97690 /* GHTRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTRenderer.h; path = Renderer/GHTRenderer.h; sourceTree = "<group>"; };
-		CB4B490C19F6C49A00D97690 /* GHTRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTRenderer.mm; path = Renderer/GHTRenderer.mm; sourceTree = "<group>"; };
 		CB4D7602198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 001IN_TestImage_32x32_black.png; path = ../../Resources/Images/Input/001IN_TestImage_32x32_black.png; sourceTree = "<group>"; };
 		CB4D7605198CB4E0002D1C9D /* GHTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTModel.h; path = "Model/Buffer Loader/GHTModel.h"; sourceTree = "<group>"; };
 		CB4D7606198CB4E0002D1C9D /* GHTModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTModel.mm; path = "Model/Buffer Loader/GHTModel.mm"; sourceTree = "<group>"; };
@@ -67,19 +112,69 @@
 		CB62A00819AB8B2200C595E7 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		CB66CCC319AC8A37004616EF /* GHTVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTVideo.h; path = "Model/Texture Loader/GHTVideo.h"; sourceTree = "<group>"; };
-		CB66CCC419AC8A37004616EF /* GHTVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTVideo.m; path = "Model/Texture Loader/GHTVideo.m"; sourceTree = "<group>"; };
+		CB66CCC419AC8A37004616EF /* GHTVideo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTVideo.mm; path = "Model/Texture Loader/GHTVideo.mm"; sourceTree = "<group>"; };
+		CB6A78AA1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTHoughSpaceToTextureFilter.h; path = Model/Filter/GHTHoughSpaceToTextureFilter.h; sourceTree = "<group>"; };
+		CB6A78AB1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTHoughSpaceToTextureFilter.mm; path = Model/Filter/GHTHoughSpaceToTextureFilter.mm; sourceTree = "<group>"; };
 		CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 002MOD__TestImage_32x32_black.gmf; sourceTree = "<group>"; };
 		CB76B4CC19F6CF43001CA3C1 /* TemplateIcon2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TemplateIcon2x.png; sourceTree = "<group>"; };
 		CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GHTShaderLibrary.metal; sourceTree = "<group>"; };
 		CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTSharedTypes.h; sourceTree = "<group>"; };
+		CB8497141A01078200B1CCB7 /* canny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canny.png; sourceTree = "<group>"; };
+		CB8497151A01078200B1CCB7 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		CB8497181A0108AC00B1CCB7 /* circleModel.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = circleModel.gmf; sourceTree = "<group>"; };
 		CBA321021986485400EF0260 /* GHTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTTexture.h; path = "Model/Texture Loader/GHTTexture.h"; sourceTree = "<group>"; };
-		CBA321031986485400EF0260 /* GHTTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTTexture.m; path = "Model/Texture Loader/GHTTexture.m"; sourceTree = "<group>"; };
+		CBA321031986485400EF0260 /* GHTTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTTexture.mm; path = "Model/Texture Loader/GHTTexture.mm"; sourceTree = "<group>"; };
 		CBA32105198650B200EF0260 /* AAPLTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAPLTransforms.h; path = Model/Math/AAPLTransforms.h; sourceTree = "<group>"; };
 		CBA32106198650B200EF0260 /* AAPLTransforms.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AAPLTransforms.mm; path = Model/Math/AAPLTransforms.mm; sourceTree = "<group>"; };
 		CBA3210A1986725900EF0260 /* GHTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTView.h; path = App/View/GHTView.h; sourceTree = "<group>"; };
 		CBA3210B1986725900EF0260 /* GHTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTView.m; path = App/View/GHTView.m; sourceTree = "<group>"; };
+		CBB46CEC1A234E1C00E8C2AA /* GHTModelFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTModelFilter.h; path = Model/Filter/GHTModelFilter.h; sourceTree = "<group>"; };
+		CBB46CED1A234E1C00E8C2AA /* GHTModelFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTModelFilter.mm; path = Model/Filter/GHTModelFilter.mm; sourceTree = "<group>"; };
+		CBB46CF01A234FEF00E8C2AA /* GHTFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTFilter.h; path = Model/Filter/GHTFilter.h; sourceTree = "<group>"; };
+		CBB46CF11A234FEF00E8C2AA /* GHTFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTFilter.mm; path = Model/Filter/GHTFilter.mm; sourceTree = "<group>"; };
+		CBB46CF41A237E5F00E8C2AA /* circle2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle2x.png; sourceTree = "<group>"; };
 		CBB921BC1986375400CA65F4 /* GHTQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTQuad.h; path = Model/Quad/GHTQuad.h; sourceTree = "<group>"; };
 		CBB921BD1986375400CA65F4 /* GHTQuad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTQuad.mm; path = Model/Quad/GHTQuad.mm; sourceTree = "<group>"; };
+		CBBCBE5A1A25DC73000DC500 /* GHTHoughSpaceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTHoughSpaceFilter.h; path = Model/Filter/GHTHoughSpaceFilter.h; sourceTree = "<group>"; };
+		CBBCBE5B1A25DC73000DC500 /* GHTHoughSpaceFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTHoughSpaceFilter.mm; path = Model/Filter/GHTHoughSpaceFilter.mm; sourceTree = "<group>"; };
+		CBBCBE5E1A25DF46000DC500 /* GHTBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTBuffer.h; path = "Model/Buffer Loader/GHTBuffer.h"; sourceTree = "<group>"; };
+		CBBCBE5F1A25DF46000DC500 /* GHTBuffer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTBuffer.mm; path = "Model/Buffer Loader/GHTBuffer.mm"; sourceTree = "<group>"; };
+		CBBCBE621A25E4AB000DC500 /* GHTHoughSpaceBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTHoughSpaceBuffer.h; path = "Model/Buffer Loader/GHTHoughSpaceBuffer.h"; sourceTree = "<group>"; };
+		CBBCBE631A25E4AB000DC500 /* GHTHoughSpaceBuffer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTHoughSpaceBuffer.mm; path = "Model/Buffer Loader/GHTHoughSpaceBuffer.mm"; sourceTree = "<group>"; };
+		CBBCBE661A2632A9000DC500 /* GHTInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTInput.h; path = "Model/Texture Loader/GHTInput.h"; sourceTree = "<group>"; };
+		CBBCBE671A2632A9000DC500 /* GHTInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTInput.mm; path = "Model/Texture Loader/GHTInput.mm"; sourceTree = "<group>"; };
+		CBBCBE6A1A2633AF000DC500 /* GHTImageInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTImageInput.h; path = "Model/Texture Loader/GHTImageInput.h"; sourceTree = "<group>"; };
+		CBBCBE6B1A2633AF000DC500 /* GHTImageInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTImageInput.mm; path = "Model/Texture Loader/GHTImageInput.mm"; sourceTree = "<group>"; };
+		CBBCBE6E1A275CA1000DC500 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		CBBCBE741A27671D000DC500 /* GHTInputImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTInputImageCollectionViewCell.h; sourceTree = "<group>"; };
+		CBBCBE751A27671D000DC500 /* GHTInputImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTInputImageCollectionViewCell.m; sourceTree = "<group>"; };
+		CBC1BA8E1A35B3A1000649FD /* GHTFilterSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTFilterSettingsViewController.h; sourceTree = "<group>"; };
+		CBC1BA8F1A35B3A1000649FD /* GHTFilterSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTFilterSettingsViewController.mm; sourceTree = "<group>"; };
+		CBC1BA981A35BE61000649FD /* GHTRoundButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTRoundButtons.h; sourceTree = "<group>"; };
+		CBC1BA991A35BE61000649FD /* GHTRoundButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTRoundButtons.m; sourceTree = "<group>"; };
+		CBC1BAA41A361FC8000649FD /* GHTFilterSettingsScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTFilterSettingsScrollView.h; sourceTree = "<group>"; };
+		CBC1BAA51A361FC8000649FD /* GHTFilterSettingsScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTFilterSettingsScrollView.m; sourceTree = "<group>"; };
+		CBC1BAAC1A36DF60000649FD /* GHTContextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTContextViewController.h; sourceTree = "<group>"; };
+		CBC1BAAD1A36DF60000649FD /* GHTContextViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTContextViewController.mm; sourceTree = "<group>"; };
+		CBC1BAB01A36E27C000649FD /* GHTCamSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTCamSettingsViewController.h; sourceTree = "<group>"; };
+		CBC1BAB11A36E27C000649FD /* GHTCamSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTCamSettingsViewController.mm; sourceTree = "<group>"; };
+		CBC1BAB41A36E288000649FD /* GHTGaussSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTGaussSettingsViewController.h; sourceTree = "<group>"; };
+		CBC1BAB51A36E288000649FD /* GHTGaussSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTGaussSettingsViewController.mm; sourceTree = "<group>"; };
+		CBC1BAB81A36E6C1000649FD /* GHTEmptySegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTEmptySegue.h; sourceTree = "<group>"; };
+		CBC1BAB91A36E6C1000649FD /* GHTEmptySegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTEmptySegue.m; sourceTree = "<group>"; };
+		CBC1BABC1A36F30F000649FD /* GHTComputeBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTComputeBuilder.h; sourceTree = "<group>"; };
+		CBC1BABD1A36F30F000649FD /* GHTComputeBuilder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTComputeBuilder.mm; sourceTree = "<group>"; };
+		CBC1BAC11A36F3A2000649FD /* GHTConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHTConstants.h; sourceTree = "<group>"; };
+		CBC1BAC21A383704000649FD /* GHTGaussFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTGaussFilter.h; path = Model/Filter/GHTGaussFilter.h; sourceTree = "<group>"; };
+		CBC1BAC31A383704000649FD /* GHTGaussFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTGaussFilter.mm; path = Model/Filter/GHTGaussFilter.mm; sourceTree = "<group>"; };
+		CBC1BAC61A383BDB000649FD /* GHTPhiFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTPhiFilter.h; path = Model/Filter/GHTPhiFilter.h; sourceTree = "<group>"; };
+		CBC1BAC71A383BDB000649FD /* GHTPhiFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTPhiFilter.mm; path = Model/Filter/GHTPhiFilter.mm; sourceTree = "<group>"; };
+		CBC1BACA1A384229000649FD /* GHTSourceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTSourceFilter.h; path = Model/Filter/GHTSourceFilter.h; sourceTree = "<group>"; };
+		CBC1BACB1A384229000649FD /* GHTSourceFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTSourceFilter.mm; path = Model/Filter/GHTSourceFilter.mm; sourceTree = "<group>"; };
+		CBC50B451A3F2649008CB9D4 /* GHTSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTSettingsViewController.h; sourceTree = "<group>"; };
+		CBC50B461A3F2649008CB9D4 /* GHTSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTSettingsViewController.mm; sourceTree = "<group>"; };
+		CBC50B4A1A4171E9008CB9D4 /* GHTPhiSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTPhiSettingsViewController.h; sourceTree = "<group>"; };
+		CBC50B4B1A4171E9008CB9D4 /* GHTPhiSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTPhiSettingsViewController.mm; sourceTree = "<group>"; };
 		CBD70153198629F500032EC3 /* GHTMetalDetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHTMetalDetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD70157198629F500032EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBD70158198629F500032EC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -101,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBBCBE6F1A275CA1000DC500 /* AssetsLibrary.framework in Frameworks */,
 				CB62A00B19AB8D5A00C595E7 /* CoreVideo.framework in Frameworks */,
 				CB62A00919AB8B2200C595E7 /* CoreMedia.framework in Frameworks */,
 				CB62A00719AB81EE00C595E7 /* AVFoundation.framework in Frameworks */,
@@ -120,8 +216,6 @@
 		CB4B490619F6A50000D97690 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
-				CB4B490B19F6C49A00D97690 /* GHTRenderer.h */,
-				CB4B490C19F6C49A00D97690 /* GHTRenderer.mm */,
 			);
 			name = Renderer;
 			sourceTree = "<group>";
@@ -133,9 +227,12 @@
 				CBEB0EA8199562F400EC9F51 /* GHTHoughSpace.mm */,
 				CB4D7605198CB4E0002D1C9D /* GHTModel.h */,
 				CB4D7606198CB4E0002D1C9D /* GHTModel.mm */,
-				CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */,
 				CB4B490219F6573C00D97690 /* GHTParameter.h */,
 				CB4B490319F6573C00D97690 /* GHTParameter.mm */,
+				CBBCBE5E1A25DF46000DC500 /* GHTBuffer.h */,
+				CBBCBE5F1A25DF46000DC500 /* GHTBuffer.mm */,
+				CBBCBE621A25E4AB000DC500 /* GHTHoughSpaceBuffer.h */,
+				CBBCBE631A25E4AB000DC500 /* GHTHoughSpaceBuffer.mm */,
 			);
 			name = "Buffer Loader";
 			sourceTree = "<group>";
@@ -153,6 +250,7 @@
 		CB4D7626198CE6C6002D1C9D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CB8497181A0108AC00B1CCB7 /* circleModel.gmf */,
 				CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */,
 				CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */,
 				CB76B4CC19F6CF43001CA3C1 /* TemplateIcon2x.png */,
@@ -160,9 +258,31 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		CBB46CEB1A234DC600E8C2AA /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				CBB46CF01A234FEF00E8C2AA /* GHTFilter.h */,
+				CBB46CF11A234FEF00E8C2AA /* GHTFilter.mm */,
+				CBBCBE5A1A25DC73000DC500 /* GHTHoughSpaceFilter.h */,
+				CBBCBE5B1A25DC73000DC500 /* GHTHoughSpaceFilter.mm */,
+				CBB46CEC1A234E1C00E8C2AA /* GHTModelFilter.h */,
+				CBB46CED1A234E1C00E8C2AA /* GHTModelFilter.mm */,
+				CB6A78AA1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h */,
+				CB6A78AB1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm */,
+				CBC1BAC21A383704000649FD /* GHTGaussFilter.h */,
+				CBC1BAC31A383704000649FD /* GHTGaussFilter.mm */,
+				CBC1BAC61A383BDB000649FD /* GHTPhiFilter.h */,
+				CBC1BAC71A383BDB000649FD /* GHTPhiFilter.mm */,
+				CBC1BACA1A384229000649FD /* GHTSourceFilter.h */,
+				CBC1BACB1A384229000649FD /* GHTSourceFilter.mm */,
+			);
+			name = Filter;
+			sourceTree = "<group>";
+		};
 		CBB9219E19862FCD00CA65F4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				CBC50B491A4171AE008CB9D4 /* Settings View Controller */,
 				CBD7015D198629F500032EC3 /* ViewController.h */,
 				CBD7015E198629F500032EC3 /* ViewController.mm */,
 			);
@@ -181,6 +301,12 @@
 		CBB921A019862FE000CA65F4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CBC1BAA41A361FC8000649FD /* GHTFilterSettingsScrollView.h */,
+				CBC1BAA51A361FC8000649FD /* GHTFilterSettingsScrollView.m */,
+				CBBCBE741A27671D000DC500 /* GHTInputImageCollectionViewCell.h */,
+				CBBCBE751A27671D000DC500 /* GHTInputImageCollectionViewCell.m */,
+				CBC1BA981A35BE61000649FD /* GHTRoundButtons.h */,
+				CBC1BA991A35BE61000649FD /* GHTRoundButtons.m */,
 				CBA3210A1986725900EF0260 /* GHTView.h */,
 				CBA3210B1986725900EF0260 /* GHTView.m */,
 			);
@@ -198,6 +324,9 @@
 		CBB921A21986302600CA65F4 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				CB8497141A01078200B1CCB7 /* canny.png */,
+				CB8497151A01078200B1CCB7 /* circle.png */,
+				CBB46CF41A237E5F00E8C2AA /* circle2x.png */,
 				CB4D7602198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png */,
 				CB4D7611198CD5BE002D1C9D /* AppIcon */,
 			);
@@ -215,12 +344,13 @@
 		CBB921A41986305A00CA65F4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CB4B490619F6A50000D97690 /* Renderer */,
 				CB4D7604198CB477002D1C9D /* Buffer Loader */,
-				CBB921A61986306C00CA65F4 /* Quad */,
-				CBB921A71986307400CA65F4 /* Texture Loader */,
+				CBB46CEB1A234DC600E8C2AA /* Filter */,
 				CBB921A51986306000CA65F4 /* Math */,
+				CBB921A61986306C00CA65F4 /* Quad */,
+				CB4B490619F6A50000D97690 /* Renderer */,
 				CBB921A31986304D00CA65F4 /* Shader */,
+				CBB921A71986307400CA65F4 /* Texture Loader */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -247,9 +377,13 @@
 			isa = PBXGroup;
 			children = (
 				CBA321021986485400EF0260 /* GHTTexture.h */,
-				CBA321031986485400EF0260 /* GHTTexture.m */,
+				CBA321031986485400EF0260 /* GHTTexture.mm */,
 				CB66CCC319AC8A37004616EF /* GHTVideo.h */,
-				CB66CCC419AC8A37004616EF /* GHTVideo.m */,
+				CB66CCC419AC8A37004616EF /* GHTVideo.mm */,
+				CBBCBE661A2632A9000DC500 /* GHTInput.h */,
+				CBBCBE671A2632A9000DC500 /* GHTInput.mm */,
+				CBBCBE6A1A2633AF000DC500 /* GHTImageInput.h */,
+				CBBCBE6B1A2633AF000DC500 /* GHTImageInput.mm */,
 			);
 			name = "Texture Loader";
 			sourceTree = "<group>";
@@ -257,6 +391,7 @@
 		CBB921A8198630D600CA65F4 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				CBC1BAC01A36F31A000649FD /* Helper */,
 				CBB9219E19862FCD00CA65F4 /* Controller */,
 				CBB9219F19862FDB00CA65F4 /* Delegate */,
 				CBB921A11986300200CA65F4 /* Storyboard */,
@@ -268,11 +403,44 @@
 		CBB921B01986332900CA65F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CBBCBE6E1A275CA1000DC500 /* AssetsLibrary.framework */,
 				CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */,
 				CB62A00819AB8B2200C595E7 /* CoreMedia.framework */,
 				CB62A00619AB81EE00C595E7 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CBC1BAC01A36F31A000649FD /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				CBC1BAB81A36E6C1000649FD /* GHTEmptySegue.h */,
+				CBC1BAB91A36E6C1000649FD /* GHTEmptySegue.m */,
+				CBC1BABC1A36F30F000649FD /* GHTComputeBuilder.h */,
+				CBC1BABD1A36F30F000649FD /* GHTComputeBuilder.mm */,
+				CBC1BAC11A36F3A2000649FD /* GHTConstants.h */,
+				CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		CBC50B491A4171AE008CB9D4 /* Settings View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CBC1BAB01A36E27C000649FD /* GHTCamSettingsViewController.h */,
+				CBC1BAB11A36E27C000649FD /* GHTCamSettingsViewController.mm */,
+				CBC1BAB41A36E288000649FD /* GHTGaussSettingsViewController.h */,
+				CBC1BAB51A36E288000649FD /* GHTGaussSettingsViewController.mm */,
+				CBC50B451A3F2649008CB9D4 /* GHTSettingsViewController.h */,
+				CBC50B461A3F2649008CB9D4 /* GHTSettingsViewController.mm */,
+				CBC1BA8E1A35B3A1000649FD /* GHTFilterSettingsViewController.h */,
+				CBC1BA8F1A35B3A1000649FD /* GHTFilterSettingsViewController.mm */,
+				CBC1BAAC1A36DF60000649FD /* GHTContextViewController.h */,
+				CBC1BAAD1A36DF60000649FD /* GHTContextViewController.mm */,
+				CBC50B4A1A4171E9008CB9D4 /* GHTPhiSettingsViewController.h */,
+				CBC50B4B1A4171E9008CB9D4 /* GHTPhiSettingsViewController.mm */,
+			);
+			name = "Settings View Controller";
 			sourceTree = "<group>";
 		};
 		CBD7014A198629F500032EC3 = {
@@ -340,11 +508,32 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBBCBE5C1A25DC73000DC500 /* GHTHoughSpaceFilter.h in Headers */,
+				CBC1BAAE1A36DF60000649FD /* GHTContextViewController.h in Headers */,
+				CBC1BAB21A36E27C000649FD /* GHTCamSettingsViewController.h in Headers */,
+				CBBCBE6C1A2633AF000DC500 /* GHTImageInput.h in Headers */,
+				CBC1BABA1A36E6C1000649FD /* GHTEmptySegue.h in Headers */,
 				CB4B490419F6573C00D97690 /* GHTParameter.h in Headers */,
-				CB4B490D19F6C49A00D97690 /* GHTRenderer.h in Headers */,
+				CBC50B471A3F2649008CB9D4 /* GHTSettingsViewController.h in Headers */,
+				CBBCBE641A25E4AB000DC500 /* GHTHoughSpaceBuffer.h in Headers */,
+				CBBCBE761A27671D000DC500 /* GHTInputImageCollectionViewCell.h in Headers */,
 				CB66CCC519AC8A37004616EF /* GHTVideo.h in Headers */,
+				CBC1BACC1A384229000649FD /* GHTSourceFilter.h in Headers */,
+				CBB46CF21A234FEF00E8C2AA /* GHTFilter.h in Headers */,
+				CBC1BAA61A361FC8000649FD /* GHTFilterSettingsScrollView.h in Headers */,
 				CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */,
+				CBB46CEE1A234E1C00E8C2AA /* GHTModelFilter.h in Headers */,
+				CB6A78AC1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h in Headers */,
+				CBC1BABE1A36F30F000649FD /* GHTComputeBuilder.h in Headers */,
+				CBC1BAB61A36E288000649FD /* GHTGaussSettingsViewController.h in Headers */,
+				CBBCBE681A2632A9000DC500 /* GHTInput.h in Headers */,
+				CBBCBE601A25DF46000DC500 /* GHTBuffer.h in Headers */,
+				CBC1BAC41A383704000649FD /* GHTGaussFilter.h in Headers */,
+				CBC1BAC81A383BDB000649FD /* GHTPhiFilter.h in Headers */,
+				CBC1BA911A35B3A1000649FD /* GHTFilterSettingsViewController.h in Headers */,
 				CBEB0EA9199562F400EC9F51 /* GHTHoughSpace.h in Headers */,
+				CBC50B4C1A4171E9008CB9D4 /* GHTPhiSettingsViewController.h in Headers */,
+				CBC1BA9A1A35BE61000649FD /* GHTRoundButtons.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +587,7 @@
 				TargetAttributes = {
 					CBD70152198629F500032EC3 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = F3279R62Q6;
 					};
 					CBD70168198629F600032EC3 = {
 						CreatedOnToolsVersion = 6.0;
@@ -429,7 +619,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB8497161A01078200B1CCB7 /* canny.png in Resources */,
 				CB76B4CE19F6CF43001CA3C1 /* TemplateIcon2x.png in Resources */,
+				CB8497191A0108AC00B1CCB7 /* circleModel.gmf in Resources */,
+				CBB46CF51A237E5F00E8C2AA /* circle2x.png in Resources */,
 				CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */,
 				CB76B4CD19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf in Resources */,
 				CB4D763C198E6D41002D1C9D /* Main.storyboard in Resources */,
@@ -437,6 +630,7 @@
 				CB4D7603198BEB98002D1C9D /* 001IN_TestImage_32x32_black.png in Resources */,
 				CB4D7625198CD85A002D1C9D /* GHTIcon60.png in Resources */,
 				CBD70164198629F500032EC3 /* Images.xcassets in Resources */,
+				CB8497171A01078200B1CCB7 /* circle.png in Resources */,
 				CB4D7623198CD85A002D1C9D /* GHTIcon29.png in Resources */,
 				CB4D7624198CD85A002D1C9D /* GHTIcon40.png in Resources */,
 			);
@@ -456,19 +650,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBBCBE6D1A2633AF000DC500 /* GHTImageInput.mm in Sources */,
+				CBC1BABB1A36E6C1000649FD /* GHTEmptySegue.m in Sources */,
+				CBC1BABF1A36F30F000649FD /* GHTComputeBuilder.mm in Sources */,
+				CBC50B4D1A4171E9008CB9D4 /* GHTPhiSettingsViewController.mm in Sources */,
+				CBC1BAC91A383BDB000649FD /* GHTPhiFilter.mm in Sources */,
+				CBC1BAC51A383704000649FD /* GHTGaussFilter.mm in Sources */,
+				CB6A78AD1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm in Sources */,
+				CBC1BACD1A384229000649FD /* GHTSourceFilter.mm in Sources */,
+				CBC1BAAF1A36DF60000649FD /* GHTContextViewController.mm in Sources */,
+				CBBCBE691A2632A9000DC500 /* GHTInput.mm in Sources */,
+				CBBCBE5D1A25DC73000DC500 /* GHTHoughSpaceFilter.mm in Sources */,
+				CBC50B481A3F2649008CB9D4 /* GHTSettingsViewController.mm in Sources */,
+				CBC1BAA71A361FC8000649FD /* GHTFilterSettingsScrollView.m in Sources */,
 				CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */,
-				CB66CCC619AC8A37004616EF /* GHTVideo.m in Sources */,
+				CB66CCC619AC8A37004616EF /* GHTVideo.mm in Sources */,
+				CBBCBE611A25DF46000DC500 /* GHTBuffer.mm in Sources */,
 				CBEB0EAA199562F400EC9F51 /* GHTHoughSpace.mm in Sources */,
 				CBA3210C1986725900EF0260 /* GHTView.m in Sources */,
 				CBD7015F198629F500032EC3 /* ViewController.mm in Sources */,
-				CB4B490E19F6C49A00D97690 /* GHTRenderer.mm in Sources */,
 				CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */,
 				CBD7015C198629F500032EC3 /* AppDelegate.m in Sources */,
+				CBBCBE651A25E4AB000DC500 /* GHTHoughSpaceBuffer.mm in Sources */,
+				CBC1BAB31A36E27C000649FD /* GHTCamSettingsViewController.mm in Sources */,
+				CBB46CEF1A234E1C00E8C2AA /* GHTModelFilter.mm in Sources */,
 				CB4D7607198CB4E0002D1C9D /* GHTModel.mm in Sources */,
+				CBC1BA921A35B3A1000649FD /* GHTFilterSettingsViewController.mm in Sources */,
+				CBB46CF31A234FEF00E8C2AA /* GHTFilter.mm in Sources */,
+				CBC1BAB71A36E288000649FD /* GHTGaussSettingsViewController.mm in Sources */,
+				CBBCBE771A27671D000DC500 /* GHTInputImageCollectionViewCell.m in Sources */,
 				CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */,
 				CB4B490519F6573C00D97690 /* GHTParameter.mm in Sources */,
 				CBD70159198629F500032EC3 /* main.m in Sources */,
-				CBA321041986485400EF0260 /* GHTTexture.m in Sources */,
+				CBA321041986485400EF0260 /* GHTTexture.mm in Sources */,
+				CBC1BA9B1A35BE61000649FD /* GHTRoundButtons.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +799,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GHTMetalDetector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -597,6 +813,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GHTMetalDetector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

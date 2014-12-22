@@ -13,20 +13,21 @@
 #import <CoreVideo/CoreVideo.h>
 #import <CoreVideo/CVMetalTextureCache.h>
 #import <CoreVideo/CVMetalTexture.h>
+#import "GHTInput.h"
 
-@interface GHTVideo : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface GHTVideo : GHTInput <AVCaptureVideoDataOutputSampleBufferDelegate>
 
-@property (nonatomic, readonly) id <MTLTexture> texture;
-@property (nonatomic, readonly) MTLTextureType  target;
-@property (nonatomic, readonly) uint32_t        width;
-@property (nonatomic, readonly) uint32_t        height;
-@property (nonatomic, readonly) uint32_t        format;
 @property (nonatomic, readwrite)BOOL            flip;
 
-@property (nonatomic, strong) AVCaptureSession *session;
+@property (nonatomic, strong) AVCaptureSession  *captureSession;
+@property (nonatomic, strong) AVCaptureDevice   *captureDevice;
+@property (nonatomic, strong) NSString* captureSessionPreset;
+@property (nonatomic, assign) AVCaptureDevicePosition capturePosition;
+
 @property (nonatomic, assign) CVMetalTextureCacheRef textureCacheRef;
 @property (nonatomic, assign) CVMetalTextureRef textureRef;
 
+- (instancetype)initWithSourceSize:(CGSize)sourceSize;
 - (BOOL)finalize:(id<MTLDevice>)device;
 
 

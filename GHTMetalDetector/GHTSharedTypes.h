@@ -23,17 +23,7 @@ namespace GHT
         float       y;
         float       phi;
         float       weight;
-        int         length; //Number of model points
-        simd::uint2 size;
     };
-    
-    typedef struct
-    {
-        float       accumulatedVotes;
-        int         numVotes;
-        simd::uint2 size;   //Hough space size
-        simd::uint2 quantization;   //Hough space size
-    } HoughSpaceCell;
     
     struct houghSpace
     {
@@ -41,7 +31,7 @@ namespace GHT
     };
     
     struct parameter
-    {                                               // Example:
+    {                                               // Example values:
         simd::uint2     houghSpaceSize;             // 4x4 cells
         simd::uint2     houghSpaceQuantization;     // 2x2 points per cell
         unsigned int    houghSpaceLength;           // 16 cells
@@ -49,9 +39,19 @@ namespace GHT
         simd::uint2     sourceSize;                 // 8x8 pixel source image
         unsigned int    sourceLength;               // 36 pixels
         
-        simd::uint2     modelSize;                  
+        simd::uint2     modelSize;                 // 8x8 pixel source image
         unsigned int    modelLength;
     };
+    
+    
+//deprecated
+    typedef struct
+    {
+        float       accumulatedVotes;
+        int         numVotes;
+        simd::uint2 size;   //Hough space size
+        simd::uint2 quantization;   //Hough space size
+    } HoughSpaceCell;
 }
 
 #endif // cplusplus
