@@ -50,10 +50,6 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-
-}
 - (IBAction)cancelFilterSettings:(id)sender
 {
     [_computeBuilder finalize];

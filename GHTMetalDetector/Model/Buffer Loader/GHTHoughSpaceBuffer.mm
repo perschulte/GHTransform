@@ -58,7 +58,7 @@
     
     if (!self.houghBuffer)
     {
-        self.houghBuffer = [device newBufferWithBytes:[self houghSpaceBuffer] length:self.length * sizeof(GHT::houghSpace) options:MTLResourceOptionCPUCacheModeDefault];
+        self.houghBuffer = [device newBufferWithBytes:data length:self.length * sizeof(GHT::houghSpace) options:MTLResourceOptionCPUCacheModeDefault];
         self.houghBuffer.label = @"emptyBuffer";
     }
     
@@ -130,5 +130,10 @@
             NSLog(@"%d: %f", i, houghSpace[i].accumulatedVotes);
         }
     }
+}
+
+- (void)dealloc
+{
+    self.houghBuffer = nil;
 }
 @end

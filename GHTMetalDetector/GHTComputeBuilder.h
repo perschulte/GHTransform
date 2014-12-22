@@ -39,7 +39,7 @@
 @property (nonatomic, weak) id <MTLLibrary> m_ShaderLibrary;
 
 - (instancetype)initWithShaderLibrary:(id <MTLLibrary>)shaderLibrary device:(id <MTLDevice>)device quad:(GHTQuad *)quad;
-- (BOOL)finalize;
+- (BOOL)finalizeBuffer;
 - (void)compute:(id <MTLCommandBuffer>)commandBuffer;
 
 - (void)addDefaultFilters;

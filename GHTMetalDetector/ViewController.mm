@@ -1909,7 +1909,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         {
             ((GHTFilterSettingsViewController *)childViewController).delegate = self;
             ((GHTFilterSettingsViewController *)childViewController).computeBuilder = _computeBuilder;
-            [_computeBuilder finalize];
+            [_computeBuilder finalizeBuffer];
         }
     }
     

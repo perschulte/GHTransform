@@ -77,18 +77,6 @@
 
 - (GHT::houghSpace*)hough
 {
-    //_imagesize = (32,32)
-    //_quantization = (1,1)
-    // -> Houghspace = (32,32)
-    
-    //_imagesize = (32,32)
-    //_quantization = (3,3)
-    // -> Houghspace = (11,11)
-    
-    //_imagesize = (32,32)
-    //_quantization = (6,6)
-    // -> Houghspace = (6,6)
-    
     _length = ceilf(_imageSize[0] / _quantization[0]) * ceilf(_imageSize[1] / _quantization[1]);
     
     GHT::houghSpace *houghSpace = (GHT::houghSpace *)malloc(sizeof(GHT::houghSpace) * _length);

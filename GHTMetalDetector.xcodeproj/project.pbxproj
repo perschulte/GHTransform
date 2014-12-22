@@ -285,6 +285,8 @@
 				CBC50B491A4171AE008CB9D4 /* Settings View Controller */,
 				CBD7015D198629F500032EC3 /* ViewController.h */,
 				CBD7015E198629F500032EC3 /* ViewController.mm */,
+				CBC1BABC1A36F30F000649FD /* GHTComputeBuilder.h */,
+				CBC1BABD1A36F30F000649FD /* GHTComputeBuilder.mm */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -416,8 +418,6 @@
 			children = (
 				CBC1BAB81A36E6C1000649FD /* GHTEmptySegue.h */,
 				CBC1BAB91A36E6C1000649FD /* GHTEmptySegue.m */,
-				CBC1BABC1A36F30F000649FD /* GHTComputeBuilder.h */,
-				CBC1BABD1A36F30F000649FD /* GHTComputeBuilder.mm */,
 				CBC1BAC11A36F3A2000649FD /* GHTConstants.h */,
 				CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */,
 			);

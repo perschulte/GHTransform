@@ -20,7 +20,6 @@ static const uint32_t kSizeSIMDFloat4x4 = sizeof(simd::float4x4);
 
 // Only allow 1 command buffers in flight at any given time so
 // we don't overwrite the renderpass descriptor.
-static const uint32_t kInFlightCommandBuffers = 1;
 static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 @interface GHTComputeBuilder ()
@@ -117,7 +116,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (BOOL)finalize
+- (BOOL)finalizeBuffer
 {
     if (_m_Device)
     {
