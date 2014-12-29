@@ -27,6 +27,11 @@
     
     if (computeEncoder)
     {
+        if (self.input)
+        {
+            _inTexture = self.input.texture;
+        }
+        
         [computeEncoder setComputePipelineState:self.m_Kernel];
         [computeEncoder setTexture:_inTexture atIndex:0];
         [computeEncoder setTexture:_outTexture atIndex:1];

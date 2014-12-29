@@ -52,7 +52,7 @@
 
 - (IBAction)cancelFilterSettings:(id)sender
 {
-    [_computeBuilder finalize];
+    [_computeBuilder finalizeBuffer];
     [self.delegate cancelFilterSettings];
 }
 

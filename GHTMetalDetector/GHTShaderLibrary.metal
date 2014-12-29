@@ -204,13 +204,15 @@ kernel void sourceKernel(texture2d<float, access::read>    inTexture   [[ textur
     outTexture.write(inTexture.read(gid), gid);
 }
 
+/**
+ * The gaussianBlurKernel applies a gaussian blur using a 5x5 matrix to the texture and reduces the pixel to a grayscale value
+ */
 kernel void gaussianBlurKernel(texture2d<float, access::read>    inTexture   [[ texture(0) ]],
                                texture2d<float, access::write>   outTexture  [[ texture(1) ]],
                                uint2                             gid         [[ thread_position_in_grid ]])
 {
     float4 outColor;
     
-    //Apply gaussian blur
     float sample5x5[5][5];
     for (int i = 0; i < 5; i++)
     {
@@ -225,13 +227,15 @@ kernel void gaussianBlurKernel(texture2d<float, access::read>    inTexture   [[ 
     outTexture.write(outColor, gid);
 }
 
+/**
+ * The gaussian3x3BlurKernel applies a gaussian blur using a 3x3 matrix to the texture and reduces the pixel to a grayscale value
+ */
 kernel void gaussian3x3BlurKernel(texture2d<float, access::read>    inTexture   [[ texture(0) ]],
                                   texture2d<float, access::write>   outTexture  [[ texture(1) ]],
                                   uint2                             gid         [[ thread_position_in_grid ]])
 {
     float4 outColor;
     
-    //Apply gaussian blur
     float sample3x3[3][3];
     for (int i = 0; i < 3; i++)
     {
@@ -242,10 +246,17 @@ kernel void gaussian3x3BlurKernel(texture2d<float, access::read>    inTexture   
             sample3x3[i][j] = dot(inTexture.read(coords).rgb, kRec709Luma);
         }
     }
-    outColor = gaussian3x3Blur(sample3x3);
+    
+    float outValue = gaussian3x3Blur(sample3x3);
+    outColor = float4(outValue, outValue, outValue, 1.0);
     outTexture.write(outColor, gid);
 }
 
+/**
+ * The phiKernel takes any texture as input and reduces the texture to its edges.
+ * The respective angles will be stored as a grayscale color ranging from 0.0 to 1.0 which translates to 0.0 to 360.0 degrees.
+ * The alpha channel of each pixel determines if the pixel is relevant. Values higher than 0.0 represent a relevant pixel.
+ */
 kernel void phiKernel(texture2d<float, access::read>    inTexture   [[texture(0)]],
                       texture2d<float, access::write>   outTexture  [[texture(1)]],
                       uint2                             gid         [[thread_position_in_grid]])
@@ -255,6 +266,7 @@ kernel void phiKernel(texture2d<float, access::read>    inTexture   [[texture(0)
     
     float sobelsample3x3[3][3];
     
+    //collect color information about the surrounding pixels
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
@@ -265,23 +277,25 @@ kernel void phiKernel(texture2d<float, access::read>    inTexture   [[texture(0)
         }
     }
     
+    //Sobel
     float verticalEdge = vSobel(sobelsample3x3);
     
     float horizontalEdge = hSobel(sobelsample3x3);
     
+    //Filter out every pixel that has an edge that is weaker than the set theshold
+    //If a pixel ist relevant the alpha channel is set to > 0
     if (sqrt((horizontalEdge * horizontalEdge) +
              (verticalEdge * verticalEdge)) > THRESHOLD)
     {
         phi = atanTwo(verticalEdge, horizontalEdge);
         phi = (phi / PI_2);
+        outColor = float4(phi, phi, phi, 1.0);
     } else
     {
-        phi = 0.0;
+        outColor = float4(0.0, 0.0, 0.0, 0.0);
     }
     
-    outColor = float4(phi, phi, phi, phi);
     outTexture.write(outColor, gid);
-    
 }
 
 kernel void votingKernel(texture2d<float, access::read>     inTexture       [[texture(0)]],
@@ -338,12 +352,12 @@ kernel void houghKernel(texture2d<float, access::read>           inTexture      
                         uint2                                    gid                     [[thread_position_in_grid]])
 {
     float4  inColor             = inTexture.read(gid);
-    float   inPhi               = inColor[0] * PI_2;
-    uint    numberOfModelPoints = parameterBuffer[0].modelLength;
     
     //is this pixel relevant (alpha channel > 0)
     if(inColor[3] > 0.0)
     {
+        uint    numberOfModelPoints = parameterBuffer[0].modelLength;
+        float   inPhi               = inColor[0] * PI_2;
         //compare this pixel with all model entries
         for(uint i = 0; i < numberOfModelPoints; i++)
         {

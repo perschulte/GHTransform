@@ -292,6 +292,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 
 #pragma mark - Setup
+
 - (BOOL)_setupWithTextureName:(NSString *)textureNameString
                     extension:(NSString *)extensionString
 {

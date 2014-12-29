@@ -112,7 +112,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     
     if (_filters)
     {
-        [self addDefaultFilters];
+        [self addDefaultFiltersNoGauss];
     }
 }
 
@@ -378,6 +378,16 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
+/**
+ * Removes all previous filter and adds the default filter setup to the compute queue
+ * That includes:
+ * -> Gauss
+ * -> Phi
+ * -> HoughToBuffer
+ * -> HoughBufferToTexture
+ * 
+ * in that order.
+ */
 - (void)addDefaultFilters
 {
     [_filters removeAllObjects];
@@ -419,8 +429,53 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     [_filters addObject:houghBufferToTexture];
     
     [self updateWorkGroupSizeAndLocalCountForAllFilter];
-    
 }
+
+/**
+ * Removes all previous filter and adds the default filter setup not including the gauss filter to the compute queue
+ * That includes:
+ * -> Phi
+ * -> HoughToBuffer
+ * -> HoughBufferToTexture
+ *
+ * in that order.
+ */
+- (void)addDefaultFiltersNoGauss
+{
+    [_filters removeAllObjects];
+    //Source
+    GHTSourceFilter *source = [[GHTSourceFilter alloc] initWithShaderLibrary:_m_ShaderLibrary device:_m_Device];
+    source.outTexture = _outTexture;
+    source.input = _input;
+    [_filters addObject:source];
+    
+    id <MTLTexture> phiOutTexture = [self textureWithTextureDescriptor:[self textureDesciptor]];
+    
+    //Phi
+    GHTPhiFilter *phi = [[GHTPhiFilter alloc] initWithShaderLibrary:_m_ShaderLibrary device:_m_Device];
+    phi.input = _input;
+    phi.outTexture = phiOutTexture;
+    
+    //HoughToBuffer
+    GHTHoughSpaceFilter *houghToBuffer = [[GHTHoughSpaceFilter alloc] initWithShaderLibrary:_m_ShaderLibrary device:_m_Device];
+    houghToBuffer.inTexture = phiOutTexture;
+    houghToBuffer.outHoughSpaceBuffer = _houghSpaceBuffer;
+    houghToBuffer.modelBuffer = _modelBuffer;
+    houghToBuffer.parameterBuffer = _parameterBuffer;
+    
+    //HoughBufferToTexture
+    GHTHoughSpaceToTextureFilter *houghBufferToTexture =[[GHTHoughSpaceToTextureFilter alloc] initWithShaderLibrary:_m_ShaderLibrary device:_m_Device];
+    houghBufferToTexture.inHoughSpaceBuffer = _houghSpaceBuffer;
+    houghBufferToTexture.parameterBuffer = _parameterBuffer;
+    houghBufferToTexture.outHoughSpaceTexture = _outTexture;
+    
+    [_filters addObject:phi];
+    [_filters addObject:houghToBuffer];
+    [_filters addObject:houghBufferToTexture];
+    
+    [self updateWorkGroupSizeAndLocalCountForAllFilter];
+}
+
 
 - (void)addGaussFilter
 {
