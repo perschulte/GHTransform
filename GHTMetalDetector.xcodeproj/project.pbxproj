@@ -213,13 +213,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CB4B490619F6A50000D97690 /* Renderer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Renderer;
-			sourceTree = "<group>";
-		};
 		CB4D7604198CB477002D1C9D /* Buffer Loader */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,7 +343,6 @@
 				CBB46CEB1A234DC600E8C2AA /* Filter */,
 				CBB921A51986306000CA65F4 /* Math */,
 				CBB921A61986306C00CA65F4 /* Quad */,
-				CB4B490619F6A50000D97690 /* Renderer */,
 				CBB921A31986304D00CA65F4 /* Shader */,
 				CBB921A71986307400CA65F4 /* Texture Loader */,
 			);

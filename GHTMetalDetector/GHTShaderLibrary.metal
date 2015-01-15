@@ -48,11 +48,9 @@ static constant float gaussian5x5Mask[5][5] = {
 };
 
 //Gaussian mask
-//  2   4   5   4   2
-//  4   9   12  9   4
-//  5   12  15  12  5
-//  4   9   12  9   4
-//  2   4   5   4   2
+//  1   2   1
+//  2   4   2
+//  1   2   1
 static constant float gaussian3x3Mask[3][3] = {
     {1.0, 2.0, 1.0},
     {2.0, 4.0, 2.0},
@@ -345,8 +343,8 @@ kernel void modelKernel(texture2d<float, access::write>         outTexture      
     }
 }
 
-kernel void houghKernel(texture2d<float, access::read>           inTexture               [[texture(0)]],
-                        device GHT::houghSpace                   *houghSpaceBuffer       [[buffer(0)]],
+kernel void houghKernel1(texture2d<float, access::read>           inTexture               [[texture(0)]],
+                        device float                   *houghSpaceBuffer       [[buffer(0)]],
                         device GHT::model                        *modelBuffer            [[buffer(1)]],
                         device GHT::parameter                    *parameterBuffer        [[buffer(2)]],
                         uint2                                    gid                     [[thread_position_in_grid]])
@@ -354,8 +352,9 @@ kernel void houghKernel(texture2d<float, access::read>           inTexture      
     float4  inColor             = inTexture.read(gid);
     
     //is this pixel relevant (alpha channel > 0)
-    if(inColor[3] > 0.0)
+    if(inColor[3] > 0.0 && parameterBuffer[0].maxNumberOfEdges > 0)
     {
+        parameterBuffer[0].maxNumberOfEdges--;
         uint    numberOfModelPoints = parameterBuffer[0].modelLength;
         float   inPhi               = inColor[0] * PI_2;
         //compare this pixel with all model entries
@@ -377,7 +376,48 @@ kernel void houghKernel(texture2d<float, access::read>           inTexture      
                                              (gid[1] + modelBuffer[i].y)/parameterBuffer[0].houghSpaceQuantization[1]);
 
                     pos = houghSpaceCoords[1] * parameterBuffer[0].sourceSize[0]/parameterBuffer[0].houghSpaceQuantization[0] + houghSpaceCoords[0];
-                    houghSpaceBuffer[pos].accumulatedVotes += modelBuffer[i].weight;
+                    houghSpaceBuffer[pos] += modelBuffer[i].weight;
+                }
+            }
+        }
+    }
+}
+
+kernel void houghKernel(texture2d<float, access::read>           inTexture               [[texture(0)]],
+                        device float                   *houghSpaceBuffer       [[buffer(0)]],
+                        device GHT::model                        *modelBuffer            [[buffer(1)]],
+                        device GHT::parameter                    *parameterBuffer        [[buffer(2)]],
+                        uint2                                    gid                     [[thread_position_in_grid]])
+{
+    float4  inColor             = inTexture.read(gid);
+    
+    //is this pixel relevant (alpha channel > 0)
+    if(inColor[3] > 0.0) // && parameterBuffer[0].maxNumberOfEdges > 0)
+    {
+        //parameterBuffer[0].maxNumberOfEdges--;
+        
+        uint    numberOfModelPoints = parameterBuffer[0].modelLength;
+        float   inPhi               = inColor[0] * PI_2;
+        //compare this pixel with all model entries
+        for(uint i = 0; i < numberOfModelPoints; i++)
+        {
+#define ANGLE_THRESHOLD 0.15
+            GHT::model model = modelBuffer[i];
+            //is the models phi equal to or close to this phi angle
+            if(inPhi > model.phi - ANGLE_THRESHOLD && inPhi < model.phi + ANGLE_THRESHOLD)
+            {
+                // are the new points within the resource's borders
+                if (gid[0] + model.x >= 0 && gid[0] + model.x < parameterBuffer[0].sourceSize[0] && gid[1] + model.y >= 0 && gid[1] + model.y < parameterBuffer[0].sourceSize[1])
+                {
+                    //vote
+                    uint2 houghSpaceCoords;
+                    uint pos;
+                    
+                    houghSpaceCoords = uint2((gid[0] + model.x)/parameterBuffer[0].houghSpaceQuantization[0],
+                                             (gid[1] + model.y)/parameterBuffer[0].houghSpaceQuantization[1]);
+                    
+                    pos = houghSpaceCoords[1] * parameterBuffer[0].sourceSize[0]/parameterBuffer[0].houghSpaceQuantization[0] + houghSpaceCoords[0];
+                    houghSpaceBuffer[pos] += model.weight;
                 }
             }
         }
@@ -385,13 +425,18 @@ kernel void houghKernel(texture2d<float, access::read>           inTexture      
 }
 
 kernel void houghToTextureKernel(texture2d<float, access::write>    outTexture          [[texture(0)]],
-                                 device GHT::houghSpace             *houghSpaceBuffer   [[buffer(0)]],
+                                 device float                       *houghSpaceBuffer   [[buffer(0)]],
                                  device GHT::parameter              *parameterBuffer    [[buffer(1)]],
                                  uint2                              gid                 [[thread_position_in_grid]])
 {
+//    if (!parameterBuffer[0].maxNumberOfEdges)
+//    {
+//        parameterBuffer[0].maxNumberOfEdges = 2000;
+//    }
+    
     uint gidToHoughSpace = gid[1] / parameterBuffer[0].houghSpaceQuantization[1] * parameterBuffer[0].sourceSize[0]/parameterBuffer[0].houghSpaceQuantization[0] + gid[0] / parameterBuffer[0].houghSpaceQuantization[0];
-    if (houghSpaceBuffer[gidToHoughSpace].accumulatedVotes > 0.90)
+    if (houghSpaceBuffer[gidToHoughSpace] > 0.90)
     {
-        outTexture.write({1.0-houghSpaceBuffer[gidToHoughSpace].accumulatedVotes, 1.0-houghSpaceBuffer[gidToHoughSpace].accumulatedVotes, 200.0/255.0, 1.0}, gid);
+        outTexture.write({1.0-houghSpaceBuffer[gidToHoughSpace], 1.0-houghSpaceBuffer[gidToHoughSpace], 200.0/255.0, 1.0}, gid);
     }
 }

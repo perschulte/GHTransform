@@ -94,13 +94,6 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     {
         //pipeline state error handling
     }
-    
-    /*  Textures
-     *  Out
-     *  Gauss
-     *  Phi
-     *  HoughSpace
-     */
 
     _outTexture = [self textureWithTextureDescriptor:[self textureDesciptor]];
     [_outTexture setLabel:@"OutTexture"];
@@ -294,7 +287,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     // allocate regions of memory for the constant buffer
     _quadTransformBuffer = [_m_Device newBufferWithLength:kMaxBufferBytesPerFrame
                                                     options:0];
-    
+    [_quadTransformBuffer setLabel:@"QuadTransformBuffer"];
     if(!_quadTransformBuffer)
     {
         NSLog(@"Error(%@): Failed creating a transform buffer!", self.class);
@@ -398,7 +391,9 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     [_filters addObject:source];
     
     id <MTLTexture> gaussOutTexture = [self textureWithTextureDescriptor:[self textureDesciptor]];
+    [gaussOutTexture setLabel:@"GaussTexture"];
     id <MTLTexture> phiOutTexture = [self textureWithTextureDescriptor:[self textureDesciptor]];
+    [phiOutTexture setLabel:@"phiTexture"];
     
     //Gauss
     GHTGaussFilter *gauss = [[GHTGaussFilter alloc] initWithShaderLibrary:_m_ShaderLibrary device:_m_Device];
@@ -450,6 +445,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     [_filters addObject:source];
     
     id <MTLTexture> phiOutTexture = [self textureWithTextureDescriptor:[self textureDesciptor]];
+    [phiOutTexture setLabel:@"phiTexture"];
     
     //Phi
     GHTPhiFilter *phi = [[GHTPhiFilter alloc] initWithShaderLibrary:_m_ShaderLibrary device:_m_Device];
@@ -496,6 +492,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     [self.filters removeAllObjects];
     
     id <MTLTexture> gaussOutTexture = [self textureWithTextureDescriptor:[self textureDesciptor]];
+    [gaussOutTexture setLabel:@"GaussTexture"];
     
     //Gauss
     GHTGaussFilter *gauss = [[GHTGaussFilter alloc] initWithShaderLibrary:self.m_ShaderLibrary device:self.m_Device];

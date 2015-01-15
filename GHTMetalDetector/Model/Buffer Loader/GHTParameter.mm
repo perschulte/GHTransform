@@ -62,7 +62,8 @@
     parameter.sourceSize                = _sourceSize;
     parameter.sourceLength              = _sourceLength;
     parameter.modelLength               = _modelLength;
-    parameter.modelSize                 = {0,0};
+    parameter.maxNumberOfEdges          = 1000;
+    
     parameterBuffer[0] = parameter;
     
     return parameterBuffer;

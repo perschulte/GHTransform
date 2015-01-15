@@ -35,8 +35,8 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "GHTInputImageCollectionViewCell.h"
 
-static const float kUIInterfaceOrientationLandscapeAngle = 35.0f;
-static const float kUIInterfaceOrientationPortraitAngle  = 35.0f;
+static const float kUIInterfaceOrientationLandscapeAngle = 45.0f;
+static const float kUIInterfaceOrientationPortraitAngle  = 45.0f;
 
 static const int kQx  = 1;
 static const int kQy  = 1;
@@ -218,7 +218,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 #pragma mark - ComputeBuilder
 
-- (BOOL)_setupRenderKernelsAndPipelineStateWithError:(NSError **)error
+- (BOOL)_setupRenderKernelsAndPipelineStateWithError:(NSError **)error  __attribute__((deprecated))
 {
     // load the fragment program into the library
     id <MTLFunction> fragment_program = [_m_ShaderLibrary newFunctionWithName:@"texturedQuadFragment"];
@@ -294,7 +294,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 #pragma mark - Setup
 
 - (BOOL)_setupWithTextureName:(NSString *)textureNameString
-                    extension:(NSString *)extensionString
+                    extension:(NSString *)extensionString __attribute__((deprecated))
 {
     NSError *error = nil;
     return YES;
@@ -415,7 +415,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     return YES;
 }
 
-- (BOOL)_setupWithImage:(UIImage *)image
+- (BOOL)_setupWithImage:(UIImage *)image  __attribute__((deprecated))
 {
     NSError *error = nil;
     
@@ -529,7 +529,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 
 
-- (BOOL)_setupOutputTexturesWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (BOOL)_setupOutputTexturesWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor  __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -615,7 +615,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     return YES;
 }
 
-- (BOOL)_setupKernelsAndPipeLineStateWithError:(NSError **)error
+- (BOOL)_setupKernelsAndPipeLineStateWithError:(NSError **)error  __attribute__((deprecated))
 {
     
     _m_ShaderLibrary = [_m_Device newDefaultLibrary];
@@ -713,7 +713,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     return YES;
 }
 
-- (BOOL)_setupQuadSamplerAndDepthStencilState
+- (BOOL)_setupQuadSamplerAndDepthStencilState __attribute__((deprecated))
 {
     // create a sampler for the quad
     MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
@@ -773,7 +773,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     return YES;
 }
 
-- (BOOL)_setupParameterBufferWithImageSize:(simd::uint2)imageSize quantization:(simd::uint2)quantization modelSize:(simd::uint2)modelSize numberOfModelPoints:(unsigned int)modelLength
+- (BOOL)_setupParameterBufferWithImageSize:(simd::uint2)imageSize quantization:(simd::uint2)quantization modelSize:(simd::uint2)modelSize numberOfModelPoints:(unsigned int)modelLength __attribute__((deprecated))
 {
     _m_Parameter = [[GHTParameter alloc] initWithImageSize:(simd::uint2){352,288} quantization:quantization modelSize:modelSize numberOfModelPoints:modelLength];
     
@@ -796,7 +796,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 
 #pragma mark - source setup
-- (id <MTLFunction>)_sourceFunction
+- (id <MTLFunction>)_sourceFunction __attribute__((deprecated))
 {
     if (_m_ShaderLibrary)
     {
@@ -817,7 +817,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLComputePipelineState>)_sourceKernelWithError:(NSError **)error
+- (id <MTLComputePipelineState>)_sourceKernelWithError:(NSError **)error __attribute__((deprecated))
 {
     if (_m_Device)
     {
@@ -840,7 +840,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLTexture>)_sourceTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (id <MTLTexture>)_sourceTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -864,7 +864,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 - (void)_addSourceKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
                             inputTexture:(id <MTLTexture>)inTexture
-                           outputTexture:(id <MTLTexture>)outTexture
+                           outputTexture:(id <MTLTexture>)outTexture __attribute__((deprecated))
 {
     if (computeEncoder)
     {
@@ -879,7 +879,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 #pragma mark - Gauss setup
 //  Gaussian blur
-- (id <MTLFunction>)_gaussFunction
+- (id <MTLFunction>)_gaussFunction __attribute__((deprecated))
 {
     if (_m_ShaderLibrary)
     {
@@ -900,7 +900,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLComputePipelineState>)_gaussKernelWithError:(NSError **)error
+- (id <MTLComputePipelineState>)_gaussKernelWithError:(NSError **)error __attribute__((deprecated))
 {
     if (_m_Device)
     {
@@ -923,7 +923,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLTexture>)_gaussTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (id <MTLTexture>)_gaussTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -947,7 +947,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 - (void)_addGaussKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
                            inputTexture:(id <MTLTexture>)inTexture
-                          outputTexture:(id <MTLTexture>)outTexture
+                          outputTexture:(id <MTLTexture>)outTexture __attribute__((deprecated))
 {
     if (computeEncoder)
     {
@@ -963,7 +963,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 #pragma mark - Voting setup
 //  The voting kernel visualizes the actual voting process.
 //  It draws lines from the edge point to a possible center point.
-- (id <MTLFunction>)_votingFunction
+- (id <MTLFunction>)_votingFunction __attribute__((deprecated))
 {
     if (_m_ShaderLibrary)
     {
@@ -984,7 +984,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLComputePipelineState>)_votingKernelWithError:(NSError **)error
+- (id <MTLComputePipelineState>)_votingKernelWithError:(NSError **)error __attribute__((deprecated))
 {
     if (_m_Device)
     {
@@ -1007,7 +1007,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLTexture>)_votingTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (id <MTLTexture>)_votingTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -1032,7 +1032,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 - (void)_addVotingKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
                             inputTexture:(id <MTLTexture>)inTexture
                            outputTexture:(id <MTLTexture>)outTexture
-                             modelBuffer:(GHTModel *)modelBuffer
+                             modelBuffer:(GHTModel *)modelBuffer __attribute__((deprecated))
 {
     if (computeEncoder)
     {
@@ -1049,7 +1049,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 
 #pragma mark - Hough space setup
-- (id <MTLFunction>)_houghSpaceFunction
+- (id <MTLFunction>)_houghSpaceFunction __attribute__((deprecated))
 {
     if (_m_ShaderLibrary)
     {
@@ -1070,7 +1070,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLComputePipelineState>)_houghSpaceKernelWithError:(NSError **)error
+- (id <MTLComputePipelineState>)_houghSpaceKernelWithError:(NSError **)error __attribute__((deprecated))
 {
     if (_m_Device)
     {
@@ -1093,7 +1093,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLTexture>)_houghSpaceTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (id <MTLTexture>)_houghSpaceTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -1118,7 +1118,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 - (void)_addHoughSpaceKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
                                 inputTexture:(id <MTLTexture>)inTexture
                             houghSpaceBuffer:(GHTHoughSpace *)houghSpaceBuffer
-                                 modelBuffer:(GHTModel *)modelBuffer
+                                 modelBuffer:(GHTModel *)modelBuffer __attribute__((deprecated))
 {
     if (computeEncoder)
     {
@@ -1133,7 +1133,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (BOOL)_setupHoughSpaceBufferWithResourceSize:(simd::uint2)size
+- (BOOL)_setupHoughSpaceBufferWithResourceSize:(simd::uint2)size __attribute__((deprecated))
 {
     _m_HoughSpace = [[GHTHoughSpace alloc] initWithImageSize:size quantization:{1,1}];
     
@@ -1160,7 +1160,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 #pragma mark - Phi setup
 //  The phi kernel draws edges with direction information embedded inside the color values
-- (id <MTLFunction>)_phiFunction
+- (id <MTLFunction>)_phiFunction __attribute__((deprecated))
 {
     if (_m_ShaderLibrary)
     {
@@ -1181,7 +1181,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLComputePipelineState>)_phiKernelWithError:(NSError **)error
+- (id <MTLComputePipelineState>)_phiKernelWithError:(NSError **)error __attribute__((deprecated))
 {
     if (_m_Device)
     {
@@ -1204,7 +1204,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLTexture>)_phiTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (id <MTLTexture>)_phiTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -1228,7 +1228,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 - (void)_addPhiKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
                          inputTexture:(id <MTLTexture>)inTexture
-                        outputTexture:(id <MTLTexture>)outTexture
+                        outputTexture:(id <MTLTexture>)outTexture __attribute__((deprecated))
 {
     if (computeEncoder)
     {
@@ -1242,8 +1242,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 
 #pragma mark - Canny setup
-//  The canny kernel only draws the detected edges
-- (id <MTLFunction>)_cannyFunction
+- (id <MTLFunction>)_cannyFunction __attribute__((deprecated))
 {
     if (_m_ShaderLibrary)
     {
@@ -1264,7 +1263,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLComputePipelineState>)_cannyKernelWithError:(NSError **)error
+- (id <MTLComputePipelineState>)_cannyKernelWithError:(NSError **)error __attribute__((deprecated))
 {
     if (_m_Device)
     {
@@ -1287,7 +1286,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLTexture>)_cannyTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (id <MTLTexture>)_cannyTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -1311,7 +1310,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 #pragma mark - Model setup
 //  The model kernel draws the model data
-- (id <MTLFunction>)_modelFunction
+- (id <MTLFunction>)_modelFunction __attribute__((deprecated))
 {
     if (_m_ShaderLibrary)
     {
@@ -1332,7 +1331,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLComputePipelineState>)_modelKernelWithError:(NSError **)error
+- (id <MTLComputePipelineState>)_modelKernelWithError:(NSError **)error __attribute__((deprecated))
 {
     if (_m_Device)
     {
@@ -1355,7 +1354,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLTexture>)_modelTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (id <MTLTexture>)_modelTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -1377,7 +1376,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (BOOL)_setupModelBufferWithResourceName:(NSString *)resourceName extension:(NSString *)extensionString
+- (BOOL)_setupModelBufferWithResourceName:(NSString *)resourceName extension:(NSString *)extensionString __attribute__((deprecated))
 {
     _m_Model = [[GHTModel alloc] initWithResourceName:resourceName extension:extensionString];
     
@@ -1402,7 +1401,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 
 #pragma mark - Normalize kernel setup
-- (id <MTLFunction>)_normalizeFunction
+- (id <MTLFunction>)_normalizeFunction __attribute__((deprecated))
 {
     if (_m_ShaderLibrary)
     {
@@ -1422,7 +1421,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         return nil;
     }
 }
-- (id <MTLComputePipelineState>)_normalizeKernelWithError:(NSError **)error
+- (id <MTLComputePipelineState>)_normalizeKernelWithError:(NSError **)error __attribute__((deprecated))
 {
     if (_m_Device)
     {
@@ -1445,7 +1444,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
 }
 
-- (id <MTLTexture>)_normalizeTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor
+- (id <MTLTexture>)_normalizeTextureWithTextureDescriptor:(MTLTextureDescriptor *)textureDescriptor __attribute__((deprecated))
 {
     if (textureDescriptor)
     {
@@ -1468,7 +1467,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 }
 - (void)_addNormalizeKernelToComputeEncoder:(id <MTLComputeCommandEncoder>)computeEncoder
                            houghSpaceBuffer:(GHTHoughSpace *)houghSpaceBuffer
-                              outputTexture:(id <MTLTexture>)outTexture
+                              outputTexture:(id <MTLTexture>)outTexture __attribute__((deprecated))
 {
     if (computeEncoder)
     {
@@ -1670,7 +1669,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     return _m_RenderPassDescriptor;
 }
 
-- (void)_compute:(id <MTLCommandBuffer>)commandBuffer
+- (void)_compute:(id <MTLCommandBuffer>)commandBuffer __attribute__((deprecated))
 {
     id <MTLComputeCommandEncoder> computeEncoder = [commandBuffer computeCommandEncoder];
     
@@ -1818,14 +1817,12 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     id <CAMetalDrawable>  drawable      = [_m_RenderingLayer nextDrawable];
     id <MTLCommandBuffer> commandBuffer = [_m_CommandQueue commandBuffer];
     
-    //[self _compute:commandBuffer];
     [_computeBuilder compute:commandBuffer];
     [self _render:commandBuffer
          drawable:drawable];
     
     [self _dispatch:commandBuffer];
     
-
     [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer>){
         [_computeBuilder.houghSpaceBuffer normalize];
         
@@ -1882,18 +1879,6 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
 
 #pragma mark - View controller
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    
-    if (self)
-    {
-        
-    }
-    
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -1914,9 +1899,6 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         }
     }
     
-    //Loads images - Should be move where it is actually used
-    //[self initAssets];
-    
     _zoomScale = 0.37;
     
     //This needs to be redone
@@ -1934,12 +1916,15 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     }
     else
     {
-        if(![self _setupWithTextureName:@"circle" extension:@"png"])
+        if (false)
         {
+        
+//        if(![self _setupWithTextureName:@"circle" extension:@"png"])
+//        {
             NSLog(@"Error(%@): Failed creating assets!", self.class);
             
             [self _cleanUp];
-            
+
             exit(-1);
         }
         else

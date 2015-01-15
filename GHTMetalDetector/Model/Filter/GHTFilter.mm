@@ -55,7 +55,7 @@
     {
         id <MTLComputePipelineState> kernel = [self.m_Device newComputePipelineStateWithFunction:[self function]
                                                                                            error:error];
-
+        
         if(!kernel)
         {
             NSLog(@"Error(%@): Failed creating a new kernel!", self.class);

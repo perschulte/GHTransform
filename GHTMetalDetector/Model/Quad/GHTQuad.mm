@@ -71,6 +71,7 @@ static const simd::float2 kQuadTexturCoordinates[kCountQuadTextureCoordinates] =
         m_VertexBuffer = [device newBufferWithBytes:kQuadVertices
                                              length:kSizeQuadVertices
                                             options:MTLResourceOptionCPUCacheModeDefault];
+        [m_VertexBuffer setLabel:@"vertexBuffer"];
         
         if(!m_VertexBuffer)
         {
@@ -84,6 +85,7 @@ static const simd::float2 kQuadTexturCoordinates[kCountQuadTextureCoordinates] =
                                                         length:kSizeQuadTexCoordinates
                                                        options:MTLResourceOptionCPUCacheModeDefault];
 
+        [m_TextureCoordinateBuffer setLabel:@"TextureCoordinateBuffer"];
         if(!m_TextureCoordinateBuffer)
         {
             NSLog(@"Error(%@): Failed creating a 2d texture coordinate buffer!", self.class);

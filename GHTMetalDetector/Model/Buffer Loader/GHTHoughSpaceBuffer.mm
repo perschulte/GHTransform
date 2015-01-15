@@ -26,7 +26,7 @@
     return self;
 }
 
-- (GHT::houghSpace*)houghSpaceBuffer
+- (float *)houghSpaceBuffer
 {
     //_imagesize = (32,32)
     //_quantization = (1,1)
@@ -40,13 +40,13 @@
     //_quantization = (6,6)
     // -> Houghspace = (6,6)
     
-    GHT::houghSpace *houghSpace = (GHT::houghSpace *)malloc(sizeof(GHT::houghSpace) * self.length);
+    float *houghSpace = (float *)malloc(sizeof(float) * self.length);
     
     for (int i = 0; i < self.length; i++)
     {
-        GHT::houghSpace cell;
-        cell.accumulatedVotes   = 0.0f;
-        houghSpace[i]           = cell;
+//        GHT::houghSpace cell;
+//        cell.accumulatedVotes   = 0.0f;
+        houghSpace[i]           = 0.0f;
     }
     
     return houghSpace;
@@ -54,11 +54,11 @@
 
 - (BOOL)finalize:(id<MTLDevice>)device
 {
-    GHT::houghSpace *data = [self houghSpaceBuffer];
+    float *data = [self houghSpaceBuffer];
     
     if (!self.houghBuffer)
     {
-        self.houghBuffer = [device newBufferWithBytes:data length:self.length * sizeof(GHT::houghSpace) options:MTLResourceOptionCPUCacheModeDefault];
+        self.houghBuffer = [device newBufferWithBytes:data length:self.length * sizeof(float) options:MTLResourceOptionCPUCacheModeDefault];
         self.houghBuffer.label = @"emptyBuffer";
     }
     
@@ -103,19 +103,19 @@
     
     for (int i = 0 ; i < self.length; i++)
     {
-        if (max < 15)
+        if (max < 2)
         {
             houghSpace[i].accumulatedVotes = 0.0;
         } else
         {
-            if (houghSpace[i].accumulatedVotes == max)
-            {
-               houghSpace[i].accumulatedVotes = 1.0;
-            } else
-            {
-                houghSpace[i].accumulatedVotes = 0.0;
-            }
-            //houghSpace[i].accumulatedVotes = houghSpace[i].accumulatedVotes / max;
+//            if (houghSpace[i].accumulatedVotes == max)
+//            {
+//               houghSpace[i].accumulatedVotes = 1.0;
+//            } else
+//            {
+//                houghSpace[i].accumulatedVotes = 0.0;
+//            }
+            houghSpace[i].accumulatedVotes = houghSpace[i].accumulatedVotes / max;
         }
     }
 }

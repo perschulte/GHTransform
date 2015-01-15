@@ -41,19 +41,6 @@
 
 - (BOOL)finalize:(id<MTLDevice>)device
 {
-//    MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:self.width height:self.height mipmapped:NO];
-//    
-//    self.target     = textureDescriptor.textureType;
-//    self.texture    = [device newTextureWithDescriptor:textureDescriptor];
-//    [self.texture setLabel:@"VideoIn"];
-//    textureDescriptor = nil;
-//    
-//    if(!self.texture)
-//    {
-//        NSLog(@"Error(%@): Could not create texture", self.class);
-//        return NO;
-//    }
-    
     [self setupCaptureWithDevice:device];
     
     return YES;
@@ -129,11 +116,12 @@
     if (status == kCVReturnSuccess)
     {
         textureY = CVMetalTextureGetTexture(_textureRef);
+        //[textureY setLabel:@"VideoCaptureTexture"];
         CFRelease(_textureRef);
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.texture setLabel:@"InVideo1"];
+        //[self.texture setLabel:@"InputTexture"];
         self.texture = textureY;
     });
 }

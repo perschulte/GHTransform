@@ -39,7 +39,7 @@ namespace GHT
         simd::uint2     sourceSize;                 // 8x8 pixel source image
         unsigned int    sourceLength;               // 36 pixels
         
-        simd::uint2     modelSize;                 // 8x8 pixel source image
+        unsigned int    maxNumberOfEdges;                 // 8x8 pixel source image
         unsigned int    modelLength;
     };
     
