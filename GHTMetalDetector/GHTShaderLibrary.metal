@@ -19,7 +19,7 @@ using namespace metal;
 
 #define PI_2    6.28318530717958647692
 #define PI      3.14159265358979323846
-#define THRESHOLD 0.5
+#define THRESHOLD 0.45
 
 //Grayscale constant
 constant float3 kRec709Luma = float3(0.2126, 0.7152, 0.0722);
@@ -399,7 +399,7 @@ kernel void houghKernel(texture2d<float, access::read>           inTexture      
         uint    numberOfModelPoints = parameterBuffer[0].modelLength;
         float   inPhi               = inColor[0] * PI_2;
         //compare this pixel with all model entries
-        for(uint i = 0; i < numberOfModelPoints; i++)
+        for(uint i = 0; i < numberOfModelPoints; i = i + 3)
         {
 #define ANGLE_THRESHOLD 0.15
             GHT::model model = modelBuffer[i];

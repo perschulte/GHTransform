@@ -14,7 +14,7 @@
 #import <CoreVideo/CVMetalTexture.h>
 #import "GHTFilterSettingsViewController.h"
 
-@interface ViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource, UICollectionViewDelegate, GHTFilterSettingsDelegate>
+@interface ViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, GHTFilterSettingsDelegate>
 
 
 @end

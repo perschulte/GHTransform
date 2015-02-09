@@ -69,7 +69,7 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
         self.parameterBuffer = [[GHTParameter alloc] init];
     }
     
-    _parameterBuffer.houghSpaceQuantization = (simd::uint2){10,10};
+    _parameterBuffer.houghSpaceQuantization = (simd::uint2){15,15};
     
     //HoughSpace
     NSUInteger houghSpaceLength = ceilf(self.parameterBuffer.sourceSize[0] / self.parameterBuffer.houghSpaceQuantization[0] *
@@ -508,8 +508,24 @@ static const uint32_t kMaxBufferBytesPerFrame = kSizeSIMDFloat4x4;
     phi.m_WorkgroupSize = self.m_WorkgroupSize;
     phi.m_LocalCount = self.m_LocalCount;
     
+    //HoughToBuffer
+    GHTHoughSpaceFilter *houghToBuffer = [[GHTHoughSpaceFilter alloc] initWithShaderLibrary:_m_ShaderLibrary device:_m_Device];
+    houghToBuffer.inTexture = phi.outTexture;
+    houghToBuffer.outHoughSpaceBuffer = _houghSpaceBuffer;
+    houghToBuffer.modelBuffer = _modelBuffer;
+    houghToBuffer.parameterBuffer = _parameterBuffer;
+    
+    //HoughBufferToTexture
+    GHTHoughSpaceToTextureFilter *houghBufferToTexture =[[GHTHoughSpaceToTextureFilter alloc] initWithShaderLibrary:_m_ShaderLibrary device:_m_Device];
+    houghBufferToTexture.inHoughSpaceBuffer = _houghSpaceBuffer;
+    houghBufferToTexture.parameterBuffer = _parameterBuffer;
+    houghBufferToTexture.outHoughSpaceTexture = _outTexture;
+    
     [self.filters addObject:gauss];
     [self.filters addObject:phi];
+    [self.filters addObject:houghToBuffer];
+    [self.filters addObject:houghBufferToTexture];
+    [self updateWorkGroupSizeAndLocalCountForAllFilter];
 }
 
 #pragma mark - GHTInputDelegate

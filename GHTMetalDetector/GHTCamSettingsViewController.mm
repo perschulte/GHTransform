@@ -31,38 +31,6 @@
     return self;
 }
 
-- (void)awakeFromNib
-{
-    
-//    switch (_videoResolution)
-//    {
-//        case k352x288:
-//            _lowResulutionButton.backgroundColor = [UIColor darkGrayColor];
-//            _mediumResolutionButton.backgroundColor = [UIColor clearColor];
-//            break;
-//        case k640x480:
-//            _mediumResolutionButton.backgroundColor = [UIColor darkGrayColor];
-//            _lowResulutionButton.backgroundColor = [UIColor clearColor];
-//            break;
-//        default:
-//            break;
-//    }
-//    
-//    switch (_videoCamera)
-//    {
-//        case kFront:
-//            _frontCamButton.backgroundColor = [UIColor darkGrayColor];
-//            _backCamButton.backgroundColor = [UIColor clearColor];
-//            break;
-//        case kBack:
-//            _backCamButton.backgroundColor = [UIColor darkGrayColor];
-//            _frontCamButton.backgroundColor = [UIColor clearColor];
-//            break;
-//        default:
-//            break;
-//    }
-}
-
 - (void)willMoveToParentViewController:(UIViewController *)parent
 {
     if (self.computeBuilder)
