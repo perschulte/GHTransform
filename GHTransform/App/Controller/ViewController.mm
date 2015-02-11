@@ -495,42 +495,31 @@ static const uint32_t kInFlightCommandBuffers = 1;
     }
     else
     {
-        if (false)
-        {
-            NSLog(@"Error(%@): Failed creating assets!", self.class);
-            
-            [self _cleanUp];
-
-            exit(-1);
-        }
-        else
-        {
-            //Initial update
-            // Get the bounds for the current rendering layer
-            //_m_Quad.bounds = _m_RenderingLayer.frame;
-            _computeBuilder.quad.bounds = _m_RenderingLayer.frame;
-            // Update the quad bounds
-            //[_m_Quad update];
-            [_computeBuilder.quad update];
-            
-            // Determine the linear transformation matrix
-            [self _transform];
-            
-            //Setup the timer
-            _m_InflightSemaphore = dispatch_semaphore_create(kInFlightCommandBuffers);
-            
-            // as the timer fires, we render
-            _m_Timer = [CADisplayLink displayLinkWithTarget:self
-                                                   selector:@selector(render:)];
-            
-            [_m_Timer addToRunLoop:[NSRunLoop mainRunLoop]
-                           forMode:NSDefaultRunLoopMode];
-            
-            UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
-            [self.view addGestureRecognizer:pinchRecognizer];
-            UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-            [self.view addGestureRecognizer:panRecognizer];
-        }
+        //Initial update
+        // Get the bounds for the current rendering layer
+        //_m_Quad.bounds = _m_RenderingLayer.frame;
+        _computeBuilder.quad.bounds = _m_RenderingLayer.frame;
+        // Update the quad bounds
+        //[_m_Quad update];
+        [_computeBuilder.quad update];
+        
+        // Determine the linear transformation matrix
+        [self _transform];
+        
+        //Setup the timer
+        _m_InflightSemaphore = dispatch_semaphore_create(kInFlightCommandBuffers);
+        
+        // as the timer fires, we render
+        _m_Timer = [CADisplayLink displayLinkWithTarget:self
+                                               selector:@selector(render:)];
+        
+        [_m_Timer addToRunLoop:[NSRunLoop mainRunLoop]
+                       forMode:NSDefaultRunLoopMode];
+        
+        UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+        [self.view addGestureRecognizer:pinchRecognizer];
+        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [self.view addGestureRecognizer:panRecognizer];
     }
 }
 
