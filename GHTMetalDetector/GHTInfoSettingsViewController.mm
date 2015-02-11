@@ -1,8 +1,8 @@
 //
-//  GHTSourceFilter.h
+//  GHTInfoSettingsViewController.m
 //  GHTMetalDetector
 //
-//  Created by Per Schulte on 10.12.14.
+//  Created by Per Schulte on 09.02.15.
 //
 //  Copyright (c) 2015 Per Schulte
 //
@@ -24,9 +24,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "GHTFilter.h"
 
-@interface GHTSourceFilter : GHTFilter
-@property (nonatomic, strong) id <MTLTexture> inTexture;
-@property (nonatomic, strong) id <MTLTexture> outTexture;
+#import "GHTInfoSettingsViewController.h"
+
+@interface GHTInfoSettingsViewController ()
+
+@property (weak, nonatomic) IBOutlet UITextView *infoTextView;
+
+@end
+
+@implementation GHTInfoSettingsViewController
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.infoTextView setContentOffset:CGPointZero animated:NO];
+}
 @end

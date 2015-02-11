@@ -3,8 +3,26 @@
 //  GHTMetalDetector
 //
 //  Created by Per Schulte on 28.07.14.
-//  Copyright (c) 2014 de.launchair. All rights reserved.
 //
+//  Copyright (c) 2015 Per Schulte
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
 #include <metal_stdlib>
 #include <metal_graphics>
@@ -339,46 +357,6 @@ kernel void modelKernel(texture2d<float, access::write>         outTexture      
         if (center[0] + (int)modelBuffer[i].x  == gid[0] && center[1] + (int)modelBuffer[i].y == gid[1])
         {
             outTexture.write({modelBuffer[i].weight, 67.0/255.0, 53.0/255.0, 1.0}, gid);
-        }
-    }
-}
-
-kernel void houghKernel1(texture2d<float, access::read>           inTexture               [[texture(0)]],
-                        device float                   *houghSpaceBuffer       [[buffer(0)]],
-                        device GHT::model                        *modelBuffer            [[buffer(1)]],
-                        device GHT::parameter                    *parameterBuffer        [[buffer(2)]],
-                        uint2                                    gid                     [[thread_position_in_grid]])
-{
-    float4  inColor             = inTexture.read(gid);
-    
-    //is this pixel relevant (alpha channel > 0)
-    if(inColor[3] > 0.0 && parameterBuffer[0].maxNumberOfEdges > 0)
-    {
-        parameterBuffer[0].maxNumberOfEdges--;
-        uint    numberOfModelPoints = parameterBuffer[0].modelLength;
-        float   inPhi               = inColor[0] * PI_2;
-        //compare this pixel with all model entries
-        for(uint i = 0; i < numberOfModelPoints; i++)
-        {
-#define ANGLE_THRESHOLD 0.15
-            
-            //is the models phi equal to or close to this phi angle
-            if(inPhi > modelBuffer[i].phi - ANGLE_THRESHOLD && inPhi < modelBuffer[i].phi + ANGLE_THRESHOLD)
-            {
-                // are the new points within the resource's borders
-                if (gid[0] + modelBuffer[i].x >= 0 && gid[0] + modelBuffer[i].x < parameterBuffer[0].sourceSize[0] && gid[1] + modelBuffer[i].y >= 0 && gid[1] + modelBuffer[i].y < parameterBuffer[0].sourceSize[1])
-                {
-                    //vote
-                    uint2 houghSpaceCoords;
-                    uint pos;
-
-                    houghSpaceCoords = uint2((gid[0] + modelBuffer[i].x)/parameterBuffer[0].houghSpaceQuantization[0],
-                                             (gid[1] + modelBuffer[i].y)/parameterBuffer[0].houghSpaceQuantization[1]);
-
-                    pos = houghSpaceCoords[1] * parameterBuffer[0].sourceSize[0]/parameterBuffer[0].houghSpaceQuantization[0] + houghSpaceCoords[0];
-                    houghSpaceBuffer[pos] += modelBuffer[i].weight;
-                }
-            }
         }
     }
 }

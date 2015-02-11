@@ -3,8 +3,26 @@
 //  GHTMetalDetector
 //
 //  Created by Per Schulte on 28.07.14.
-//  Copyright (c) 2014 de.launchair. All rights reserved.
 //
+//  Copyright (c) 2015 Per Schulte
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
 #import "ViewController.h"
 
@@ -18,13 +36,6 @@
 #import "GHTQuad.h"
 #import "GHTTexture.h"
 #import "GHTView.h"
-#import "GHTModel.h"
-#import "GHTHoughSpace.h"
-#import "GHTVideo.h"
-#import "GHTParameter.h"
-
-#import "GHTHoughSpaceFilter.h"
-#import "GHTHoughSpaceToTextureFilter.h"
 
 #import "GHTFilterSettingsViewController.h"
 
@@ -51,9 +62,7 @@ static const uint32_t kInFlightCommandBuffers = 1;
 
 //Input
 @property (nonatomic, strong) NSArray *assets;
-
 @property (nonatomic, assign) UIInterfaceOrientation interfaceOrientation;
-@property (nonatomic, assign) uint state;
 @property (nonatomic, assign) float zoomScale;
 
 //Compute Builder
@@ -63,7 +72,6 @@ static const uint32_t kInFlightCommandBuffers = 1;
 @property (nonatomic, strong) id <MTLDevice>                m_Device;
 @property (nonatomic, strong) id <MTLCommandQueue>          m_CommandQueue;
 @property (nonatomic, strong) id <MTLLibrary>               m_ShaderLibrary;
-@property (nonatomic, strong) id <MTLDepthStencilState>     m_DepthState;
 @property (nonatomic, strong) MTLRenderPassDescriptor      *m_RenderPassDescriptor;
 
 //App control
@@ -71,33 +79,11 @@ static const uint32_t kInFlightCommandBuffers = 1;
 @property (nonatomic, strong) dispatch_semaphore_t          m_InflightSemaphore;
 
 //Quad setup
-@property (nonatomic, strong) id <MTLRenderPipelineState>   m_PipelineState;
-@property (nonatomic, strong) id <MTLSamplerState>          m_QuadSampler;
 @property (nonatomic, strong) GHTQuad                      *m_Quad;             //Quad representation
-@property (nonatomic, assign) CGSize                        m_QuadTextureSize;  //Dimensions
 @property (nonatomic, assign) simd::float4x4                m_QuadTransform;
-@property (nonatomic, strong) id <MTLBuffer>                m_QuadTransformBuffer;
 
 //Textures
-@property (nonatomic, strong) GHTInput                     *m_InTexture;
-@property (nonatomic, strong) GHTVideo                     *m_VideoTexture;
 @property (nonatomic, strong) id <MTLTexture>               m_OutTexture;
-
-//Filter
-@property (nonatomic, strong) GHTHoughSpaceFilter          *houghSpaceFilter;
-@property (nonatomic, strong) GHTHoughSpaceToTextureFilter *houghSpaceToTextureFilter;
-
-//Model Buffer A
-@property (nonatomic, strong) GHTModel                     *m_Model;
-//Model Buffer B
-@property (nonatomic, strong) GHTModel                     *m_ModelB;
-
-//HoughSpace Buffer
-@property (nonatomic, strong) GHTHoughSpace                *m_HoughSpace;
-@property (nonatomic, strong) GHTHoughSpaceBuffer          *m_HoughSpaceBuffer;
-
-//Parameter Buffer
-@property (nonatomic, strong) GHTParameter                 *m_Parameter;
 
 // Viewing matrix is derived from an eye point, a reference point
 // indicating the center of the scene, and an up vector.
@@ -128,27 +114,12 @@ static const uint32_t kInFlightCommandBuffers = 1;
     _m_Device               = nil;
     _m_CommandQueue         = nil;
     _m_ShaderLibrary        = nil;
-    _m_DepthState           = nil;
     
     //Quad setup
     _m_Quad                 = nil;
-    _m_PipelineState        = nil;
-    _m_QuadSampler          = nil;
-    _m_QuadTransformBuffer  = nil;
     
     //Textures
-    _m_InTexture            = nil;
     _m_OutTexture           = nil;
-    
-    //Model Buffer
-    _m_Model                = nil;
-    
-    //HoughSpace Buffer
-    _m_HoughSpace           = nil;
-    _m_HoughSpaceBuffer     = nil;
-    
-    //Parameter Buffer
-    _m_Parameter            = nil;
     
     // Framebuffer/drawable
     _m_RenderingLayer       = nil;
@@ -515,11 +486,6 @@ static const uint32_t kInFlightCommandBuffers = 1;
     
     _zoomScale = 0.37;
     
-    //This needs to be redone
-    _state = 0;
-    //[self displayString:@"1 - original image" forDuration:1.0];
-    //
-    
     if(![self _start])
     {
         NSLog(@"Error(%@): Failed initializations!", self.class);
@@ -561,9 +527,6 @@ static const uint32_t kInFlightCommandBuffers = 1;
             [_m_Timer addToRunLoop:[NSRunLoop mainRunLoop]
                            forMode:NSDefaultRunLoopMode];
             
-            
-//            UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-//            [self.view addGestureRecognizer:tapRecognizer];
             UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
             [self.view addGestureRecognizer:pinchRecognizer];
             UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
@@ -597,33 +560,6 @@ static const uint32_t kInFlightCommandBuffers = 1;
 }
 
 #pragma mark - gestures
-- (void)handleTap:(UIGestureRecognizer *)gestureRecognizer
-{
-    _state = (_state + 1) % 6;
-    switch (_state)
-    {
-        case 0:
-            [self displayString:@"0 - original image" forDuration:1.0];
-            break;
-        case 1:
-            [self displayString:@"1 - image with gauss filter applied" forDuration:1.0];
-            break;
-        case 2:
-            [self displayString:@"2 - something something" forDuration:1.0];
-            break;
-        case 3:
-            [self displayString:@"3 - something something" forDuration:1.0];
-            break;
-        case 4:
-            [self displayString:@"4 - something something" forDuration:1.0];
-            break;
-        default:
-            [self displayString:@"unknown state" forDuration:1.0];
-
-            break;
-    }
-    
-}
 
 - (void)handlePinch:(UIPinchGestureRecognizer *)recognizer
 {

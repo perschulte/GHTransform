@@ -23,7 +23,7 @@
 		CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
 		CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */; };
 		CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
-		CB8497191A0108AC00B1CCB7 /* circleModel.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB8497181A0108AC00B1CCB7 /* circleModel.gmf */; };
+		CB8497191A0108AC00B1CCB7 /* leftEyeModel.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB8497181A0108AC00B1CCB7 /* leftEyeModel.gmf */; };
 		CBA321041986485400EF0260 /* GHTTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBA321031986485400EF0260 /* GHTTexture.mm */; };
 		CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBA32106198650B200EF0260 /* AAPLTransforms.mm */; };
 		CBA3210C1986725900EF0260 /* GHTView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA3210B1986725900EF0260 /* GHTView.m */; };
@@ -86,13 +86,19 @@
 		CBCE5A9C1A8911F500C9BFA5 /* Transform144.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5A9A1A8911F500C9BFA5 /* Transform144.png */; };
 		CBCE5A9F1A89122D00C9BFA5 /* Transform76.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5A9D1A89122D00C9BFA5 /* Transform76.png */; };
 		CBCE5AA01A89122D00C9BFA5 /* Transform152.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5A9E1A89122D00C9BFA5 /* Transform152.png */; };
+		CBCE5AAC1A891B3A00C9BFA5 /* Transform.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5AA91A891B3A00C9BFA5 /* Transform.png */; };
+		CBCE5AAD1A891B3A00C9BFA5 /* Transform@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5AAA1A891B3A00C9BFA5 /* Transform@2x.png */; };
+		CBCE5AAE1A891B3A00C9BFA5 /* Transform@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5AAB1A891B3A00C9BFA5 /* Transform@3x.png */; };
+		CBCE5AB21A892F3D00C9BFA5 /* infoButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5AAF1A892F3D00C9BFA5 /* infoButton.png */; };
+		CBCE5AB31A892F3D00C9BFA5 /* infoButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5AB01A892F3D00C9BFA5 /* infoButton@2x.png */; };
+		CBCE5AB41A892F3D00C9BFA5 /* infoButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CBCE5AB11A892F3D00C9BFA5 /* infoButton@3x.png */; };
+		CBCE5AB71A89374200C9BFA5 /* GHTInfoSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBCE5AB51A89374200C9BFA5 /* GHTInfoSettingsViewController.h */; };
+		CBCE5AB81A89374200C9BFA5 /* GHTInfoSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBCE5AB61A89374200C9BFA5 /* GHTInfoSettingsViewController.mm */; };
 		CBD70159198629F500032EC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD70158198629F500032EC3 /* main.m */; };
 		CBD7015C198629F500032EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015B198629F500032EC3 /* AppDelegate.m */; };
 		CBD7015F198629F500032EC3 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015E198629F500032EC3 /* ViewController.mm */; };
 		CBD70164198629F500032EC3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBD70163198629F500032EC3 /* Images.xcassets */; };
 		CBD70170198629F600032EC3 /* GHTMetalDetectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD7016F198629F600032EC3 /* GHTMetalDetectorTests.m */; };
-		CBEB0EA9199562F400EC9F51 /* GHTHoughSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = CBEB0EA7199562F400EC9F51 /* GHTHoughSpace.h */; };
-		CBEB0EAA199562F400EC9F51 /* GHTHoughSpace.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBEB0EA8199562F400EC9F51 /* GHTHoughSpace.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,7 +127,7 @@
 		CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 002MOD__TestImage_32x32_black.gmf; sourceTree = "<group>"; };
 		CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GHTShaderLibrary.metal; sourceTree = "<group>"; };
 		CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTSharedTypes.h; sourceTree = "<group>"; };
-		CB8497181A0108AC00B1CCB7 /* circleModel.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = circleModel.gmf; sourceTree = "<group>"; };
+		CB8497181A0108AC00B1CCB7 /* leftEyeModel.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = leftEyeModel.gmf; sourceTree = "<group>"; };
 		CBA321021986485400EF0260 /* GHTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTTexture.h; path = "Model/Texture Loader/GHTTexture.h"; sourceTree = "<group>"; };
 		CBA321031986485400EF0260 /* GHTTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTTexture.mm; path = "Model/Texture Loader/GHTTexture.mm"; sourceTree = "<group>"; };
 		CBA32105198650B200EF0260 /* AAPLTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAPLTransforms.h; path = Model/Math/AAPLTransforms.h; sourceTree = "<group>"; };
@@ -189,7 +195,15 @@
 		CBCE5A9A1A8911F500C9BFA5 /* Transform144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform144.png; path = ../../AppIcon/Transform144.png; sourceTree = "<group>"; };
 		CBCE5A9D1A89122D00C9BFA5 /* Transform76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform76.png; path = ../../AppIcon/Transform76.png; sourceTree = "<group>"; };
 		CBCE5A9E1A89122D00C9BFA5 /* Transform152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform152.png; path = ../../AppIcon/Transform152.png; sourceTree = "<group>"; };
-		CBD70153198629F500032EC3 /* GHTMetalDetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHTMetalDetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBCE5AA91A891B3A00C9BFA5 /* Transform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform.png; path = ../../AppIcon/Transform.png; sourceTree = "<group>"; };
+		CBCE5AAA1A891B3A00C9BFA5 /* Transform@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Transform@2x.png"; path = "../../AppIcon/Transform@2x.png"; sourceTree = "<group>"; };
+		CBCE5AAB1A891B3A00C9BFA5 /* Transform@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Transform@3x.png"; path = "../../AppIcon/Transform@3x.png"; sourceTree = "<group>"; };
+		CBCE5AAF1A892F3D00C9BFA5 /* infoButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoButton.png; sourceTree = "<group>"; };
+		CBCE5AB01A892F3D00C9BFA5 /* infoButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoButton@2x.png"; sourceTree = "<group>"; };
+		CBCE5AB11A892F3D00C9BFA5 /* infoButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoButton@3x.png"; sourceTree = "<group>"; };
+		CBCE5AB51A89374200C9BFA5 /* GHTInfoSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTInfoSettingsViewController.h; sourceTree = "<group>"; };
+		CBCE5AB61A89374200C9BFA5 /* GHTInfoSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTInfoSettingsViewController.mm; sourceTree = "<group>"; };
+		CBD70153198629F500032EC3 /* Transform.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transform.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD70157198629F500032EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBD70158198629F500032EC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CBD7015A198629F500032EC3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -198,11 +212,9 @@
 		CBD7015E198629F500032EC3 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		CBD70161198629F500032EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CBD70163198629F500032EC3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		CBD70169198629F600032EC3 /* GHTMetalDetectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GHTMetalDetectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBD70169198629F600032EC3 /* TransformTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD7016E198629F600032EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBD7016F198629F600032EC3 /* GHTMetalDetectorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHTMetalDetectorTests.m; sourceTree = "<group>"; };
-		CBEB0EA7199562F400EC9F51 /* GHTHoughSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTHoughSpace.h; path = "Model/Buffer Loader/GHTHoughSpace.h"; sourceTree = "<group>"; };
-		CBEB0EA8199562F400EC9F51 /* GHTHoughSpace.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTHoughSpace.mm; path = "Model/Buffer Loader/GHTHoughSpace.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,8 +242,6 @@
 		CB4D7604198CB477002D1C9D /* Buffer Loader */ = {
 			isa = PBXGroup;
 			children = (
-				CBEB0EA7199562F400EC9F51 /* GHTHoughSpace.h */,
-				CBEB0EA8199562F400EC9F51 /* GHTHoughSpace.mm */,
 				CB4D7605198CB4E0002D1C9D /* GHTModel.h */,
 				CB4D7606198CB4E0002D1C9D /* GHTModel.mm */,
 				CB4B490219F6573C00D97690 /* GHTParameter.h */,
@@ -269,7 +279,7 @@
 		CB4D7626198CE6C6002D1C9D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CB8497181A0108AC00B1CCB7 /* circleModel.gmf */,
+				CB8497181A0108AC00B1CCB7 /* leftEyeModel.gmf */,
 				CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */,
 				CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */,
 			);
@@ -344,6 +354,12 @@
 		CBB921A21986302600CA65F4 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				CBCE5AAF1A892F3D00C9BFA5 /* infoButton.png */,
+				CBCE5AB01A892F3D00C9BFA5 /* infoButton@2x.png */,
+				CBCE5AB11A892F3D00C9BFA5 /* infoButton@3x.png */,
+				CBCE5AA91A891B3A00C9BFA5 /* Transform.png */,
+				CBCE5AAA1A891B3A00C9BFA5 /* Transform@2x.png */,
+				CBCE5AAB1A891B3A00C9BFA5 /* Transform@3x.png */,
 				CB4D7611198CD5BE002D1C9D /* AppIcon */,
 			);
 			name = Image;
@@ -452,6 +468,8 @@
 				CBC1BAAD1A36DF60000649FD /* GHTContextViewController.mm */,
 				CBC50B4A1A4171E9008CB9D4 /* GHTPhiSettingsViewController.h */,
 				CBC50B4B1A4171E9008CB9D4 /* GHTPhiSettingsViewController.mm */,
+				CBCE5AB51A89374200C9BFA5 /* GHTInfoSettingsViewController.h */,
+				CBCE5AB61A89374200C9BFA5 /* GHTInfoSettingsViewController.mm */,
 			);
 			name = "Settings View Controller";
 			sourceTree = "<group>";
@@ -468,8 +486,8 @@
 		CBD70154198629F500032EC3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CBD70153198629F500032EC3 /* GHTMetalDetector.app */,
-				CBD70169198629F600032EC3 /* GHTMetalDetectorTests.xctest */,
+				CBD70153198629F500032EC3 /* Transform.app */,
+				CBD70169198629F600032EC3 /* TransformTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -529,6 +547,7 @@
 				CB4B490419F6573C00D97690 /* GHTParameter.h in Headers */,
 				CBC50B471A3F2649008CB9D4 /* GHTSettingsViewController.h in Headers */,
 				CBBCBE641A25E4AB000DC500 /* GHTHoughSpaceBuffer.h in Headers */,
+				CBCE5AB71A89374200C9BFA5 /* GHTInfoSettingsViewController.h in Headers */,
 				CBBCBE761A27671D000DC500 /* GHTInputImageCollectionViewCell.h in Headers */,
 				CB66CCC519AC8A37004616EF /* GHTVideo.h in Headers */,
 				CBC1BACC1A384229000649FD /* GHTSourceFilter.h in Headers */,
@@ -544,7 +563,6 @@
 				CBC1BAC41A383704000649FD /* GHTGaussFilter.h in Headers */,
 				CBC1BAC81A383BDB000649FD /* GHTPhiFilter.h in Headers */,
 				CBC1BA911A35B3A1000649FD /* GHTFilterSettingsViewController.h in Headers */,
-				CBEB0EA9199562F400EC9F51 /* GHTHoughSpace.h in Headers */,
 				CBC50B4C1A4171E9008CB9D4 /* GHTPhiSettingsViewController.h in Headers */,
 				CBC1BA9A1A35BE61000649FD /* GHTRoundButtons.h in Headers */,
 			);
@@ -553,9 +571,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		CBD70152198629F500032EC3 /* GHTMetalDetector */ = {
+		CBD70152198629F500032EC3 /* Transform */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CBD70173198629F600032EC3 /* Build configuration list for PBXNativeTarget "GHTMetalDetector" */;
+			buildConfigurationList = CBD70173198629F600032EC3 /* Build configuration list for PBXNativeTarget "Transform" */;
 			buildPhases = (
 				CBD7014F198629F500032EC3 /* Sources */,
 				CBD70150198629F500032EC3 /* Frameworks */,
@@ -566,14 +584,14 @@
 			);
 			dependencies = (
 			);
-			name = GHTMetalDetector;
+			name = Transform;
 			productName = GHTMetalDetector;
-			productReference = CBD70153198629F500032EC3 /* GHTMetalDetector.app */;
+			productReference = CBD70153198629F500032EC3 /* Transform.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CBD70168198629F600032EC3 /* GHTMetalDetectorTests */ = {
+		CBD70168198629F600032EC3 /* TransformTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CBD70176198629F600032EC3 /* Build configuration list for PBXNativeTarget "GHTMetalDetectorTests" */;
+			buildConfigurationList = CBD70176198629F600032EC3 /* Build configuration list for PBXNativeTarget "TransformTests" */;
 			buildPhases = (
 				CBD70165198629F600032EC3 /* Sources */,
 				CBD70166198629F600032EC3 /* Frameworks */,
@@ -584,9 +602,9 @@
 			dependencies = (
 				CBD7016B198629F600032EC3 /* PBXTargetDependency */,
 			);
-			name = GHTMetalDetectorTests;
+			name = TransformTests;
 			productName = GHTMetalDetectorTests;
-			productReference = CBD70169198629F600032EC3 /* GHTMetalDetectorTests.xctest */;
+			productReference = CBD70169198629F600032EC3 /* TransformTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -600,7 +618,7 @@
 				TargetAttributes = {
 					CBD70152198629F500032EC3 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = F3279R62Q6;
+						DevelopmentTeam = LH32AV9342;
 					};
 					CBD70168198629F600032EC3 = {
 						CreatedOnToolsVersion = 6.0;
@@ -608,7 +626,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CBD7014E198629F500032EC3 /* Build configuration list for PBXProject "GHTMetalDetector" */;
+			buildConfigurationList = CBD7014E198629F500032EC3 /* Build configuration list for PBXProject "Transform" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -621,8 +639,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CBD70152198629F500032EC3 /* GHTMetalDetector */,
-				CBD70168198629F600032EC3 /* GHTMetalDetectorTests */,
+				CBD70152198629F500032EC3 /* Transform */,
+				CBD70168198629F600032EC3 /* TransformTests */,
 			);
 		};
 /* End PBXProject section */
@@ -633,10 +651,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBCE5A921A89114500C9BFA5 /* Transform114.png in Resources */,
+				CBCE5AAD1A891B3A00C9BFA5 /* Transform@2x.png in Resources */,
+				CBCE5AB31A892F3D00C9BFA5 /* infoButton@2x.png in Resources */,
 				CBCE5A9B1A8911F500C9BFA5 /* Transform72.png in Resources */,
 				CBCE5A861A89109900C9BFA5 /* Transform29.png in Resources */,
+				CBCE5AB41A892F3D00C9BFA5 /* infoButton@3x.png in Resources */,
 				CBCE5A8D1A8910F300C9BFA5 /* Transform120.png in Resources */,
-				CB8497191A0108AC00B1CCB7 /* circleModel.gmf in Resources */,
+				CB8497191A0108AC00B1CCB7 /* leftEyeModel.gmf in Resources */,
 				CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */,
 				CBCE5AA01A89122D00C9BFA5 /* Transform152.png in Resources */,
 				CB76B4CD19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf in Resources */,
@@ -649,9 +670,12 @@
 				CBCE5A981A8911B700C9BFA5 /* Transform100.png in Resources */,
 				CBCE5A9C1A8911F500C9BFA5 /* Transform144.png in Resources */,
 				CBCE5A8E1A8910F300C9BFA5 /* Transform180.png in Resources */,
+				CBCE5AB21A892F3D00C9BFA5 /* infoButton.png in Resources */,
+				CBCE5AAE1A891B3A00C9BFA5 /* Transform@3x.png in Resources */,
 				CBCE5A871A89109900C9BFA5 /* Transform58.png in Resources */,
 				CBD70164198629F500032EC3 /* Images.xcassets in Resources */,
 				CBCE5A911A89114500C9BFA5 /* Transform57.png in Resources */,
+				CBCE5AAC1A891B3A00C9BFA5 /* Transform.png in Resources */,
 				CBCE5A971A8911B700C9BFA5 /* Transform50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -686,7 +710,6 @@
 				CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */,
 				CB66CCC619AC8A37004616EF /* GHTVideo.mm in Sources */,
 				CBBCBE611A25DF46000DC500 /* GHTBuffer.mm in Sources */,
-				CBEB0EAA199562F400EC9F51 /* GHTHoughSpace.mm in Sources */,
 				CBA3210C1986725900EF0260 /* GHTView.m in Sources */,
 				CBD7015F198629F500032EC3 /* ViewController.mm in Sources */,
 				CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */,
@@ -702,6 +725,7 @@
 				CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */,
 				CB4B490519F6573C00D97690 /* GHTParameter.mm in Sources */,
 				CBD70159198629F500032EC3 /* main.m in Sources */,
+				CBCE5AB81A89374200C9BFA5 /* GHTInfoSettingsViewController.mm in Sources */,
 				CBA321041986485400EF0260 /* GHTTexture.mm in Sources */,
 				CBC1BA9B1A35BE61000649FD /* GHTRoundButtons.m in Sources */,
 			);
@@ -720,7 +744,7 @@
 /* Begin PBXTargetDependency section */
 		CBD7016B198629F600032EC3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CBD70152198629F500032EC3 /* GHTMetalDetector */;
+			target = CBD70152198629F500032EC3 /* Transform */;
 			targetProxy = CBD7016A198629F600032EC3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -820,9 +844,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = GHTMetalDetector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Transform;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -834,9 +860,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = GHTMetalDetector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Transform;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -855,7 +883,7 @@
 				);
 				INFOPLIST_FILE = GHTMetalDetectorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TransformTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
@@ -870,7 +898,7 @@
 				);
 				INFOPLIST_FILE = GHTMetalDetectorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TransformTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Release;
@@ -878,7 +906,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CBD7014E198629F500032EC3 /* Build configuration list for PBXProject "GHTMetalDetector" */ = {
+		CBD7014E198629F500032EC3 /* Build configuration list for PBXProject "Transform" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBD70171198629F600032EC3 /* Debug */,
@@ -887,7 +915,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CBD70173198629F600032EC3 /* Build configuration list for PBXNativeTarget "GHTMetalDetector" */ = {
+		CBD70173198629F600032EC3 /* Build configuration list for PBXNativeTarget "Transform" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBD70174198629F600032EC3 /* Debug */,
@@ -896,7 +924,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CBD70176198629F600032EC3 /* Build configuration list for PBXNativeTarget "GHTMetalDetectorTests" */ = {
+		CBD70176198629F600032EC3 /* Build configuration list for PBXNativeTarget "TransformTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBD70177198629F600032EC3 /* Debug */,
