@@ -10,7 +10,6 @@
 		CB4B490419F6573C00D97690 /* GHTParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4B490219F6573C00D97690 /* GHTParameter.h */; };
 		CB4B490519F6573C00D97690 /* GHTParameter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB4B490319F6573C00D97690 /* GHTParameter.mm */; };
 		CB4D7607198CB4E0002D1C9D /* GHTModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB4D7606198CB4E0002D1C9D /* GHTModel.mm */; };
-		CB4D7635198E54E7002D1C9D /* 001MOD__TestImage_32x32_black.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */; };
 		CB4D763C198E6D41002D1C9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBD70160198629F500032EC3 /* Main.storyboard */; };
 		CB62A00719AB81EE00C595E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00619AB81EE00C595E7 /* AVFoundation.framework */; };
 		CB62A00919AB8B2200C595E7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB62A00819AB8B2200C595E7 /* CoreMedia.framework */; };
@@ -19,7 +18,6 @@
 		CB66CCC619AC8A37004616EF /* GHTVideo.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB66CCC419AC8A37004616EF /* GHTVideo.mm */; };
 		CB6A78AC1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = CB6A78AA1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h */; };
 		CB6A78AD1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = CB6A78AB1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm */; };
-		CB76B4CD19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf in Resources */ = {isa = PBXBuildFile; fileRef = CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */; };
 		CB78530F19EBC9A500ECFA43 /* GHTShaderLibrary.metal in Sources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
 		CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */; };
 		CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */ = {isa = PBXBuildFile; fileRef = CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */; };
@@ -43,14 +41,10 @@
 		CBBCBE6C1A2633AF000DC500 /* GHTImageInput.h in Headers */ = {isa = PBXBuildFile; fileRef = CBBCBE6A1A2633AF000DC500 /* GHTImageInput.h */; };
 		CBBCBE6D1A2633AF000DC500 /* GHTImageInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBBCBE6B1A2633AF000DC500 /* GHTImageInput.mm */; };
 		CBBCBE6F1A275CA1000DC500 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBCBE6E1A275CA1000DC500 /* AssetsLibrary.framework */; };
-		CBBCBE761A27671D000DC500 /* GHTInputImageCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CBBCBE741A27671D000DC500 /* GHTInputImageCollectionViewCell.h */; };
-		CBBCBE771A27671D000DC500 /* GHTInputImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CBBCBE751A27671D000DC500 /* GHTInputImageCollectionViewCell.m */; };
 		CBC1BA911A35B3A1000649FD /* GHTFilterSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BA8E1A35B3A1000649FD /* GHTFilterSettingsViewController.h */; };
 		CBC1BA921A35B3A1000649FD /* GHTFilterSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BA8F1A35B3A1000649FD /* GHTFilterSettingsViewController.mm */; };
 		CBC1BA9A1A35BE61000649FD /* GHTRoundButtons.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BA981A35BE61000649FD /* GHTRoundButtons.h */; };
 		CBC1BA9B1A35BE61000649FD /* GHTRoundButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BA991A35BE61000649FD /* GHTRoundButtons.m */; };
-		CBC1BAA61A361FC8000649FD /* GHTFilterSettingsScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAA41A361FC8000649FD /* GHTFilterSettingsScrollView.h */; };
-		CBC1BAA71A361FC8000649FD /* GHTFilterSettingsScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAA51A361FC8000649FD /* GHTFilterSettingsScrollView.m */; };
 		CBC1BAAE1A36DF60000649FD /* GHTContextViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAAC1A36DF60000649FD /* GHTContextViewController.h */; };
 		CBC1BAAF1A36DF60000649FD /* GHTContextViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBC1BAAD1A36DF60000649FD /* GHTContextViewController.mm */; };
 		CBC1BAB21A36E27C000649FD /* GHTCamSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC1BAB01A36E27C000649FD /* GHTCamSettingsViewController.h */; };
@@ -99,6 +93,8 @@
 		CBD7015F198629F500032EC3 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015E198629F500032EC3 /* ViewController.mm */; };
 		CBD70164198629F500032EC3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBD70163198629F500032EC3 /* Images.xcassets */; };
 		CBD70170198629F600032EC3 /* GHTMetalDetectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD7016F198629F600032EC3 /* GHTMetalDetectorTests.m */; };
+		CBE54CFC1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = CBE54CFA1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h */; };
+		CBE54CFD1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE54CFB1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +112,6 @@
 		CB4B490319F6573C00D97690 /* GHTParameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTParameter.mm; path = "Model/Buffer Loader/GHTParameter.mm"; sourceTree = "<group>"; };
 		CB4D7605198CB4E0002D1C9D /* GHTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTModel.h; path = "Model/Buffer Loader/GHTModel.h"; sourceTree = "<group>"; };
 		CB4D7606198CB4E0002D1C9D /* GHTModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTModel.mm; path = "Model/Buffer Loader/GHTModel.mm"; sourceTree = "<group>"; };
-		CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = 001MOD__TestImage_32x32_black.gmf; path = ../../Resources/Models/001MOD__TestImage_32x32_black.gmf; sourceTree = "<group>"; };
 		CB62A00619AB81EE00C595E7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		CB62A00819AB8B2200C595E7 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		CB62A00A19AB8D5A00C595E7 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -124,16 +119,15 @@
 		CB66CCC419AC8A37004616EF /* GHTVideo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTVideo.mm; path = "Model/Texture Loader/GHTVideo.mm"; sourceTree = "<group>"; };
 		CB6A78AA1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTHoughSpaceToTextureFilter.h; path = Model/Filter/GHTHoughSpaceToTextureFilter.h; sourceTree = "<group>"; };
 		CB6A78AB1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTHoughSpaceToTextureFilter.mm; path = Model/Filter/GHTHoughSpaceToTextureFilter.mm; sourceTree = "<group>"; };
-		CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 002MOD__TestImage_32x32_black.gmf; sourceTree = "<group>"; };
 		CB78530E19EBC9A500ECFA43 /* GHTShaderLibrary.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GHTShaderLibrary.metal; sourceTree = "<group>"; };
 		CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTSharedTypes.h; sourceTree = "<group>"; };
-		CB8497181A0108AC00B1CCB7 /* leftEyeModel.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = leftEyeModel.gmf; sourceTree = "<group>"; };
+		CB8497181A0108AC00B1CCB7 /* leftEyeModel.gmf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = leftEyeModel.gmf; path = "Supporting Files/Model/leftEyeModel.gmf"; sourceTree = "<group>"; };
 		CBA321021986485400EF0260 /* GHTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTTexture.h; path = "Model/Texture Loader/GHTTexture.h"; sourceTree = "<group>"; };
 		CBA321031986485400EF0260 /* GHTTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTTexture.mm; path = "Model/Texture Loader/GHTTexture.mm"; sourceTree = "<group>"; };
 		CBA32105198650B200EF0260 /* AAPLTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAPLTransforms.h; path = Model/Math/AAPLTransforms.h; sourceTree = "<group>"; };
 		CBA32106198650B200EF0260 /* AAPLTransforms.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AAPLTransforms.mm; path = Model/Math/AAPLTransforms.mm; sourceTree = "<group>"; };
-		CBA3210A1986725900EF0260 /* GHTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTView.h; path = App/View/GHTView.h; sourceTree = "<group>"; };
-		CBA3210B1986725900EF0260 /* GHTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHTView.m; path = App/View/GHTView.m; sourceTree = "<group>"; };
+		CBA3210A1986725900EF0260 /* GHTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTView.h; sourceTree = "<group>"; };
+		CBA3210B1986725900EF0260 /* GHTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTView.m; sourceTree = "<group>"; };
 		CBB46CEC1A234E1C00E8C2AA /* GHTModelFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTModelFilter.h; path = Model/Filter/GHTModelFilter.h; sourceTree = "<group>"; };
 		CBB46CED1A234E1C00E8C2AA /* GHTModelFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTModelFilter.mm; path = Model/Filter/GHTModelFilter.mm; sourceTree = "<group>"; };
 		CBB46CF01A234FEF00E8C2AA /* GHTFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTFilter.h; path = Model/Filter/GHTFilter.h; sourceTree = "<group>"; };
@@ -151,14 +145,10 @@
 		CBBCBE6A1A2633AF000DC500 /* GHTImageInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTImageInput.h; path = "Model/Texture Loader/GHTImageInput.h"; sourceTree = "<group>"; };
 		CBBCBE6B1A2633AF000DC500 /* GHTImageInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTImageInput.mm; path = "Model/Texture Loader/GHTImageInput.mm"; sourceTree = "<group>"; };
 		CBBCBE6E1A275CA1000DC500 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		CBBCBE741A27671D000DC500 /* GHTInputImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTInputImageCollectionViewCell.h; sourceTree = "<group>"; };
-		CBBCBE751A27671D000DC500 /* GHTInputImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTInputImageCollectionViewCell.m; sourceTree = "<group>"; };
 		CBC1BA8E1A35B3A1000649FD /* GHTFilterSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTFilterSettingsViewController.h; sourceTree = "<group>"; };
 		CBC1BA8F1A35B3A1000649FD /* GHTFilterSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTFilterSettingsViewController.mm; sourceTree = "<group>"; };
 		CBC1BA981A35BE61000649FD /* GHTRoundButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTRoundButtons.h; sourceTree = "<group>"; };
 		CBC1BA991A35BE61000649FD /* GHTRoundButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTRoundButtons.m; sourceTree = "<group>"; };
-		CBC1BAA41A361FC8000649FD /* GHTFilterSettingsScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTFilterSettingsScrollView.h; sourceTree = "<group>"; };
-		CBC1BAA51A361FC8000649FD /* GHTFilterSettingsScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTFilterSettingsScrollView.m; sourceTree = "<group>"; };
 		CBC1BAAC1A36DF60000649FD /* GHTContextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTContextViewController.h; sourceTree = "<group>"; };
 		CBC1BAAD1A36DF60000649FD /* GHTContextViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTContextViewController.mm; sourceTree = "<group>"; };
 		CBC1BAB01A36E27C000649FD /* GHTCamSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTCamSettingsViewController.h; sourceTree = "<group>"; };
@@ -180,27 +170,27 @@
 		CBC50B461A3F2649008CB9D4 /* GHTSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTSettingsViewController.mm; sourceTree = "<group>"; };
 		CBC50B4A1A4171E9008CB9D4 /* GHTPhiSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTPhiSettingsViewController.h; sourceTree = "<group>"; };
 		CBC50B4B1A4171E9008CB9D4 /* GHTPhiSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTPhiSettingsViewController.mm; sourceTree = "<group>"; };
-		CBCE5A831A89109900C9BFA5 /* Transform29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform29.png; path = ../../AppIcon/Transform29.png; sourceTree = "<group>"; };
-		CBCE5A841A89109900C9BFA5 /* Transform58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform58.png; path = ../../AppIcon/Transform58.png; sourceTree = "<group>"; };
-		CBCE5A851A89109900C9BFA5 /* Transform87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform87.png; path = ../../AppIcon/Transform87.png; sourceTree = "<group>"; };
-		CBCE5A891A8910F300C9BFA5 /* Transform80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform80.png; path = ../../AppIcon/Transform80.png; sourceTree = "<group>"; };
-		CBCE5A8A1A8910F300C9BFA5 /* Transform120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform120.png; path = ../../AppIcon/Transform120.png; sourceTree = "<group>"; };
-		CBCE5A8B1A8910F300C9BFA5 /* Transform180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform180.png; path = ../../AppIcon/Transform180.png; sourceTree = "<group>"; };
-		CBCE5A8F1A89114500C9BFA5 /* Transform57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform57.png; path = ../../AppIcon/Transform57.png; sourceTree = "<group>"; };
-		CBCE5A901A89114500C9BFA5 /* Transform114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform114.png; path = ../../AppIcon/Transform114.png; sourceTree = "<group>"; };
-		CBCE5A931A89118700C9BFA5 /* Transform40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform40.png; path = ../../AppIcon/Transform40.png; sourceTree = "<group>"; };
-		CBCE5A951A8911B700C9BFA5 /* Transform50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform50.png; path = ../../AppIcon/Transform50.png; sourceTree = "<group>"; };
-		CBCE5A961A8911B700C9BFA5 /* Transform100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform100.png; path = ../../AppIcon/Transform100.png; sourceTree = "<group>"; };
-		CBCE5A991A8911F500C9BFA5 /* Transform72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform72.png; path = ../../AppIcon/Transform72.png; sourceTree = "<group>"; };
-		CBCE5A9A1A8911F500C9BFA5 /* Transform144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform144.png; path = ../../AppIcon/Transform144.png; sourceTree = "<group>"; };
-		CBCE5A9D1A89122D00C9BFA5 /* Transform76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform76.png; path = ../../AppIcon/Transform76.png; sourceTree = "<group>"; };
-		CBCE5A9E1A89122D00C9BFA5 /* Transform152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform152.png; path = ../../AppIcon/Transform152.png; sourceTree = "<group>"; };
+		CBCE5A831A89109900C9BFA5 /* Transform29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform29.png; sourceTree = "<group>"; };
+		CBCE5A841A89109900C9BFA5 /* Transform58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform58.png; sourceTree = "<group>"; };
+		CBCE5A851A89109900C9BFA5 /* Transform87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform87.png; sourceTree = "<group>"; };
+		CBCE5A891A8910F300C9BFA5 /* Transform80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform80.png; sourceTree = "<group>"; };
+		CBCE5A8A1A8910F300C9BFA5 /* Transform120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform120.png; sourceTree = "<group>"; };
+		CBCE5A8B1A8910F300C9BFA5 /* Transform180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform180.png; sourceTree = "<group>"; };
+		CBCE5A8F1A89114500C9BFA5 /* Transform57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform57.png; sourceTree = "<group>"; };
+		CBCE5A901A89114500C9BFA5 /* Transform114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform114.png; sourceTree = "<group>"; };
+		CBCE5A931A89118700C9BFA5 /* Transform40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform40.png; sourceTree = "<group>"; };
+		CBCE5A951A8911B700C9BFA5 /* Transform50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform50.png; sourceTree = "<group>"; };
+		CBCE5A961A8911B700C9BFA5 /* Transform100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform100.png; sourceTree = "<group>"; };
+		CBCE5A991A8911F500C9BFA5 /* Transform72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform72.png; sourceTree = "<group>"; };
+		CBCE5A9A1A8911F500C9BFA5 /* Transform144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform144.png; sourceTree = "<group>"; };
+		CBCE5A9D1A89122D00C9BFA5 /* Transform76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform76.png; sourceTree = "<group>"; };
+		CBCE5A9E1A89122D00C9BFA5 /* Transform152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform152.png; sourceTree = "<group>"; };
 		CBCE5AA91A891B3A00C9BFA5 /* Transform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform.png; path = ../../AppIcon/Transform.png; sourceTree = "<group>"; };
 		CBCE5AAA1A891B3A00C9BFA5 /* Transform@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Transform@2x.png"; path = "../../AppIcon/Transform@2x.png"; sourceTree = "<group>"; };
 		CBCE5AAB1A891B3A00C9BFA5 /* Transform@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Transform@3x.png"; path = "../../AppIcon/Transform@3x.png"; sourceTree = "<group>"; };
-		CBCE5AAF1A892F3D00C9BFA5 /* infoButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoButton.png; sourceTree = "<group>"; };
-		CBCE5AB01A892F3D00C9BFA5 /* infoButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoButton@2x.png"; sourceTree = "<group>"; };
-		CBCE5AB11A892F3D00C9BFA5 /* infoButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoButton@3x.png"; sourceTree = "<group>"; };
+		CBCE5AAF1A892F3D00C9BFA5 /* infoButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoButton.png; path = "Supporting Files/Image/infoButton.png"; sourceTree = "<group>"; };
+		CBCE5AB01A892F3D00C9BFA5 /* infoButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButton@2x.png"; path = "Supporting Files/Image/infoButton@2x.png"; sourceTree = "<group>"; };
+		CBCE5AB11A892F3D00C9BFA5 /* infoButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButton@3x.png"; path = "Supporting Files/Image/infoButton@3x.png"; sourceTree = "<group>"; };
 		CBCE5AB51A89374200C9BFA5 /* GHTInfoSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTInfoSettingsViewController.h; sourceTree = "<group>"; };
 		CBCE5AB61A89374200C9BFA5 /* GHTInfoSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GHTInfoSettingsViewController.mm; sourceTree = "<group>"; };
 		CBD70153198629F500032EC3 /* Transform.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transform.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,6 +205,8 @@
 		CBD70169198629F600032EC3 /* TransformTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD7016E198629F600032EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBD7016F198629F600032EC3 /* GHTMetalDetectorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHTMetalDetectorTests.m; sourceTree = "<group>"; };
+		CBE54CFA1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTFilterSettingsScrollView.h; sourceTree = "<group>"; };
+		CBE54CFB1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTFilterSettingsScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,14 +266,13 @@
 				CBCE5A851A89109900C9BFA5 /* Transform87.png */,
 			);
 			name = AppIcon;
+			path = "Supporting Files/Image/AppIcon";
 			sourceTree = "<group>";
 		};
 		CB4D7626198CE6C6002D1C9D /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				CB8497181A0108AC00B1CCB7 /* leftEyeModel.gmf */,
-				CB4D7627198CE76D002D1C9D /* 001MOD__TestImage_32x32_black.gmf */,
-				CB76B4CB19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -316,7 +307,7 @@
 				CBC1BABC1A36F30F000649FD /* GHTComputeBuilder.h */,
 				CBC1BABD1A36F30F000649FD /* GHTComputeBuilder.mm */,
 			);
-			name = Controller;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		CBB9219F19862FDB00CA65F4 /* Delegate */ = {
@@ -325,22 +316,20 @@
 				CBD7015A198629F500032EC3 /* AppDelegate.h */,
 				CBD7015B198629F500032EC3 /* AppDelegate.m */,
 			);
-			name = Delegate;
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 		CBB921A019862FE000CA65F4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CBC1BAA41A361FC8000649FD /* GHTFilterSettingsScrollView.h */,
-				CBC1BAA51A361FC8000649FD /* GHTFilterSettingsScrollView.m */,
-				CBBCBE741A27671D000DC500 /* GHTInputImageCollectionViewCell.h */,
-				CBBCBE751A27671D000DC500 /* GHTInputImageCollectionViewCell.m */,
+				CBE54CFA1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h */,
+				CBE54CFB1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m */,
 				CBC1BA981A35BE61000649FD /* GHTRoundButtons.h */,
 				CBC1BA991A35BE61000649FD /* GHTRoundButtons.m */,
 				CBA3210A1986725900EF0260 /* GHTView.h */,
 				CBA3210B1986725900EF0260 /* GHTView.m */,
 			);
-			name = View;
+			path = View;
 			sourceTree = "<group>";
 		};
 		CBB921A11986300200CA65F4 /* Storyboard */ = {
@@ -428,7 +417,7 @@
 				CBB921A11986300200CA65F4 /* Storyboard */,
 				CBB921A019862FE000CA65F4 /* View */,
 			);
-			name = App;
+			path = App;
 			sourceTree = "<group>";
 		};
 		CBB921B01986332900CA65F4 /* Frameworks */ = {
@@ -450,7 +439,7 @@
 				CBC1BAC11A36F3A2000649FD /* GHTConstants.h */,
 				CB78531019EBC9E300ECFA43 /* GHTSharedTypes.h */,
 			);
-			name = Helper;
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		CBC50B491A4171AE008CB9D4 /* Settings View Controller */ = {
@@ -471,7 +460,7 @@
 				CBCE5AB51A89374200C9BFA5 /* GHTInfoSettingsViewController.h */,
 				CBCE5AB61A89374200C9BFA5 /* GHTInfoSettingsViewController.mm */,
 			);
-			name = "Settings View Controller";
+			path = "Settings View Controller";
 			sourceTree = "<group>";
 		};
 		CBD7014A198629F500032EC3 = {
@@ -541,6 +530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBBCBE5C1A25DC73000DC500 /* GHTHoughSpaceFilter.h in Headers */,
+				CBE54CFC1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h in Headers */,
 				CBC1BAAE1A36DF60000649FD /* GHTContextViewController.h in Headers */,
 				CBC1BAB21A36E27C000649FD /* GHTCamSettingsViewController.h in Headers */,
 				CBBCBE6C1A2633AF000DC500 /* GHTImageInput.h in Headers */,
@@ -549,11 +539,9 @@
 				CBC50B471A3F2649008CB9D4 /* GHTSettingsViewController.h in Headers */,
 				CBBCBE641A25E4AB000DC500 /* GHTHoughSpaceBuffer.h in Headers */,
 				CBCE5AB71A89374200C9BFA5 /* GHTInfoSettingsViewController.h in Headers */,
-				CBBCBE761A27671D000DC500 /* GHTInputImageCollectionViewCell.h in Headers */,
 				CB66CCC519AC8A37004616EF /* GHTVideo.h in Headers */,
 				CBC1BACC1A384229000649FD /* GHTSourceFilter.h in Headers */,
 				CBB46CF21A234FEF00E8C2AA /* GHTFilter.h in Headers */,
-				CBC1BAA61A361FC8000649FD /* GHTFilterSettingsScrollView.h in Headers */,
 				CB78531119EBC9E300ECFA43 /* GHTSharedTypes.h in Headers */,
 				CBB46CEE1A234E1C00E8C2AA /* GHTModelFilter.h in Headers */,
 				CB6A78AC1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.h in Headers */,
@@ -661,12 +649,10 @@
 				CB8497191A0108AC00B1CCB7 /* leftEyeModel.gmf in Resources */,
 				CB78531219EBC9FE00ECFA43 /* GHTShaderLibrary.metal in Resources */,
 				CBCE5AA01A89122D00C9BFA5 /* Transform152.png in Resources */,
-				CB76B4CD19F6CF43001CA3C1 /* 002MOD__TestImage_32x32_black.gmf in Resources */,
 				CBCE5A8C1A8910F300C9BFA5 /* Transform80.png in Resources */,
 				CBCE5A941A89118700C9BFA5 /* Transform40.png in Resources */,
 				CB4D763C198E6D41002D1C9D /* Main.storyboard in Resources */,
 				CBCE5A9F1A89122D00C9BFA5 /* Transform76.png in Resources */,
-				CB4D7635198E54E7002D1C9D /* 001MOD__TestImage_32x32_black.gmf in Resources */,
 				CBCE5A881A89109900C9BFA5 /* Transform87.png in Resources */,
 				CBCE5A981A8911B700C9BFA5 /* Transform100.png in Resources */,
 				CBCE5A9C1A8911F500C9BFA5 /* Transform144.png in Resources */,
@@ -699,6 +685,7 @@
 				CBC1BABB1A36E6C1000649FD /* GHTEmptySegue.m in Sources */,
 				CBC1BABF1A36F30F000649FD /* GHTComputeBuilder.mm in Sources */,
 				CBC50B4D1A4171E9008CB9D4 /* GHTPhiSettingsViewController.mm in Sources */,
+				CBE54CFD1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m in Sources */,
 				CBC1BAC91A383BDB000649FD /* GHTPhiFilter.mm in Sources */,
 				CBC1BAC51A383704000649FD /* GHTGaussFilter.mm in Sources */,
 				CB6A78AD1A2F16B5004CD707 /* GHTHoughSpaceToTextureFilter.mm in Sources */,
@@ -707,7 +694,6 @@
 				CBBCBE691A2632A9000DC500 /* GHTInput.mm in Sources */,
 				CBBCBE5D1A25DC73000DC500 /* GHTHoughSpaceFilter.mm in Sources */,
 				CBC50B481A3F2649008CB9D4 /* GHTSettingsViewController.mm in Sources */,
-				CBC1BAA71A361FC8000649FD /* GHTFilterSettingsScrollView.m in Sources */,
 				CBA32107198650B200EF0260 /* AAPLTransforms.mm in Sources */,
 				CB66CCC619AC8A37004616EF /* GHTVideo.mm in Sources */,
 				CBBCBE611A25DF46000DC500 /* GHTBuffer.mm in Sources */,
@@ -722,7 +708,6 @@
 				CBC1BA921A35B3A1000649FD /* GHTFilterSettingsViewController.mm in Sources */,
 				CBB46CF31A234FEF00E8C2AA /* GHTFilter.mm in Sources */,
 				CBC1BAB71A36E288000649FD /* GHTGaussSettingsViewController.mm in Sources */,
-				CBBCBE771A27671D000DC500 /* GHTInputImageCollectionViewCell.m in Sources */,
 				CBB921BE1986375400CA65F4 /* GHTQuad.mm in Sources */,
 				CB4B490519F6573C00D97690 /* GHTParameter.mm in Sources */,
 				CBD70159198629F500032EC3 /* main.m in Sources */,
@@ -757,6 +742,7 @@
 				CBD70161198629F500032EC3 /* Base */,
 			);
 			name = Main.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
