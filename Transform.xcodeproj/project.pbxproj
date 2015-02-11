@@ -477,8 +477,8 @@
 		CBD7014A198629F500032EC3 = {
 			isa = PBXGroup;
 			children = (
-				CBD70155198629F500032EC3 /* GHTMetalDetector */,
-				CBD7016C198629F600032EC3 /* GHTMetalDetectorTests */,
+				CBD70155198629F500032EC3 /* GHTransform */,
+				CBD7016C198629F600032EC3 /* GHTransform */,
 				CBD70154198629F500032EC3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -492,7 +492,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CBD70155198629F500032EC3 /* GHTMetalDetector */ = {
+		CBD70155198629F500032EC3 /* GHTransform */ = {
 			isa = PBXGroup;
 			children = (
 				CBB921A8198630D600CA65F4 /* App */,
@@ -500,7 +500,7 @@
 				CBD70156198629F500032EC3 /* Supporting Files */,
 				CBB921B01986332900CA65F4 /* Frameworks */,
 			);
-			path = GHTMetalDetector;
+			path = GHTransform;
 			sourceTree = "<group>";
 		};
 		CBD70156198629F500032EC3 /* Supporting Files */ = {
@@ -515,13 +515,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CBD7016C198629F600032EC3 /* GHTMetalDetectorTests */ = {
+		CBD7016C198629F600032EC3 /* GHTransform */ = {
 			isa = PBXGroup;
 			children = (
 				CBD7016F198629F600032EC3 /* GHTMetalDetectorTests.m */,
 				CBD7016D198629F600032EC3 /* Supporting Files */,
 			);
-			path = GHTMetalDetectorTests;
+			name = GHTransform;
+			path = GHTransformTests;
 			sourceTree = "<group>";
 		};
 		CBD7016D198629F600032EC3 /* Supporting Files */ = {
@@ -845,7 +846,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = GHTMetalDetector/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/GHTransform/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Transform;
 				PROVISIONING_PROFILE = "";
@@ -861,7 +862,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = GHTMetalDetector/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/GHTransform/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Transform;
 				PROVISIONING_PROFILE = "";
