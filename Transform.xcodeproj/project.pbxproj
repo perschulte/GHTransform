@@ -92,7 +92,6 @@
 		CBD7015C198629F500032EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015B198629F500032EC3 /* AppDelegate.m */; };
 		CBD7015F198629F500032EC3 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CBD7015E198629F500032EC3 /* ViewController.mm */; };
 		CBD70164198629F500032EC3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBD70163198629F500032EC3 /* Images.xcassets */; };
-		CBD70170198629F600032EC3 /* GHTMetalDetectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD7016F198629F600032EC3 /* GHTMetalDetectorTests.m */; };
 		CBE54CFC1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = CBE54CFA1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h */; };
 		CBE54CFD1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE54CFB1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m */; };
 /* End PBXBuildFile section */
@@ -185,9 +184,9 @@
 		CBCE5A9A1A8911F500C9BFA5 /* Transform144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform144.png; sourceTree = "<group>"; };
 		CBCE5A9D1A89122D00C9BFA5 /* Transform76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform76.png; sourceTree = "<group>"; };
 		CBCE5A9E1A89122D00C9BFA5 /* Transform152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transform152.png; sourceTree = "<group>"; };
-		CBCE5AA91A891B3A00C9BFA5 /* Transform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform.png; path = ../../AppIcon/Transform.png; sourceTree = "<group>"; };
-		CBCE5AAA1A891B3A00C9BFA5 /* Transform@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Transform@2x.png"; path = "../../AppIcon/Transform@2x.png"; sourceTree = "<group>"; };
-		CBCE5AAB1A891B3A00C9BFA5 /* Transform@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Transform@3x.png"; path = "../../AppIcon/Transform@3x.png"; sourceTree = "<group>"; };
+		CBCE5AA91A891B3A00C9BFA5 /* Transform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Transform.png; path = "Supporting Files/Image/Transform.png"; sourceTree = "<group>"; };
+		CBCE5AAA1A891B3A00C9BFA5 /* Transform@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Transform@2x.png"; path = "Supporting Files/Image/Transform@2x.png"; sourceTree = "<group>"; };
+		CBCE5AAB1A891B3A00C9BFA5 /* Transform@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Transform@3x.png"; path = "Supporting Files/Image/Transform@3x.png"; sourceTree = "<group>"; };
 		CBCE5AAF1A892F3D00C9BFA5 /* infoButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoButton.png; path = "Supporting Files/Image/infoButton.png"; sourceTree = "<group>"; };
 		CBCE5AB01A892F3D00C9BFA5 /* infoButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButton@2x.png"; path = "Supporting Files/Image/infoButton@2x.png"; sourceTree = "<group>"; };
 		CBCE5AB11A892F3D00C9BFA5 /* infoButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButton@3x.png"; path = "Supporting Files/Image/infoButton@3x.png"; sourceTree = "<group>"; };
@@ -203,8 +202,6 @@
 		CBD70161198629F500032EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CBD70163198629F500032EC3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CBD70169198629F600032EC3 /* TransformTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CBD7016E198629F600032EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CBD7016F198629F600032EC3 /* GHTMetalDetectorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHTMetalDetectorTests.m; sourceTree = "<group>"; };
 		CBE54CFA1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTFilterSettingsScrollView.h; sourceTree = "<group>"; };
 		CBE54CFB1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTFilterSettingsScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -467,7 +464,6 @@
 			isa = PBXGroup;
 			children = (
 				CBD70155198629F500032EC3 /* GHTransform */,
-				CBD7016C198629F600032EC3 /* GHTransform */,
 				CBD70154198629F500032EC3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -500,24 +496,6 @@
 				CBD70163198629F500032EC3 /* Images.xcassets */,
 				CBD70157198629F500032EC3 /* Info.plist */,
 				CBD70158198629F500032EC3 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		CBD7016C198629F600032EC3 /* GHTransform */ = {
-			isa = PBXGroup;
-			children = (
-				CBD7016F198629F600032EC3 /* GHTMetalDetectorTests.m */,
-				CBD7016D198629F600032EC3 /* Supporting Files */,
-			);
-			name = GHTransform;
-			path = GHTransformTests;
-			sourceTree = "<group>";
-		};
-		CBD7016D198629F600032EC3 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				CBD7016E198629F600032EC3 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -607,7 +585,6 @@
 				TargetAttributes = {
 					CBD70152198629F500032EC3 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = LH32AV9342;
 					};
 					CBD70168198629F600032EC3 = {
 						CreatedOnToolsVersion = 6.0;
@@ -721,7 +698,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBD70170198629F600032EC3 /* GHTMetalDetectorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
