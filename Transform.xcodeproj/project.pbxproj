@@ -96,16 +96,6 @@
 		CBE54CFD1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE54CFB1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		CBD7016A198629F600032EC3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CBD7014B198629F500032EC3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CBD70152198629F500032EC3;
-			remoteInfo = GHTMetalDetector;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		CB4B490219F6573C00D97690 /* GHTParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHTParameter.h; path = "Model/Buffer Loader/GHTParameter.h"; sourceTree = "<group>"; };
 		CB4B490319F6573C00D97690 /* GHTParameter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GHTParameter.mm; path = "Model/Buffer Loader/GHTParameter.mm"; sourceTree = "<group>"; };
@@ -201,7 +191,6 @@
 		CBD7015E198629F500032EC3 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		CBD70161198629F500032EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CBD70163198629F500032EC3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		CBD70169198629F600032EC3 /* TransformTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBE54CFA1A8B476000AE8F9C /* GHTFilterSettingsScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTFilterSettingsScrollView.h; sourceTree = "<group>"; };
 		CBE54CFB1A8B476000AE8F9C /* GHTFilterSettingsScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHTFilterSettingsScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,13 +204,6 @@
 				CB62A00B19AB8D5A00C595E7 /* CoreVideo.framework in Frameworks */,
 				CB62A00919AB8B2200C595E7 /* CoreMedia.framework in Frameworks */,
 				CB62A00719AB81EE00C595E7 /* AVFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CBD70166198629F600032EC3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,7 +454,6 @@
 			isa = PBXGroup;
 			children = (
 				CBD70153198629F500032EC3 /* Transform.app */,
-				CBD70169198629F600032EC3 /* TransformTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -556,24 +537,6 @@
 			productReference = CBD70153198629F500032EC3 /* Transform.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CBD70168198629F600032EC3 /* TransformTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CBD70176198629F600032EC3 /* Build configuration list for PBXNativeTarget "TransformTests" */;
-			buildPhases = (
-				CBD70165198629F600032EC3 /* Sources */,
-				CBD70166198629F600032EC3 /* Frameworks */,
-				CBD70167198629F600032EC3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CBD7016B198629F600032EC3 /* PBXTargetDependency */,
-			);
-			name = TransformTests;
-			productName = GHTMetalDetectorTests;
-			productReference = CBD70169198629F600032EC3 /* TransformTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -585,10 +548,6 @@
 				TargetAttributes = {
 					CBD70152198629F500032EC3 = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					CBD70168198629F600032EC3 = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = CBD70152198629F500032EC3;
 					};
 				};
 			};
@@ -606,7 +565,6 @@
 			projectRoot = "";
 			targets = (
 				CBD70152198629F500032EC3 /* Transform */,
-				CBD70168198629F600032EC3 /* TransformTests */,
 			);
 		};
 /* End PBXProject section */
@@ -641,13 +599,6 @@
 				CBCE5A911A89114500C9BFA5 /* Transform57.png in Resources */,
 				CBCE5AAC1A891B3A00C9BFA5 /* Transform.png in Resources */,
 				CBCE5A971A8911B700C9BFA5 /* Transform50.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CBD70167198629F600032EC3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,22 +645,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CBD70165198629F600032EC3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		CBD7016B198629F600032EC3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CBD70152198629F500032EC3 /* Transform */;
-			targetProxy = CBD7016A198629F600032EC3 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CBD70160198629F500032EC3 /* Main.storyboard */ = {
@@ -832,40 +768,6 @@
 			};
 			name = Release;
 		};
-		CBD70177198629F600032EC3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GHTMetalDetector.app/GHTMetalDetector";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = GHTMetalDetectorTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = TransformTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Debug;
-		};
-		CBD70178198629F600032EC3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GHTMetalDetector.app/GHTMetalDetector";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = GHTMetalDetectorTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = TransformTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -883,15 +785,6 @@
 			buildConfigurations = (
 				CBD70174198629F600032EC3 /* Debug */,
 				CBD70175198629F600032EC3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CBD70176198629F600032EC3 /* Build configuration list for PBXNativeTarget "TransformTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CBD70177198629F600032EC3 /* Debug */,
-				CBD70178198629F600032EC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
